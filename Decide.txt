@@ -1,0 +1,6 @@
+1. landmark field in accommodation model
+2. either coordinates or iFrame for location field in accommodation model
+3. does package have features and if it does do we use one model for the features of both accommodation and package models
+4. adding deadline field for the Package model
+5. is one package for one city/destination only or for many?
+6. removing piknik from the list of types of accommodation
