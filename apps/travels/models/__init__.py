@@ -1,1 +1,0 @@
-from .accommodation import *  # noqa

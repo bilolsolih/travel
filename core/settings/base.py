@@ -30,7 +30,8 @@ THIRD_PARTY_APPS = [
 USER_DEFINED_APPS = [
     'apps.accounts',
     'apps.base',
-    'apps.travels',
+    'apps.accommodations',
+    'apps.packages'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + USER_DEFINED_APPS
@@ -65,9 +66,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
-
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
