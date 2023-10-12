@@ -16,4 +16,5 @@ CORS_ALLOW_CREDENTIALS = True
 
 INTERNAL_IPS = [
     'localhost',
+    'lordstormrage.pythonanywhere.com'
 ]
