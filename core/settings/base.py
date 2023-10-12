@@ -2,6 +2,7 @@ from os import getenv
 from pathlib import Path
 
 import corsheaders.middleware
+import debug_toolbar.middleware
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -27,6 +28,7 @@ THIRD_PARTY_APPS = [
     'drf_yasg',
     'ckeditor',
     'corsheaders',
+    'debug_toolbar',
 ]
 
 USER_DEFINED_APPS = [
@@ -47,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
