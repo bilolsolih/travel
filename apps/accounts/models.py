@@ -53,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
         ]
 
     def __str__(self):
-        return self.phone_number
+        return str(self.phone_number)
 
 
 class AdminUser(User):
