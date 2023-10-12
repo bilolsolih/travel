@@ -12,7 +12,6 @@ SECRET_KEY = getenv('SECRET_KEY')
 # Application definition
 
 DJANGO_APPS = [
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
