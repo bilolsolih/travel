@@ -1,8 +1,6 @@
 from os import getenv
 from pathlib import Path
 
-import corsheaders.middleware
-import debug_toolbar.middleware
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -14,6 +12,7 @@ SECRET_KEY = getenv('SECRET_KEY')
 # Application definition
 
 DJANGO_APPS = [
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -23,6 +22,8 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'modeltranslation',
+    'jazzmin',
     'rest_framework',
     'rest_framework.authtoken',
     'drf_yasg',
@@ -38,7 +39,7 @@ USER_DEFINED_APPS = [
     'apps.packages'
 ]
 
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + USER_DEFINED_APPS
+INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + USER_DEFINED_APPS
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
