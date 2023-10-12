@@ -2,7 +2,7 @@ from .base import *  # noqa
 
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['lordstormrage.pythonanywhere.com']
 
 DATABASES = {
     'default': {
@@ -10,3 +10,10 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+CORS_ALLOWED_ORIGINS = [
+    '',
+    '',
+]
+
+CORS_ALLOW_CREDENTIALS = True

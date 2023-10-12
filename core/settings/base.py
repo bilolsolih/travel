@@ -1,6 +1,7 @@
 from os import getenv
 from pathlib import Path
 
+import corsheaders.middleware
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -25,6 +26,7 @@ THIRD_PARTY_APPS = [
     'rest_framework.authtoken',
     'drf_yasg',
     'ckeditor',
+    'corsheaders',
 ]
 
 USER_DEFINED_APPS = [
@@ -38,6 +40,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + USER_DEFINED_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
