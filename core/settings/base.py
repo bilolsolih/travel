@@ -29,6 +29,7 @@ THIRD_PARTY_APPS = [
     'drf_yasg',
     'ckeditor',
     'corsheaders',
+    'phonenumber_field',
     'debug_toolbar',
 ]
 

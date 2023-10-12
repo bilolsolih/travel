@@ -1,9 +1,9 @@
+from ckeditor.fields import RichTextField
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from apps.base.models import TimeStampedModel
-from ckeditor.fields import RichTextField
 
 
 class Trip(TimeStampedModel):
@@ -25,6 +25,7 @@ class Package(TimeStampedModel):
     country = models.ForeignKey('accommodations.Country', related_name='packages', on_delete=models.PROTECT, verbose_name=_('Country'))
     city = models.ForeignKey('accommodations.City', related_name='packages', on_delete=models.PROTECT, verbose_name=_('City'))
     duration = models.PositiveIntegerField(_('Duration'))
+    active = models.BooleanField(_('Active status'), default=True)
 
     class Meta:
         verbose_name = _('Package')
@@ -47,11 +48,11 @@ class PlanType(models.Model):
 
 class Plan(models.Model):
     package = models.ForeignKey('packages.Package', related_name='plans', on_delete=models.CASCADE, verbose_name=_('Package'))
-    description = RichTextField(_('Description'), blank=True, null=True)
     type = models.ForeignKey('packages.PlanType', related_name='plans', on_delete=models.PROTECT, verbose_name=_('Type'))
     price = models.PositiveIntegerField(_('Price'))
     features = models.ManyToManyField('packages.PlanFeature', related_name='plans', blank=True, verbose_name=_('Features'))
     activities = models.ManyToManyField('packages.Activity', related_name='plans', blank=True, verbose_name=_('Activities'))
+    description = RichTextField(_('Description'), blank=True, null=True)
 
     class Meta:
         verbose_name = _('Plan')
@@ -63,7 +64,7 @@ class Plan(models.Model):
 
 class PlanFeature(models.Model):
     title = models.CharField(_('Title'), max_length=128)
-    description = models.TextField(_('Description'), blank=True, null=True)
+    description = RichTextField(_('Description'), blank=True, null=True)
     icon = models.ImageField(_('Icon'), upload_to='images/packages/features/')
 
     class Meta:
@@ -78,6 +79,7 @@ class Activity(TimeStampedModel):
     title = models.CharField(_('Title'), max_length=256)
     address = models.CharField(_('Address'), max_length=256)
     landmark = models.CharField(_('Landmark'), max_length=256, blank=True, null=True)
+    description = RichTextField(_('Description'), blank=True, null=True)
 
     iframe = models.TextField(_('iFrame'), blank=True, null=True)
     latitude = models.CharField(_('Latitude'), max_length=64, blank=True, null=True)
