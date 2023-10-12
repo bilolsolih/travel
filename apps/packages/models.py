@@ -3,11 +3,13 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from apps.base.models import TimeStampedModel
+from ckeditor.fields import RichTextField
 
 
 class Trip(TimeStampedModel):
     package = models.ForeignKey('packages.Package', related_name='trips', on_delete=models.CASCADE, verbose_name=_('Package'))
     start_date = models.DateField(_('Start date'), default=timezone.now)
+    end_date = models.DateField(_('End date'), default=timezone.now)
 
     class Meta:
         verbose_name = _('Trip')
@@ -22,8 +24,6 @@ class Package(TimeStampedModel):
     picture = models.ImageField(_('Picture'), upload_to='images/packages/packages/%Y/%m/')
     country = models.ForeignKey('accommodations.Country', related_name='packages', on_delete=models.PROTECT, verbose_name=_('Country'))
     city = models.ForeignKey('accommodations.City', related_name='packages', on_delete=models.PROTECT, verbose_name=_('City'))
-    start_date = models.DateField(_('Start date'), default=timezone.now)
-    end_date = models.DateField(_('End date'), default=timezone.now)
     duration = models.PositiveIntegerField(_('Duration'))
 
     class Meta:
@@ -47,6 +47,7 @@ class PlanType(models.Model):
 
 class Plan(models.Model):
     package = models.ForeignKey('packages.Package', related_name='plans', on_delete=models.CASCADE, verbose_name=_('Package'))
+    description = RichTextField(_('Description'), blank=True, null=True)
     type = models.ForeignKey('packages.PlanType', related_name='plans', on_delete=models.PROTECT, verbose_name=_('Type'))
     price = models.PositiveIntegerField(_('Price'))
     features = models.ManyToManyField('packages.PlanFeature', related_name='plans', blank=True, verbose_name=_('Features'))
