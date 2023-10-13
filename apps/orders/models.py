@@ -13,8 +13,8 @@ class OrderStatus(models.TextChoices):
 
 class Order(TimeStampedModel):
     user = models.ForeignKey('accounts.User', related_name='orders', on_delete=models.PROTECT, verbose_name=_('User'))
-    package = models.ForeignKey('travels.Package', related_name='orders', on_delete=models.CASCADE, verbose_name=_('Package'))
-    plan = models.ForeignKey('travels.Plan', related_name='orders', on_delete=models.SET_NULL, null=True, verbose_name=_('Plan'))
+    package = models.ForeignKey('packages.Package', related_name='orders', on_delete=models.CASCADE, verbose_name=_('Package'))
+    plan = models.ForeignKey('packages.Plan', related_name='orders', on_delete=models.SET_NULL, null=True, verbose_name=_('Plan'))
     price_total = models.PositiveIntegerField(_('Total price'))
     price_paid = models.PositiveIntegerField(_('Price paid'), default=0)
 
