@@ -1,4 +1,5 @@
 from ckeditor.fields import RichTextField
+from django.core.validators import MaxValueValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -26,6 +27,7 @@ class Package(TimeStampedModel):
     city = models.ForeignKey('accommodations.City', related_name='packages', on_delete=models.PROTECT, verbose_name=_('City'))
     duration = models.PositiveIntegerField(_('Duration'))
     active = models.BooleanField(_('Active status'), default=True)
+    discount = models.PositiveIntegerField(_('Discount'), default=0, validators=[MaxValueValidator(100)])
 
     class Meta:
         verbose_name = _('Package')
@@ -57,6 +59,10 @@ class Plan(models.Model):
     class Meta:
         verbose_name = _('Plan')
         verbose_name_plural = _('Plans')
+
+    @property
+    def get_discounted_price(self):
+        return self.price if self.package.discount == 0 else self.price * ((100 - self.package.discount) / 100)
 
     def __str__(self):
         return f'{self.package.title} - {self.type.title}'

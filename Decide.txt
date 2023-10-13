@@ -6,4 +6,4 @@
 6. removing piknik from the list of types of accommodation (remove)
 ################################################################################
 1. Instructional videos by well-known Imams for activities
-2.
+2. Creating orders without authentication for guest users
