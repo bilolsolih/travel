@@ -1,1 +1,2 @@
-from .User import *  # noqa
+from .RelatedPerson import *
+from .User import *

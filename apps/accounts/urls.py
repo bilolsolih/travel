@@ -14,6 +14,11 @@ urlpatterns = [
     path('delete/', views.UserDeleteAPIView.as_view(), name='delete'),
     path('check/', views.UserCheckAPIView.as_view(), name='check'),
     path('token/', TokenObtainPairView.as_view(), name='token'),
-    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh')
-
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    #########################################################################
+    path('related_person/create/', views.RelatedPersonCreateAPIView.as_view(), name='related_person_create'),
+    path('related_person/list/', views.RelatedPersonListAPIView.as_view(), name='related_person_list'),
+    path('related_person/retrieve/<int:pk>/', views.RelatedPersonRetrieveAPIView.as_view(), name='related_person_retrieve'),
+    path('related_person/delete/<int:pk>/', views.RelatedPersonDeleteAPIView.as_view(), name='related_person_delete'),
+    ##################################################################################################################
 ]
