@@ -1,14 +1,15 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 from .models import *  # noqa
 
 
-class PlanInPackage(admin.TabularInline):
+class PlanInPackage(TranslationTabularInline):
     model = Plan
 
 
 @admin.register(Package)
-class PackageAdmin(admin.ModelAdmin):
+class PackageAdmin(TranslationAdmin):
     list_display = ['id', 'title', 'picture', 'city']
     list_display_links = ['id', 'title']
     list_editable = ['picture']
@@ -17,13 +18,13 @@ class PackageAdmin(admin.ModelAdmin):
 
 
 @admin.register(PlanType)
-class PlanTypeAdmin(admin.ModelAdmin):
+class PlanTypeAdmin(TranslationAdmin):
     list_display = ['id', 'title']
     list_display_links = ['id', 'title']
 
 
 @admin.register(Activity)
-class ActivityAdmin(admin.ModelAdmin):
+class ActivityAdmin(TranslationAdmin):
     list_display = ['id', 'title', 'latitude', 'longitude']
     list_display_links = ['id', 'title']
     list_editable = ['latitude', 'longitude']
@@ -31,7 +32,7 @@ class ActivityAdmin(admin.ModelAdmin):
 
 
 @admin.register(PlanFeature)
-class PlanFeatureAdmin(admin.ModelAdmin):
+class PlanFeatureAdmin(TranslationAdmin):
     list_display = ['id', 'title', 'icon']
     list_display_links = ['id', 'title']
     list_editable = ['icon']
