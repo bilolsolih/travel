@@ -6,4 +6,7 @@ from apps.accounts.models import User
 class UserRetrieveSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ['first_name', 'middle_name', 'last_name', 'gender', 'birthdate', 'phone_number', 'email']
+        fields = [
+            'phone_number', 'email', 'is_verified', 'first_name', 'last_name', 'middle_name', 'gender', 'birthdate',
+            'passport_picture', 'individual_pin', 'serial_number', 'region', 'district', 'balance'
+        ]
