@@ -9,11 +9,12 @@ urlpatterns = [
     path('api/v1/accounts/', include('apps.accounts.urls', namespace='accounts')),
     path('api/v1/packages/', include('apps.packages.urls', namespace='packages')),
     path('api/v1/orders/', include('apps.orders.urls', namespace='orders')),
+    path('api/v1/gallery/', include('apps.gallery.urls', namespace='gallery')),
 ]
 
 urlpatterns += swagger_patterns
 
 if settings.DEBUG:
     urlpatterns += [
-        path('__debug__/', include('debug_toolbar.urls'))
+        path('__debug__/', include('debug_toolbar.urls')),
     ]
