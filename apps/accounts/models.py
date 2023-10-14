@@ -2,10 +2,10 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from phonenumber_field.modelfields import PhoneNumberField
 
 from apps.accounts.managers import UserManager
 from apps.base.models import TimeStampedModel
-from phonenumber_field.modelfields import PhoneNumberField
 from . import choices
 
 
@@ -68,8 +68,9 @@ class AdminUser(User):
 
 
 class RelatedPerson(TimeStampedModel):
-    # AUTHENTICATION FIELDS #
+    responsible = models.ForeignKey('accounts.User', related_name='related_people', on_delete=models.CASCADE, verbose_name=_('Responsible person'))
     phone_number = models.CharField(_('Phone number'), max_length=15)
+    is_phone_number_same = models.BooleanField(_('Is phone number the same?'))
     email = models.EmailField(_('Email'), unique=True, blank=True, null=True)
 
     # PERSONAL INFO #
@@ -87,6 +88,7 @@ class RelatedPerson(TimeStampedModel):
     # ADDRESS #
     region = models.CharField(_('Region/City'), max_length=128)
     district = models.CharField(_('District'), max_length=128)
+    is_address_same = models.BooleanField(_('Is address the same?'))
 
     class Meta:
         verbose_name = _('Related person')
@@ -94,6 +96,14 @@ class RelatedPerson(TimeStampedModel):
         indexes = [
             models.Index(fields=['last_name', 'first_name', 'middle_name'])
         ]
+
+    def save(self, *args, **kwargs):
+        if self.is_address_same:
+            self.region = self.responsible.region
+            self.district = self.responsible.district
+        if self.is_phone_number_same:
+            self.phone_number = self.responsible.phone_number
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.phone_number
