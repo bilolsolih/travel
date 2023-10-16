@@ -12,6 +12,7 @@ urlpatterns = i18n_patterns(
     path('api/v1/packages/', include('apps.packages.urls', namespace='packages')),
     path('api/v1/orders/', include('apps.orders.urls', namespace='orders')),
     path('api/v1/gallery/', include('apps.gallery.urls', namespace='gallery')),
+    path('api/v1/payments/', include('apps.payments.urls', namespace='payments')),
 )
 
 urlpatterns += swagger_patterns
