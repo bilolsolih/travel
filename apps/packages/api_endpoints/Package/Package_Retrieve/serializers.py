@@ -32,6 +32,8 @@ class PlanInPackageSerializer(ModelSerializer):
 
 
 class PackageRetrieveSerializer(ModelSerializer):
+    plans = PlanInPackageSerializer(many=True)
+
     class Meta:
         model = Package
-        fields = ['id', 'title', 'picture', 'country', 'city', 'duration']
+        fields = ['id', 'title', 'picture', 'country', 'city', 'duration', 'plans']
