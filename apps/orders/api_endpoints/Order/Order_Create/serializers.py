@@ -15,13 +15,11 @@ class OrderCreateSerializer(ModelSerializer):
 
     def validate(self, attrs):
         user = self.context['request'].user
-        package = Package.objects.get(pk=attrs['package'])
-        plan = Plan.objects.get(pk=attrs['plan'])
 
-        if plan not in package.plans.all():
+        if attrs['plan'] not in attrs['package'].plans.all():
             raise ValidationError(_('No such plan in the package.'))
 
-        if Order.objects.filter(user=user, package=package, status=OrderStatus.WAITING).exists():
+        if Order.objects.filter(user=user, package=attrs['package'], status=OrderStatus.WAITING).exists():
             raise ValidationError(_('Order exists and waiting for payment.'))
         
         return attrs
