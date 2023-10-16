@@ -86,7 +86,7 @@ class RelatedPerson(TimeStampedModel):
     serial_number = models.CharField(_('Passport serial number'), max_length=9, blank=True, null=True)
 
     # ADDRESS #
-    region = models.CharField(_('Region/City'), max_length=128)
+    region = models.ForeignKey('base.Region', related_name='users', on_delete=models.PROTECT, verbose_name=_('Region/City'))
     district = models.CharField(_('District'), max_length=128)
     is_address_same = models.BooleanField(_('Is address the same?'))
 
