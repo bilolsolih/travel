@@ -1,8 +1,10 @@
 from ckeditor.fields import RichTextField
 from django.core.validators import MaxValueValidator
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 from apps.base.models import TimeStampedModel
 
@@ -21,10 +23,10 @@ class Trip(TimeStampedModel):
 
 
 class Package(TimeStampedModel):
+    core_activities = models.ManyToManyField('packages.Activity', related_name='packages', blank=True, verbose_name=_('Core activities'))
     title = models.CharField(_('Title'), max_length=256)
     picture = models.ImageField(_('Picture'), upload_to='images/packages/packages/%Y/%m/')
     country = models.ForeignKey('accommodations.Country', related_name='packages', on_delete=models.PROTECT, verbose_name=_('Country'))
-    city = models.ForeignKey('accommodations.City', related_name='packages', on_delete=models.PROTECT, verbose_name=_('City'))
     duration = models.PositiveIntegerField(_('Duration'))
     active = models.BooleanField(_('Active status'), default=True)
     discount = models.PositiveIntegerField(_('Discount'), default=0, validators=[MaxValueValidator(100)])
@@ -35,6 +37,23 @@ class Package(TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+
+class Destination(models.Model):
+    package = models.ForeignKey('packages.Package', related_name='destinations', on_delete=models.CASCADE, verbose_name=_('Package'))
+    city = models.ForeignKey('accommodations.City', related_name='packages', on_delete=models.PROTECT, verbose_name=_('City'))
+    duration = models.PositiveIntegerField(_('Duration in days'), validators=[MinValueValidator(1)])
+
+    class Meta:
+        verbose_name = _('Destination')
+        verbose_name_plural = _('Destinations')
+
+    def clean(self):
+        if self.city not in self.package.country.cities.all():
+            raise ValidationError({'city': 'Does not exist in the list of cities of the country of the package.'})
+
+    def __str__(self):
+        return f"{self.city}, {self.country} - {self.duration} {'days' if self.duration >= 2 else 'day'}"
 
 
 class PlanType(models.Model):
@@ -53,7 +72,7 @@ class Plan(models.Model):
     type = models.ForeignKey('packages.PlanType', related_name='plans', on_delete=models.PROTECT, verbose_name=_('Type'))
     price = models.PositiveIntegerField(_('Price'))
     features = models.ManyToManyField('packages.PlanFeature', related_name='plans', blank=True, verbose_name=_('Features'))
-    activities = models.ManyToManyField('packages.Activity', related_name='plans', blank=True, verbose_name=_('Activities'))
+    activities = models.ManyToManyField('packages.Activity', related_name='plans', blank=True, verbose_name=_('Plan-specific cctivities'))
     description = RichTextField(_('Description'), blank=True, null=True)
 
     class Meta:
@@ -99,4 +118,4 @@ class Activity(TimeStampedModel):
         return self.title
 
 
-__all__ = ['Package', 'PlanType', 'Plan', 'PlanFeature', 'Activity']
+__all__ = ['Trip', 'Package', 'PlanType', 'Plan', 'PlanFeature', 'Activity', 'Destination']

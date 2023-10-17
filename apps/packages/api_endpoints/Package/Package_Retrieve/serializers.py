@@ -36,4 +36,4 @@ class PackageRetrieveSerializer(ModelSerializer):
 
     class Meta:
         model = Package
-        fields = ['id', 'title', 'picture', 'country', 'city', 'duration', 'plans']
+        fields = ['id', 'title', 'picture', 'country', 'duration', 'plans']

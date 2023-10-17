@@ -1,20 +1,24 @@
 from django.contrib import admin
-from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
+from modeltranslation.admin import TranslationAdmin, TranslationStackedInline
 
 from .models import *  # noqa
 
 
-class PlanInPackage(TranslationTabularInline):
+class PlanInPackage(TranslationStackedInline):
     model = Plan
+
+
+class TripInPackage(admin.StackedInline):
+    model = Trip
 
 
 @admin.register(Package)
 class PackageAdmin(TranslationAdmin):
-    list_display = ['id', 'title', 'picture', 'city']
+    list_display = ['id', 'title', 'picture']
     list_display_links = ['id', 'title']
     list_editable = ['picture']
     search_fields = ['title']
-    inlines = [PlanInPackage]
+    inlines = [PlanInPackage, TripInPackage]
 
 
 @admin.register(PlanType)
