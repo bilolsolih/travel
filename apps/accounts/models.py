@@ -21,9 +21,8 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
 
     # PERSONAL INFO #
     first_name = models.CharField(_('First name'), max_length=128)
-    middle_name = models.CharField(_('Middle name'), max_length=128, blank=True, null=True)
     last_name = models.CharField(_('Last name'), max_length=128)
-    gender = models.CharField(_('Gender'), choices=choices.GENDER, max_length=10)
+    gender = models.CharField(_('Gender'), choices=choices.GENDER, max_length=10, blank=True, null=True)
     birthdate = models.DateField(_('Birthdate'), blank=True, null=True)
 
     # SENSITIVE INFO #
@@ -32,8 +31,8 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
     serial_number = models.CharField(_('Passport serial number'), max_length=9, blank=True, null=True)
 
     # ADDRESS #
-    region = models.CharField(_('Region/City'), max_length=128)
-    district = models.CharField(_('District'), max_length=128)
+    region = models.ForeignKey('base.Region', related_name='users', on_delete=models.PROTECT, blank=True, null=True, verbose_name=_('Region'))
+    district = models.CharField(_('District'), max_length=128, blank=True, null=True)
 
     # ACTIVITIES #
     balance = models.IntegerField(_('Balance'), default=0)
@@ -75,7 +74,6 @@ class RelatedPerson(TimeStampedModel):
 
     # PERSONAL INFO #
     first_name = models.CharField(_('First name'), max_length=128)
-    middle_name = models.CharField(_('Middle name'), max_length=128, blank=True, null=True)
     last_name = models.CharField(_('Last name'), max_length=128)
     gender = models.CharField(_('Gender'), choices=choices.GENDER, max_length=10)
     birthdate = models.DateField(_('Birthdate'), blank=True, null=True)
@@ -86,7 +84,7 @@ class RelatedPerson(TimeStampedModel):
     serial_number = models.CharField(_('Passport serial number'), max_length=9, blank=True, null=True)
 
     # ADDRESS #
-    region = models.ForeignKey('base.Region', related_name='users', on_delete=models.PROTECT, verbose_name=_('Region/City'))
+    region = models.ForeignKey('base.Region', related_name='related_users', on_delete=models.PROTECT, null=True, blank=True, verbose_name=_('Region/City'))
     district = models.CharField(_('District'), max_length=128)
     is_address_same = models.BooleanField(_('Is address the same?'))
 
