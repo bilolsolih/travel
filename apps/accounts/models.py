@@ -48,7 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
         verbose_name_plural = _('Users')
         indexes = [
             models.Index(fields=['phone_number']),
-            models.Index(fields=['last_name', 'first_name', 'middle_name'])
+            models.Index(fields=['last_name', 'first_name'])
         ]
 
     def __str__(self):
@@ -92,7 +92,7 @@ class RelatedPerson(TimeStampedModel):
         verbose_name = _('Related person')
         verbose_name_plural = _('Related people')
         indexes = [
-            models.Index(fields=['last_name', 'first_name', 'middle_name'])
+            models.Index(fields=['last_name', 'first_name'])
         ]
 
     def save(self, *args, **kwargs):
