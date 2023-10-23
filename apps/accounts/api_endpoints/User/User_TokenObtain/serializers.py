@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from rest_framework_simplejwt.tokens import RefreshToken
 from apps.accounts.models import User, OTPCode
 
 
@@ -19,4 +19,7 @@ class UserTokenObtainSerializer(serializers.Serializer):
         #         raise serializers.ValidationError({'code': 'Code for this user does not exist.'})
         if attrs['code'] != '1111':
             raise serializers.ValidationError({'code': 'Invalid code.'})
-        return attrs
+        token = RefreshToken.for_user(user)
+        refresh_token = str(token)
+        access_token = str(token.access_token)
+        return {'refresh': refresh_token, 'access': access_token}
