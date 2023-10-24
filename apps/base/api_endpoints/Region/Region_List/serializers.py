@@ -6,4 +6,4 @@ from apps.base.models import Region
 class RegionListSerializer(ModelSerializer):
     class Meta:
         model = Region
-        fields = ['title']
+        fields = ['id', 'title']
