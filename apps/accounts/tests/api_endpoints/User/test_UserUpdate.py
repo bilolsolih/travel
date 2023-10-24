@@ -13,8 +13,6 @@ class UserUpdateTestCase(APITestCase):
             'first_name': 'Bilol',
             'last_name': 'Muhammad Solih',
             'phone_number': '+998912958899',
-            'email': 'BilolMuhammadSolih@gmail.com',
-            'password': 'Solih1234!@#$',
         }
         self.user = User.objects.create_user(**defaults)
         self.token = Token.objects.create(user=self.user)
@@ -24,7 +22,6 @@ class UserUpdateTestCase(APITestCase):
             'first_name': 'Biloliddin',
             'last_name': 'Muhammad Solih',
             'phone_number': '+998912968899',
-            'email': 'BilolSolih@gmail.com',
         }
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
         response = self.client.patch(path=self.endpoint, data=defaults)

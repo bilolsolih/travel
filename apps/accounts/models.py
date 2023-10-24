@@ -22,6 +22,7 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
     # PERSONAL INFO #
     first_name = models.CharField(_('First name'), max_length=128)
     last_name = models.CharField(_('Last name'), max_length=128)
+    profile_photo = models.ImageField(_('Profile photo'), upload_to='images/accounts/profile_photos/%Y/%m/', blank=True, null=True)
     gender = models.CharField(_('Gender'), choices=choices.GENDER, max_length=10, blank=True, null=True)
     birthdate = models.DateField(_('Birthdate'), blank=True, null=True)
 
