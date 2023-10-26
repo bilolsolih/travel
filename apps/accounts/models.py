@@ -109,14 +109,14 @@ class RelatedPerson(TimeStampedModel):
 
 
 class OTPCode(TimeStampedModel):
-    user = models.ForeignKey('accounts.User', related_name='codes', on_delete=models.CASCADE, verbose_name=_('User'))
+    phone_number = models.CharField(max_length=15)
     code = models.CharField(_('Code'), max_length=4)
     is_expired = models.BooleanField(_('Expired status'), default=False)
 
     class Meta:
         verbose_name = _('OTP code')
         verbose_name_plural = _('OTP codes')
-        unique_together = ['user', 'code', 'is_expired']
+        unique_together = ['phone_number', 'code', 'is_expired']
 
     def __str__(self):
         return f'{self.user} - {self.code}'
