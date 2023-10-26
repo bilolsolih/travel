@@ -107,7 +107,8 @@ class RelatedPerson(TimeStampedModel):
     def __str__(self):
         return self.phone_number
 
-
+class VerifiedPhoneNumber(models.Model):
+    phone_number = models.CharField(max_length=15, unique=True)
 class OTPCode(TimeStampedModel):
     phone_number = models.CharField(max_length=15)
     code = models.CharField(_('Code'), max_length=4)
