@@ -1,12 +1,12 @@
 from rest_framework.generics import CreateAPIView
-from rest_framework.parsers import MultiPartParser
+from rest_framework.parsers import MultiPartParser, JSONParser
 
 from .permissions import IsNotAuthenticated
 from .serializers import UserRegisterSerializer
 
 
 class UserRegisterAPIView(CreateAPIView):
-    parser_classes = [MultiPartParser]
+    parser_classes = [MultiPartParser, JSONParser]
     permission_classes = [IsNotAuthenticated]
     serializer_class = UserRegisterSerializer
 
