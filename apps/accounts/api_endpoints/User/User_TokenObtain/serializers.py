@@ -10,8 +10,9 @@ class UserTokenObtainSerializer(serializers.Serializer):
     def validate(self, attrs):
         try:
             user = User.objects.get(phone_number=attrs['phone_number'])
+            exist = True
         except User.DoesNotExist:
-            raise serializers.ValidationError({'user': 'User does not exist.'})
+            exist = False
         #
         #     try:
         #         OTPCode.objects.get(user=user, code=attrs['code'], is_expired=False)
@@ -19,7 +20,10 @@ class UserTokenObtainSerializer(serializers.Serializer):
         #         raise serializers.ValidationError({'code': 'Code for this user does not exist.'})
         if attrs['code'] != '1111':
             raise serializers.ValidationError({'code': 'Invalid code.'})
-        token = RefreshToken.for_user(user)
-        refresh_token = str(token)
-        access_token = str(token.access_token)
-        return {'refresh': refresh_token, 'access': access_token}
+        if exist:
+            token = RefreshToken.for_user(user)
+            refresh_token = str(token)
+            access_token = str(token.access_token)
+            return {'refresh': refresh_token, 'access': access_token}
+        else:
+            return {"exist":False}
