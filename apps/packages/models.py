@@ -25,7 +25,10 @@ class Trip(TimeStampedModel):
 
     @property
     def get_end_date(self):
-        return self.start_date + timedelta(days=self.package.get_duration) if self.package.destinations else None
+        if self.package.destinations:
+            return self.start_date + timedelta(days=self.package.get_duration)
+        else:
+            return None
 
     def __str__(self):
         return f'{self.package}: {self.start_date} - {self.get_end_date}'
