@@ -25,10 +25,7 @@ class Trip(TimeStampedModel):
 
     @property
     def get_end_date(self):
-        if self.package.destinations.exists():
-            return self.start_date + timedelta(days=self.package.get_duration)
-        else:
-            return None
+        return self.start_date + timedelta(days=self.package.get_duration) if self.package.destinations.exists() else None
 
     def __str__(self):
         return f'{self.package}: {self.start_date} - {self.get_end_date}'
@@ -48,14 +45,14 @@ class Package(TimeStampedModel):
 
     @property
     def get_duration(self):
-        if self.destinations:
+        if self.destinations.exists():
             return self.destinations.aggregate(total_duration=models.Sum('duration'))['total_duration']
         else:
             return None
 
     @property
     def get_discount(self):
-        return self.plans.aggregate(max_discount=models.Max('discount'))['max_discount'] if self.plans else None
+        return self.plans.aggregate(max_discount=models.Max('discount'))['max_discount'] if self.plans.exists() else None
 
     def __str__(self):
         return self.title
