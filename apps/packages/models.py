@@ -45,11 +45,11 @@ class Package(TimeStampedModel):
 
     @property
     def get_duration(self):
-        return self.destinations.aggregate(total_duration=models.Sum('duration'))
+        return self.destinations.aggregate(total_duration=models.Sum('duration'))['total_duration']
 
     @property
     def get_discount(self):
-        return self.plans.aggregate(max_discount=models.Max('discount'))
+        return self.plans.aggregate(max_discount=models.Max('discount'))['max_discount']
 
     def __str__(self):
         return self.title
