@@ -8,20 +8,21 @@ from random import randint
 
 
 class UserCheckAPIView(APIView):
-    def generate_otp(self, user):
-        if OTPCode.objects.filter(user=user).exists():
-            OTPCode.objects.filter(user=user).delete()
-        return OTPCode.objects.create(user=user, code=randint(1000, 9999))
+    def generate_otp(self, phone_number):
+        if OTPCode.objects.filter(phone_number=phone_number).exists():
+            OTPCode.objects.filter(phone_number=phone_number).delete()
+        return OTPCode.objects.create(phone_number=phone_number, code=randint(1000, 9999))
 
     def post(self, request, *args, **kwargs):
         serializer = UserCheckSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         try:
             user = User.objects.get(**serializer.validated_data)
-            self.generate_otp(user)
-            return Response({'detail': 'User exists.'}, status=status.HTTP_200_OK)
+            exist = True
         except User.DoesNotExist:
-            return Response({'detail': 'User does not exist.'}, status=status.HTTP_204_NO_CONTENT)
+            exist = False
+        self.generate_otp(serializer.validated_data["phone_number"])
+        return Response({'exist': exist}, status=status.HTTP_200_OK)
 
 
 __all__ = ['UserCheckAPIView']
