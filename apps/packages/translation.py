@@ -1,7 +1,7 @@
 from modeltranslation.decorators import register
 from modeltranslation.translator import TranslationOptions
 
-from .models import Package, Plan, PlanType, PlanFeature, Activity
+from .models import Package, Plan, PlanType, PackageFeature, Activity
 
 
 @register(Package)
@@ -19,7 +19,7 @@ class PlanTranslation(TranslationOptions):
     fields = ['description']
 
 
-@register(PlanFeature)
+@register(PackageFeature)
 class PlanFeatureTranslation(TranslationOptions):
     fields = ['title', 'description']
 
