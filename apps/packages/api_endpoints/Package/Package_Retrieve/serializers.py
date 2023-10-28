@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer
 
-from apps.packages.models import Package, Plan, PlanType, PlanFeature, Activity
+from apps.packages.models import Package, Plan, PlanType, PackageFeature, Activity
 
 
 class PlanTypeInPlanSerializer(ModelSerializer):
@@ -11,7 +11,7 @@ class PlanTypeInPlanSerializer(ModelSerializer):
 
 class FeatureInPackageSerializer(ModelSerializer):
     class Meta:
-        model = PlanFeature
+        model = PackageFeature
         fields = ['title', 'icon', 'description']
 
 
