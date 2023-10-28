@@ -7,6 +7,7 @@ class PlanTypeInPlanSerializer(ModelSerializer):
     class Meta:
         model = PlanType
         fields = ['id', 'title']
+        ref_name = 'PlanTypeInPlanRetrieve'
 
 
 class FeatureInPackageSerializer(ModelSerializer):
@@ -36,4 +37,4 @@ class PackageRetrieveSerializer(ModelSerializer):
 
     class Meta:
         model = Package
-        fields = ['id', 'title', 'picture', 'country', 'duration', 'plans']
+        fields = ['id', 'title', 'picture', 'plans']

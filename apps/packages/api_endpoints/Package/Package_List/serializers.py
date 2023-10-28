@@ -25,6 +25,7 @@ class PlanTypeInPlan(ModelSerializer):
     class Meta:
         model = PlanType
         fields = ['title']
+        ref_name = 'PlanTypeInPlanList'
 
 
 class PlanInPackageListSerializer(ModelSerializer):
