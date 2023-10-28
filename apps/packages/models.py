@@ -25,7 +25,7 @@ class Trip(TimeStampedModel):
 
     @property
     def get_end_date(self):
-        if self.package.destinations:
+        if self.package.destinations.exists():
             return self.start_date + timedelta(days=self.package.get_duration)
         else:
             return None
