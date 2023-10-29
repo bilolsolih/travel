@@ -11,6 +11,10 @@ class UserRegisterAPIView(CreateAPIView):
     parser_classes = [MultiPartParser]
     serializer_class = UserRegisterSerializer
 
+    def generate_token(self, user):
+        token = RefreshToken.for_user(user)
+        return {'refresh': str(token), 'access': str(token.access_token)}
+
     def perform_create(self, serializer):
         return serializer.save()
 
@@ -18,11 +22,8 @@ class UserRegisterAPIView(CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = self.perform_create(serializer)
-        token = RefreshToken.for_user(user)
-        refresh_token = str(token)
-        access_token = str(token.access_token)
         headers = self.get_success_headers(serializer.data)
-        return Response({'refresh': refresh_token, 'access': access_token}, status=status.HTTP_201_CREATED, headers=headers)
+        return Response(self.generate_token(user), status=status.HTTP_201_CREATED, headers=headers)
 
 
 __all__ = ['UserRegisterAPIView']

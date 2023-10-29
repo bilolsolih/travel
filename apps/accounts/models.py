@@ -109,12 +109,13 @@ class RelatedPerson(TimeStampedModel):
 
 
 class VerifiedPhoneNumber(models.Model):
-    phone_number = models.CharField(_('Phone number'), max_length=15, unique=True)
+    phone_number = models.CharField(_('Phone number'), max_length=15)
     device_id = models.CharField(_('Device ID'), max_length=64)
 
     class Meta:
         verbose_name = _('Verified phone number')
         verbose_name_plural = _('Verified phone numbers')
+        unique_together = ['device_id', 'phone_number']
 
     def __str__(self):
         return self.phone_number
