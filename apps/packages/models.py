@@ -90,8 +90,9 @@ class PlanType(models.Model):
 class Plan(models.Model):
     package = models.ForeignKey('packages.Package', related_name='plans', on_delete=models.CASCADE, verbose_name=_('Package'))
     type = models.ForeignKey('packages.PlanType', related_name='plans', on_delete=models.PROTECT, verbose_name=_('Type'))
-    price = models.PositiveIntegerField(_('Price'))
+    price = models.PositiveIntegerField(_('Price in USD ($)'))
     discount = models.PositiveIntegerField(_('Discount'), default=0, validators=[MaxValueValidator(100)])
+    discount_expiry_date = models.DateTimeField(_('Discount expiry date'), blank=True, null=True)
     features = models.ManyToManyField('packages.PackageFeature', related_name='plans', blank=True, verbose_name=_('Features'))
     activities = models.ManyToManyField('packages.Activity', related_name='plans', blank=True, verbose_name=_('Plan-specific activities'))
     description = RichTextField(_('Description'), blank=True, null=True)
@@ -99,10 +100,15 @@ class Plan(models.Model):
     class Meta:
         verbose_name = _('Plan')
         verbose_name_plural = _('Plans')
+        unique_together = ['package', 'type']
 
     @property
     def get_discounted_price(self):
-        return self.price if self.discount == 0 else self.price * ((100 - self.discount) / 100)
+        return self.price if self.discount == 0 or self.discount_expiry_date < timezone.now() else self.price * ((100 - self.discount) / 100)
+
+    def clean(self):
+        if self.discount and not self.discount_expiry_date:
+            raise ValidationError({'discount_expiry_date': 'When discount is set, this field also must be set.'})
 
     def __str__(self):
         return f'{self.package.title} - {self.type.title}'

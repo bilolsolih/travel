@@ -107,10 +107,22 @@ class RelatedPerson(TimeStampedModel):
     def __str__(self):
         return self.phone_number
 
+
 class VerifiedPhoneNumber(models.Model):
-    phone_number = models.CharField(max_length=15, unique=True)
+    phone_number = models.CharField(_('Phone number'), max_length=15, unique=True)
+    device_id = models.CharField(_('Device ID'), max_length=64)
+
+    class Meta:
+        verbose_name = _('Verified phone number')
+        verbose_name_plural = _('Verified phone numbers')
+
+    def __str__(self):
+        return self.phone_number
+
+
 class OTPCode(TimeStampedModel):
-    phone_number = models.CharField(max_length=15)
+    phone_number = models.CharField(_('Phone number'), max_length=15)
+    device_id = models.CharField(_('Device ID'), max_length=64)
     code = models.CharField(_('Code'), max_length=4)
     is_expired = models.BooleanField(_('Expired status'), default=False)
 
@@ -120,4 +132,4 @@ class OTPCode(TimeStampedModel):
         unique_together = ['phone_number', 'code', 'is_expired']
 
     def __str__(self):
-        return f'{self.user} - {self.code}'
+        return f'{self.phone_number} - {self.code}'

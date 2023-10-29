@@ -34,7 +34,7 @@ class PlanInPackageListSerializer(ModelSerializer):
 
     class Meta:
         model = Plan
-        fields = ['id', 'type', 'price', 'discount', 'get_discounted_price', 'features']
+        fields = ['id', 'type', 'price', 'discount', 'discount_expiry_date', 'get_discounted_price', 'features']
 
 
 class PackageListSerializer(ModelSerializer):
