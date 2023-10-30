@@ -10,7 +10,8 @@ class RelatedPersonRetrieveAPIView(RetrieveAPIView):
     serializer_class = RelatedPersonRetrieveSerializer
 
     def get_queryset(self):
-        return RelatedPerson.objects.filter(responsible=self.request.user)
+        queryset = RelatedPerson.objects.filter(responsible=self.request.user)
+        return queryset
 
 
 __all__ = ['RelatedPersonRetrieveAPIView']

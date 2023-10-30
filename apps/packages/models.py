@@ -91,7 +91,7 @@ class Plan(models.Model):
     package = models.ForeignKey('packages.Package', related_name='plans', on_delete=models.CASCADE, verbose_name=_('Package'))
     type = models.ForeignKey('packages.PlanType', related_name='plans', on_delete=models.PROTECT, verbose_name=_('Type'))
     price = models.PositiveIntegerField(_('Price in USD ($)'))
-    discount = models.PositiveIntegerField(_('Discount'), default=0, validators=[MaxValueValidator(100)])
+    discount = models.PositiveIntegerField(_('Discount'), validators=[MaxValueValidator(100)])
     discount_expiry_date = models.DateTimeField(_('Discount expiry date'), blank=True, null=True)
     features = models.ManyToManyField('packages.PackageFeature', related_name='plans', blank=True, verbose_name=_('Features'))
     activities = models.ManyToManyField('packages.Activity', related_name='plans', blank=True, verbose_name=_('Plan-specific activities'))
@@ -104,7 +104,10 @@ class Plan(models.Model):
 
     @property
     def get_discounted_price(self):
-        return self.price if self.discount == 0 or self.discount_expiry_date < timezone.now() else self.price * ((100 - self.discount) / 100)
+        if self.discount and self.discount_expiry_date > timezone.now():
+            return self.price * ((100 - self.discount) / 100)
+        else:
+            return self.price
 
     def clean(self):
         if self.discount and not self.discount_expiry_date:
