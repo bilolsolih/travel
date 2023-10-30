@@ -1,4 +1,4 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
 from apps.packages.models import Package, Trip, Destination, PackageFeature, Plan, PlanType
 
@@ -10,9 +10,18 @@ class TripInPackageListSerializer(ModelSerializer):
 
 
 class DestinationInPackageListSerializer(ModelSerializer):
+    ccountry = SerializerMethodField()
+    ccity = SerializerMethodField()
+
+    def get_ccountry(self, obj):
+        return obj.country.title
+
+    def get_ccity(self, obj):
+        return obj.city.title
+
     class Meta:
         model = Destination
-        fields = ['country', 'city', 'duration']
+        fields = ['ccountry', 'ccity', 'duration']
 
 
 class FeatureNestedListSerializer(ModelSerializer):
