@@ -33,6 +33,7 @@ class Trip(TimeStampedModel):
 
 class Package(TimeStampedModel):
     title = models.CharField(_('Title'), max_length=256)
+    description = models.TextField(_('Description'), blank=True, null=True)
     picture = models.ImageField(_('Picture'), upload_to='images/packages/packages/%Y/%m/')
     popular_places = models.ManyToManyField('places.PopularPlace', related_name='packages', blank=True, verbose_name=_('Popular places'))
     core_activities = models.ManyToManyField('packages.Activity', related_name='packages', blank=True, verbose_name=_('Core activities'))

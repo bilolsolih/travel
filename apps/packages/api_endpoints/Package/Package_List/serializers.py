@@ -40,7 +40,8 @@ class PlanInPackageListSerializer(ModelSerializer):
 class PackageListSerializer(ModelSerializer):
     core_features = FeatureNestedListSerializer(many=True)
     plans = PlanInPackageListSerializer(many=True)
+    destinations = DestinationInPackageListSerializer(many=True)
 
     class Meta:
         model = Package
-        fields = ['id', 'title', 'picture', 'get_duration', 'core_features', 'plans']
+        fields = ['id', 'title', 'picture', 'get_duration', 'destinations', 'core_features', 'plans']
