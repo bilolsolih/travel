@@ -24,6 +24,17 @@ class PopularPlace(TimeStampedModel):
         return self.title
 
 
+class Feature(models.Model):
+    place = models.ForeignKey('places.PopularPlace', related_name='features', on_delete=models.CASCADE, verbose_name=_('Place'))
+    title = models.CharField(_('Title'), max_length=128)
+
+    class Meta:
+        verbose_name = _('Feature')
+        verbose_name_plural = _('Features')
+
+    def __str__(self):
+        return self.title
+
 # class Picture(TimeStampedModel):
 #     popular_place = models.ForeignKey('places.PopularPlace', related_name='pictures', on_delete=models.PROTECT)
 #     is_main = models.BooleanField(_('Main status'), default=False)

@@ -5,14 +5,13 @@ from apps.accounts.models import User, OTPCode, VerifiedPhoneNumber
 
 class UserTokenObtainSerializer(serializers.Serializer):
     phone_number = serializers.CharField(max_length=15)
-    device_id = serializers.CharField(max_length=64)
     code = serializers.CharField(max_length=4, min_length=4)
 
     def validate(self, attrs):
         # try:
-        #     OTPCode.objects.get(phone_number=attrs['phone_number'], device_id=attrs['device_id'], code=attrs['code'], is_expired=False)
+        #     OTPCode.objects.get(phone_number=attrs['phone_number'], code=attrs['code'], is_expired=False)
         # except OTPCode.DoesNotExist:
-        #     raise serializers.ValidationError({'code': 'Different device or either Phone number or Code is wrong.'})
+        #     raise serializers.ValidationError({'code': 'Either Phone number or Code is wrong.'})
         user = User.objects.filter(phone_number=attrs['phone_number']).first()
         if user:
             token = RefreshToken.for_user(user)
