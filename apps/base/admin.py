@@ -1,4 +1,5 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 
 from .models import Region, Country, City
 
@@ -11,12 +12,12 @@ class RegionAdmin(admin.ModelAdmin):
     search_fields = ['title']
 
 
-class CityInCountry(admin.TabularInline):
+class CityInCountry(TranslationTabularInline):
     model = City
 
 
 @admin.register(Country)
-class CountryAdmin(admin.ModelAdmin):
+class CountryAdmin(TranslationAdmin):
     list_display = ['id', 'title']
     list_display_links = ['id', 'title']
     search_fields = ['title']

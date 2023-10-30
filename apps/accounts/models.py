@@ -12,7 +12,6 @@ from . import choices
 class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
     # AUTHENTICATION FIELDS #
     phone_number = PhoneNumberField(_('Phone number'), max_length=15, unique=True)
-    email = models.EmailField(_('Email'), unique=True, blank=True, null=True)
     is_verified = models.BooleanField(_('Verified status'), default=False)
     is_active = models.BooleanField(_('Active status'), default=True)
 
