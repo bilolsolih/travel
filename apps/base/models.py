@@ -8,7 +8,27 @@ class TimeStampedModel(models.Model):
 
     class Meta:
         abstract = True
+class Country(models.Model):
+    title = models.CharField(_('Title'), max_length=128)
 
+    class Meta:
+        verbose_name = _('Country')
+        verbose_name_plural = _('Countries')
+
+    def __str__(self):
+        return self.title
+
+
+class City(models.Model):
+    country = models.ForeignKey('accommodations.Country', related_name='cities', on_delete=models.CASCADE, verbose_name=_('Country'))
+    title = models.CharField(_('Title'), max_length=128)
+
+    class Meta:
+        verbose_name = _('City')
+        verbose_name_plural = _('Cities')
+
+    def __str__(self):
+        return self.title
 
 class Region(models.Model):
     title = models.CharField(_('Title'), max_length=64, unique=True)

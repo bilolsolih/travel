@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import *  # noqa
+from .models import *
 
 
 class AccommodationPictureInAccommodation(admin.TabularInline):
@@ -30,14 +30,3 @@ class AccommodationFeatureAdmin(admin.ModelAdmin):
     list_editable = ['icon', 'is_paid']
     search_fields = ['title']
 
-
-class CityInCountry(admin.TabularInline):
-    model = City
-
-
-@admin.register(Country)
-class CountryAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title']
-    list_display_links = ['id', 'title']
-    search_fields = ['title']
-    inlines = [CityInCountry]

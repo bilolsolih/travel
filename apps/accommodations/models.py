@@ -7,8 +7,8 @@ from apps.base.models import TimeStampedModel
 class Accommodation(TimeStampedModel):
     title = models.CharField(_('Title'), max_length=128)
     type = models.ForeignKey('accommodations.AccommodationType', related_name='accommodations', on_delete=models.PROTECT, verbose_name=_('Type'))
-    country = models.ForeignKey('accommodations.Country', related_name='accommodations', on_delete=models.PROTECT, verbose_name=_('Country'))
-    city = models.ForeignKey('accommodations.City', related_name='accommodations', on_delete=models.PROTECT, verbose_name=_('City'))
+    country = models.ForeignKey('base.Country', related_name='accommodations', on_delete=models.PROTECT, verbose_name=_('Country'))
+    city = models.ForeignKey('base.City', related_name='accommodations', on_delete=models.PROTECT, verbose_name=_('City'))
     address = models.CharField(_('Address'), max_length=256)
     landmark = models.CharField(_('Landmark'), max_length=256, blank=True, null=True)
     features = models.ManyToManyField('accommodations.AccommodationFeature', related_name='accommodations', blank=True)
@@ -63,27 +63,4 @@ class AccommodationFeature(models.Model):
         return self.title
 
 
-class Country(models.Model):
-    title = models.CharField(_('Title'), max_length=128)
-
-    class Meta:
-        verbose_name = _('Country')
-        verbose_name_plural = _('Countries')
-
-    def __str__(self):
-        return self.title
-
-
-class City(models.Model):
-    country = models.ForeignKey('accommodations.Country', related_name='cities', on_delete=models.CASCADE, verbose_name=_('Country'))
-    title = models.CharField(_('Title'), max_length=128)
-
-    class Meta:
-        verbose_name = _('City')
-        verbose_name_plural = _('Cities')
-
-    def __str__(self):
-        return self.title
-
-
-__all__ = ['AccommodationType', 'Accommodation', 'AccommodationPicture', 'AccommodationFeature', 'Country', 'City']
+__all__ = ['AccommodationType', 'Accommodation', 'AccommodationPicture', 'AccommodationFeature']
