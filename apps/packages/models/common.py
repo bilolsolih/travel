@@ -31,7 +31,6 @@ class Flight(TimeStampedModel):
     def __str__(self):
         return f'From {self.from_city} to {self.to_city} at {self.flight_time} on day {self.day.ordinal_number} of {self.day.package.title}'
 
-
 class PackageFeature(models.Model):
     title = models.CharField(_('Title'), max_length=128)
     description = RichTextField(_('Description'), blank=True, null=True)

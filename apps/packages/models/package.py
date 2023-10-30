@@ -61,8 +61,8 @@ class Package(TimeStampedModel):
 class Destination(models.Model):
     package = models.ForeignKey('packages.Package', related_name='destinations', on_delete=models.CASCADE, verbose_name=_('Package'))
     accommodation = models.ForeignKey('accommodations.Accommodation', related_name='destinations', on_delete=models.PROTECT, verbose_name=_('Accommodation'), blank=True, null=True)
-    country = models.ForeignKey('accommodations.Country', related_name='packages', on_delete=models.PROTECT, verbose_name=_('Country'))
-    city = models.ForeignKey('accommodations.City', related_name='packages', on_delete=models.PROTECT, verbose_name=_('City'))
+    country = models.ForeignKey('base.Country', related_name='packages', on_delete=models.PROTECT, verbose_name=_('Country'))
+    city = models.ForeignKey('base.City', related_name='packages', on_delete=models.PROTECT, verbose_name=_('City'))
     duration = models.PositiveIntegerField(_('Duration in days'), validators=[MinValueValidator(1)])
 
     class Meta:
