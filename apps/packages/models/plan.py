@@ -24,7 +24,6 @@ class Plan(models.Model):
     discount = models.PositiveIntegerField(_('Discount'), validators=[MaxValueValidator(100)])
     discount_expiry_date = models.DateTimeField(_('Discount expiry date'), blank=True, null=True)
     features = models.ManyToManyField('packages.PackageFeature', related_name='plans', blank=True, verbose_name=_('Features'))
-    activities = models.ManyToManyField('packages.Activity', related_name='plans', blank=True, verbose_name=_('Plan-specific activities'))
     description = RichTextField(_('Description'), blank=True, null=True)
 
     class Meta:

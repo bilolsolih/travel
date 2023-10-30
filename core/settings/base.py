@@ -37,7 +37,6 @@ THIRD_PARTY_APPS = [
 USER_DEFINED_APPS = [
     'apps.accounts',
     'apps.base',
-    'apps.accommodations',
     'apps.packages',
     'apps.orders',
     'apps.gallery',

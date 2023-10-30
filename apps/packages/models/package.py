@@ -1,3 +1,4 @@
+import os
 from datetime import timedelta
 
 from django.core.exceptions import ValidationError
@@ -34,6 +35,7 @@ class Package(TimeStampedModel):
     description = models.TextField(_('Description'), blank=True, null=True)
     picture = models.ImageField(_('Picture'), upload_to='images/packages/packages/%Y/%m/')
     popular_places = models.ManyToManyField('places.PopularPlace', related_name='packages', blank=True, verbose_name=_('Popular places'))
+
     core_activities = models.ManyToManyField('packages.Activity', related_name='packages', blank=True, verbose_name=_('Core activities'))
     core_features = models.ManyToManyField('packages.PackageFeature', related_name='packages', blank=True, verbose_name=_('Core features'))
 
@@ -54,13 +56,17 @@ class Package(TimeStampedModel):
     def get_discount(self):
         return self.plans.aggregate(max_discount=models.Max('discount'))['max_discount'] if self.plans.exists() else None
 
+    def delete(self, *args, **kwargs):
+        if os.path.exists(self.picture.path):
+            os.remove(self.picture.path)
+        super().delete(*args, **kwargs)
+
     def __str__(self):
         return self.title
 
 
 class Destination(models.Model):
     package = models.ForeignKey('packages.Package', related_name='destinations', on_delete=models.CASCADE, verbose_name=_('Package'))
-    accommodation = models.ForeignKey('accommodations.Accommodation', related_name='destinations', on_delete=models.PROTECT, verbose_name=_('Accommodation'), blank=True, null=True)
     country = models.ForeignKey('base.Country', related_name='packages', on_delete=models.PROTECT, verbose_name=_('Country'))
     city = models.ForeignKey('base.City', related_name='packages', on_delete=models.PROTECT, verbose_name=_('City'))
     duration = models.PositiveIntegerField(_('Duration in days'), validators=[MinValueValidator(1)])

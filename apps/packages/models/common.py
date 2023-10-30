@@ -7,29 +7,39 @@ from apps.base.models import TimeStampedModel
 
 class Day(TimeStampedModel):
     package = models.ForeignKey('packages.Package', related_name='days', on_delete=models.CASCADE, verbose_name=_('Package'))
-    ordinal_number = models.PositiveIntegerField(_('Ordinal number'))
-    activities = models.ManyToManyField('packages.Activity', related_name='days', verbose_name=_('Activities'))
+    day_number = models.PositiveIntegerField(_('Day number'))
 
     class Meta:
         verbose_name = _('Day')
         verbose_name_plural = _('Days')
 
     def __str__(self):
-        return f'{self.package.title}: day {self.ordinal_number}'
+        return f'{self.package.title}: day {self.day_number}'
+
+
+class Stay(TimeStampedModel):
+    day = models.ForeignKey('packages.Day', related_name='stays', on_delete=models.CASCADE, verbose_name=_('Day'))
+    accommodation = models.ForeignKey('packages.Accommodation', related_name='stays', on_delete=models.PROTECT, verbose_name=_('Accommodation'))
+    due_time = models.TimeField(_('Due time'))
+
+    class Meta:
+        verbose_name = _('Stay')
+        verbose_name_plural = _('Stays')
 
 
 class Flight(TimeStampedModel):
     day = models.ForeignKey('packages.Day', related_name='flights', on_delete=models.CASCADE, verbose_name=_('Day'))
     from_city = models.ForeignKey('base.City', related_name='from_flights', on_delete=models.PROTECT, verbose_name=_('From what city?'))
     to_city = models.ForeignKey('base.City', related_name='to_flights', on_delete=models.PROTECT, verbose_name=_('To what city?'))
-    flight_time = models.TimeField(_('Flight time'))
+    due_time = models.TimeField(_('Due time'))
 
     class Meta:
         verbose_name = _('Flight')
         verbose_name_plural = _('FLights')
 
     def __str__(self):
-        return f'From {self.from_city} to {self.to_city} at {self.flight_time} on day {self.day.ordinal_number} of {self.day.package.title}'
+        return f'From {self.from_city} to {self.to_city} at {self.due_time} on day {self.day.day_number} of {self.day.package.title}'
+
 
 class PackageFeature(models.Model):
     title = models.CharField(_('Title'), max_length=128)
@@ -42,6 +52,20 @@ class PackageFeature(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class ActivityBridge(models.Model):
+    plan = models.ForeignKey('packages.Plan', related_name='activities', on_delete=models.CASCADE, verbose_name=_('Plan'))
+    day = models.ForeignKey('packages.Day', related_name='activities', on_delete=models.CASCADE, verbose_name=_('Day'))
+    activity = models.ForeignKey('packages.Activity', related_name='bridges', on_delete=models.PROTECT, verbose_name=_('Activity'))
+    due_time = models.TimeField(_('Due time'))
+
+    class Meta:
+        verbose_name = _('Activity in Day')
+        verbose_name_plural = _('Activities in Day')
+
+    def __str__(self):
+        return f'{self.plan.type} - {self.activity.title}'
 
 
 class Activity(TimeStampedModel):
@@ -62,4 +86,16 @@ class Activity(TimeStampedModel):
         return self.title
 
 
-__all__ = ['Day', 'Flight', 'PackageFeature', 'Activity']
+class ActivityPicture(TimeStampedModel):
+    activity = models.ForeignKey('packages.Activity', related_name='pictures', on_delete=models.PROTECT, verbose_name=_('Activity'))
+    picture = models.ImageField(_('Picture'), upload_to='images/packages/activities/%Y/%m')
+
+    class Meta:
+        verbose_name = _('Activity picture')
+        verbose_name_plural = _('Activity pictures')
+
+    def __str__(self):
+        return f'Picture for {self.activity} {self.id}'
+
+
+__all__ = ['Day', 'Stay', 'Flight', 'PackageFeature', 'Activity', 'ActivityBridge', 'ActivityPicture']
