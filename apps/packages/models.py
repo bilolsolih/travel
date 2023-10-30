@@ -104,7 +104,7 @@ class Plan(models.Model):
 
     @property
     def get_discounted_price(self):
-        if self.discount and self.discount_expiry_date > timezone.now():
+        if self.discount and self.discount != 0 and self.discount_expiry_date > timezone.now():
             return self.price * ((100 - self.discount) / 100)
         else:
             return self.price
