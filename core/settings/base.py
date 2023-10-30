@@ -31,6 +31,7 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'phonenumber_field',
     'debug_toolbar',
+    'django_filters'
 ]
 
 USER_DEFINED_APPS = [
