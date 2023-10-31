@@ -50,7 +50,15 @@ class PackageListSerializer(ModelSerializer):
     core_features = FeatureNestedListSerializer(many=True)
     plans = PlanInPackageListSerializer(many=True)
     destinations = DestinationInPackageListSerializer(many=True)
+    is_liked = SerializerMethodField()
 
     class Meta:
         model = Package
-        fields = ['id', 'title', 'picture', 'get_duration', 'get_discount', 'destinations', 'core_features', 'plans']
+        fields = ['id', 'title', 'picture', 'get_duration', 'get_discount', 'destinations', 'core_features', 'plans', 'is_liked']
+
+    def get_is_liked(self, instance):
+        user = self.context['request'].user
+        if user.is_authenticated and user.liked_packages.contains(instance):
+            return True
+        else:
+            return False
