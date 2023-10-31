@@ -64,6 +64,18 @@ class Package(TimeStampedModel):
         return self.title
 
 
+class PackagePicture(TimeStampedModel):
+    package = models.ForeignKey('packages.Package', related_name='pictures', on_delete=models.PROTECT, verbose_name=_('Package'))
+    picture = models.ImageField(_('Picture'), upload_to='images/packages/package/%Y/%m/')
+
+    class Meta:
+        verbose_name = _('Package picture')
+        verbose_name_plural = _('Package pictures')
+
+    def __str__(self):
+        return f'Picture {self.id} for {self.package}'
+
+
 class Destination(models.Model):
     package = models.ForeignKey('packages.Package', related_name='destinations', on_delete=models.CASCADE, verbose_name=_('Package'))
     country = models.ForeignKey('base.Country', related_name='packages', on_delete=models.PROTECT, verbose_name=_('Country'))
@@ -82,4 +94,4 @@ class Destination(models.Model):
         return f"{self.city} - {self.duration} {'days' if self.duration >= 2 else 'day'}"
 
 
-__all__ = ['Trip', 'Package', 'Destination']
+__all__ = ['Trip', 'Package', 'PackagePicture', 'Destination']

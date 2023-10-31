@@ -1,40 +1,63 @@
-from rest_framework.serializers import ModelSerializer
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
-from apps.packages.models import Package, Plan, PlanType, PackageFeature, Activity
+from apps.packages.models import Package, Trip, Destination, PackageFeature, Plan, PlanType, PackagePicture
 
 
-class PlanTypeInPlanSerializer(ModelSerializer):
+class TripInPackageRetrieveSerializer(ModelSerializer):
+    class Meta:
+        model = Trip
+        fields = ['id', 'start_date', 'get_end_date']
+
+
+class DestinationInPackageRetrieveSerializer(ModelSerializer):
+    ccountry = SerializerMethodField()
+    ccity = SerializerMethodField()
+
+    def get_ccountry(self, obj):
+        return obj.country.title
+
+    def get_ccity(self, obj):
+        return obj.city.title
+
+    class Meta:
+        model = Destination
+        fields = ['ccountry', 'ccity', 'duration']
+
+
+class FeatureNestedRetrieveSerializer(ModelSerializer):
+    class Meta:
+        model = PackageFeature
+        fields = ['id', 'title', 'icon', 'description']
+
+
+class PlanTypeInPlan(ModelSerializer):
     class Meta:
         model = PlanType
-        fields = ['id', 'title']
+        fields = ['title']
         ref_name = 'PlanTypeInPlanRetrieve'
 
 
-class FeatureInPackageSerializer(ModelSerializer):
-    class Meta:
-        model = PackageFeature
-        fields = ['title', 'icon', 'description']
-
-
-class ActivityInPackageSerializer(ModelSerializer):
-    class Meta:
-        model = Activity
-        fields = ['id', 'title', 'address', 'landmark', 'description', 'iframe', 'latitude', 'longitude']
-
-
-class PlanInPackageSerializer(ModelSerializer):
-    type = PlanTypeInPlanSerializer(many=False)
-    features = FeatureInPackageSerializer(many=True)
-    activities = ActivityInPackageSerializer(many=True)
+class PlanInPackageRetrieveSerializer(ModelSerializer):
+    type = PlanTypeInPlan(many=False)
+    features = FeatureNestedRetrieveSerializer(many=True)
 
     class Meta:
         model = Plan
-        fields = ['id', 'type', 'price', 'features', 'activities', 'description']
+        fields = ['id', 'type', 'price', 'discount', 'discount_expiry_date', 'get_discounted_price', 'features', 'description']
+
+
+class PictureInPackageRetrieveSerializer(ModelSerializer):
+    class Meta:
+        model = PackagePicture
+        fields = ['id', 'picture']
 
 
 class PackageRetrieveSerializer(ModelSerializer):
-    plans = PlanInPackageSerializer(many=True)
+    core_features = FeatureNestedRetrieveSerializer(many=True)
+    plans = PlanInPackageRetrieveSerializer(many=True)
+    destinations = DestinationInPackageRetrieveSerializer(many=True)
+    pictures = PictureInPackageRetrieveSerializer(many=True)
 
     class Meta:
         model = Package
-        fields = ['id', 'title', 'picture', 'plans']
+        fields = ['id', 'title', 'description', 'picture', 'pictures', 'get_duration', 'get_discount', 'destinations', 'core_features', 'plans']

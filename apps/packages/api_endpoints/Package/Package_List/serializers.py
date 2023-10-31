@@ -53,4 +53,4 @@ class PackageListSerializer(ModelSerializer):
 
     class Meta:
         model = Package
-        fields = ['id', 'title', 'picture', 'get_duration', 'destinations', 'core_features', 'plans']
+        fields = ['id', 'title', 'picture', 'get_duration', 'get_discount', 'destinations', 'core_features', 'plans']
