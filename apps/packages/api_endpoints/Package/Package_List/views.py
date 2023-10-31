@@ -21,7 +21,7 @@ class PackageListAPIView(ListAPIView):
     def get_queryset(self):
         queryset = Package.objects.filter(is_active=True)
         if self.request.query_params.get('discount', None):
-            queryset.filter(plans__discount__gt=0)
+            queryset = queryset.filter(plans__discount__gt=0)
         return queryset
 
 
