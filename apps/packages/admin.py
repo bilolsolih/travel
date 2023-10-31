@@ -30,6 +30,7 @@ class PictureInPackageInLine(admin.TabularInline):
 
 class DayInPackageInLine(admin.TabularInline):
     model = Day
+    fields = ['id', 'trip', 'day_number']
     extra = 3
 
 
