@@ -2,6 +2,7 @@ import django_filters
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from django_filters.rest_framework.filterset import FilterSet
 from rest_framework.generics import ListAPIView
+from rest_framework.permissions import IsAuthenticated
 
 from apps.packages.models import Package
 from apps.places.models import PopularPlace
@@ -20,4 +21,12 @@ class PackageListAPIView(ListAPIView):
     filterset_class = PackageFilterSet
 
 
-__all__ = ['PackageListAPIView']
+class PackageLikedListAPIView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = PackageListSerializer
+
+    def get_queryset(self):
+        return self.request.user.liked_packages.all()
+
+
+__all__ = ['PackageListAPIView', 'PackageLikedListAPIView']
