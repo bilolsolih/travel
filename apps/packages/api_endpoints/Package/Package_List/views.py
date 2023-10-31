@@ -15,9 +15,14 @@ class PackageFilterSet(FilterSet):
 
 class PackageListAPIView(ListAPIView):
     serializer_class = PackageListSerializer
-    queryset = Package.objects.filter(is_active=True)
     filter_backends = [DjangoFilterBackend]
     filterset_class = PackageFilterSet
+
+    def get_queryset(self):
+        queryset = Package.objects.filter(is_active=True)
+        if self.request.query_params.get('discount', None):
+            queryset.filter(plans__discount__gt=0)
+        return queryset
 
 
 __all__ = ['PackageListAPIView']
