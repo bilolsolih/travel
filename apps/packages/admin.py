@@ -30,7 +30,7 @@ class PictureInPackageInLine(admin.TabularInline):
 
 class DayInPackageInLine(admin.TabularInline):
     model = Day
-    fields = ['pk', 'trip']
+    fields = ['id', 'trip']
     extra = 3
 
 
