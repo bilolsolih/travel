@@ -19,7 +19,7 @@ class Day(TimeStampedModel):
 
     @property
     def change_link(self):
-        return mark_safe(f'<a href="en/admin/packages/day/{self.id}/change/">{self.id}</a>')
+        return mark_safe(f'<a href="/en/admin/packages/day/{self.id}/change/">{self.id}</a>')
 
     def clean(self):
         if not self.package.trips.contains(self.trip):
