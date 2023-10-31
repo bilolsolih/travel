@@ -6,7 +6,7 @@ from .models import Package, Plan, PlanType, PackageFeature, Activity
 
 @register(Package)
 class PackageTranslation(TranslationOptions):
-    fields = ['title']
+    fields = ['title', 'description']
 
 
 @register(PlanType)
