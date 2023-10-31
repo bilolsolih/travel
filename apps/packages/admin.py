@@ -31,8 +31,8 @@ class PictureInPackageInLine(admin.TabularInline):
 class DayInPackageInLine(admin.TabularInline):
     model = Day
     fields = ['change_link', 'trip', 'day_number']
+    readonly_fields = ['change_link']
     extra = 3
-
 
 
 @admin.register(Package)

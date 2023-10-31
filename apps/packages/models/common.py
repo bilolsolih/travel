@@ -2,6 +2,7 @@ from ckeditor.fields import RichTextField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.utils.safestring import mark_safe
 
 from apps.base.models import TimeStampedModel
 
@@ -18,7 +19,7 @@ class Day(TimeStampedModel):
 
     @property
     def change_link(self):
-        return f'<a href="en/admin/packages/day/{self.id}/change/">{self.id}</a>'
+        return mark_safe(f'<a href="en/admin/packages/day/{self.id}/change/">{self.id}</a>')
 
     def clean(self):
         if not self.package.trips.contains(self.trip):
