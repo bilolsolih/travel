@@ -1,5 +1,5 @@
 from django.urls import path
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import TokenRefreshView
 
 from . import api_endpoints as views
 
@@ -15,6 +15,7 @@ urlpatterns = [
     path('user/check/', views.UserCheckAPIView.as_view(), name='check'),
     path('user/token/', views.UserTokenObtainAPIView.as_view(), name='token_obtain'),
     path('user/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('user/like_dislike/', views.UserLikeDislikePackageAPIView.as_view(), name='user_like_dislike'),
     #########################################################################
     path('related_person/create/', views.RelatedPersonCreateAPIView.as_view(), name='related_person_create'),
     path('related_person/list/', views.RelatedPersonListAPIView.as_view(), name='related_person_list'),

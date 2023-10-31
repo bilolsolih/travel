@@ -36,6 +36,7 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
 
     # ACTIVITIES #
     balance = models.IntegerField(_('Balance'), default=0)
+    liked_packages = models.ManyToManyField('packages.Package', related_name='liked_users', blank=True, verbose_name=_('Liked packages'))
 
     # DISTINCT FIELDS #
     is_staff = models.BooleanField(_('Staff status'), default=False)
@@ -53,6 +54,7 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
 
     def __str__(self):
         return str(self.phone_number)
+
 
 
 class AdminUser(User):
