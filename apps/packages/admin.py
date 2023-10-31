@@ -30,13 +30,9 @@ class PictureInPackageInLine(admin.TabularInline):
 
 class DayInPackageInLine(admin.TabularInline):
     model = Day
-    fields = ['change', 'trip', 'day_number']
+    fields = ['change_link', 'trip', 'day_number']
     extra = 3
 
-    def change(self, obj):
-        return f'<a href="en/admin/packages/day/{obj.id}/change/">{obj.id}</a>'
-
-    change.allow_tags = True
 
 
 @admin.register(Package)
