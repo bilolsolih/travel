@@ -110,7 +110,7 @@ class RelatedPerson(TimeStampedModel):
 
 
 class VerifiedPhoneNumber(models.Model):
-    phone_number = models.CharField(_('Phone number'), max_length=15)
+    phone_number = models.CharField(_('Phone number'), max_length=15, unique=True)
 
     class Meta:
         verbose_name = _('Verified phone number')

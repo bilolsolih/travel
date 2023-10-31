@@ -18,5 +18,6 @@ class UserTokenObtainSerializer(serializers.Serializer):
             token = RefreshToken.for_user(user)
             return {'refresh': str(token), 'access': str(token.access_token), 'exist': True}
         else:
-            VerifiedPhoneNumber.objects.create(phone_number=attrs['phone_number'])
+            if not VerifiedPhoneNumber.objects.filter(phone_number=attrs['phone_number']).exists():
+                VerifiedPhoneNumber.objects.create(phone_number=attrs['phone_number'])
             return {'exist': False}
