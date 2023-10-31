@@ -1,4 +1,5 @@
 from ckeditor.fields import RichTextField
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -37,6 +38,10 @@ class Accommodation(TimeStampedModel):
         verbose_name = _('Accommodation')
         verbose_name_plural = _('Accommodations')
 
+    def clean(self):
+        if not self.country.cities.contains(self.city):
+            raise ValidationError({'city': 'No such City in the Country.'})
+
     def __str__(self):
         return self.title
 
@@ -48,12 +53,12 @@ class AccommodationPicture(TimeStampedModel):
     is_main = models.BooleanField(_('Is main?'), default=False)
 
     class Meta:
-        verbose_name = _('Accommodation type')
-        verbose_name_plural = _('Accommodation types')
+        verbose_name = _('Accommodation picture')
+        verbose_name_plural = _('Accommodation pictures')
 
     def save(self, *args, **kwargs):
         if self.is_main:
-            queryset = self.accommodation.pictures.exclude(self).filter(is_main=True)
+            queryset = self.accommodation.pictures.exclude(pk=self.pk).filter(is_main=True)
             if queryset.exists():
                 queryset.update(is_main=False)
         super().save(*args, **kwargs)

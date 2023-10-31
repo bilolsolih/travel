@@ -33,7 +33,6 @@ class Trip(TimeStampedModel):
 class Package(TimeStampedModel):
     title = models.CharField(_('Title'), max_length=256)
     description = models.TextField(_('Description'), blank=True, null=True)
-    picture = models.ImageField(_('Picture'), upload_to='images/packages/packages/%Y/%m/')
     popular_places = models.ManyToManyField('places.PopularPlace', related_name='packages', blank=True, verbose_name=_('Popular places'))
 
     core_features = models.ManyToManyField('packages.PackageFeature', related_name='packages', blank=True, verbose_name=_('Core features'))
@@ -43,6 +42,13 @@ class Package(TimeStampedModel):
     class Meta:
         verbose_name = _('Package')
         verbose_name_plural = _('Packages')
+
+    @property
+    def get_picture(self):
+        if self.pictures.filter(is_main=True).exists():
+            return self.pictures.filter(is_main=True).first().picture.path
+        else:
+            return self.pictures.first().picture.path
 
     @property
     def get_duration(self):
@@ -55,11 +61,6 @@ class Package(TimeStampedModel):
     def get_discount(self):
         return self.plans.aggregate(max_discount=models.Max('discount'))['max_discount'] if self.plans.exists() else None
 
-    def delete(self, *args, **kwargs):
-        if os.path.exists(self.picture.path):
-            os.remove(self.picture.path)
-        super().delete(*args, **kwargs)
-
     def __str__(self):
         return self.title
 
@@ -67,10 +68,23 @@ class Package(TimeStampedModel):
 class PackagePicture(TimeStampedModel):
     package = models.ForeignKey('packages.Package', related_name='pictures', on_delete=models.PROTECT, verbose_name=_('Package'))
     picture = models.ImageField(_('Picture'), upload_to='images/packages/package/%Y/%m/')
+    is_main = models.BooleanField(_('Is main?'), default=False)
 
     class Meta:
         verbose_name = _('Package picture')
         verbose_name_plural = _('Package pictures')
+
+    def save(self, *args, **kwargs):
+        if self.is_main:
+            queryset = self.package.pictures.exclude(pk=self.pk).filter(is_main=True)
+            if queryset.exists():
+                queryset.update(is_main=False)
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        if os.path.exists(self.picture.path):
+            os.remove(self.picture.path)
+        super().delete(*args, **kwargs)
 
     def __str__(self):
         return f'Picture {self.id} for {self.package}'

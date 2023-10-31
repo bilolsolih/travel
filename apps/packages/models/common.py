@@ -4,6 +4,7 @@ from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.safestring import mark_safe
+from django.conf import settings
 
 from apps.base.models import TimeStampedModel
 
@@ -21,7 +22,13 @@ class Day(TimeStampedModel):
     @property
     def change_link(self):
         current_site = Site.objects.get_current()
-        return mark_safe(f'<a href="https://{current_site.domain}/admin/packages/day/{self.id}/change/">{self.id}</a>')
+        if settings.SITE_ID == 1:
+            protocol = 'http'
+        elif settings.SITE_ID == 2:
+            protocol = 'https'
+        else:
+            protocol = 'http'
+        return mark_safe(f'<a href="{protocol}://{current_site.domain}/admin/packages/day/{self.id}/change/">{self.id}</a>')
 
     def clean(self):
         if not self.package.trips.contains(self.trip):
@@ -49,7 +56,7 @@ class Flight(TimeStampedModel):
 
     class Meta:
         verbose_name = _('Flight')
-        verbose_name_plural = _('FLights')
+        verbose_name_plural = _('Flights')
 
     def __str__(self):
         return f'From {self.from_city} to {self.to_city} at {self.due_time} on day {self.day.day_number} of {self.day.package.title}'

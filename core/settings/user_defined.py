@@ -11,8 +11,7 @@ REST_FRAMEWORK = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'apps.accounts.authentication_backends.UsernamePhoneNumberAndEmailAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend'
 ]
 
 SIMPLE_JWT = {
@@ -41,5 +40,3 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_LIFETIME": timedelta(days=1),
     "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=10),
 }
-
-SITE_ID = 1

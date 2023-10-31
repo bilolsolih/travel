@@ -49,7 +49,7 @@ class PlanInPackageRetrieveSerializer(ModelSerializer):
 class PictureInPackageRetrieveSerializer(ModelSerializer):
     class Meta:
         model = PackagePicture
-        fields = ['id', 'picture']
+        fields = ['id', 'picture', 'is_main']
 
 
 class PackageRetrieveSerializer(ModelSerializer):
@@ -57,7 +57,8 @@ class PackageRetrieveSerializer(ModelSerializer):
     plans = PlanInPackageRetrieveSerializer(many=True)
     destinations = DestinationInPackageRetrieveSerializer(many=True)
     pictures = PictureInPackageRetrieveSerializer(many=True)
+    trips = TripInPackageRetrieveSerializer(many=True)
 
     class Meta:
         model = Package
-        fields = ['id', 'title', 'description', 'picture', 'pictures', 'get_duration', 'destinations', 'core_features', 'plans']
+        fields = ['id', 'title', 'trips', 'description', 'pictures', 'get_duration', 'destinations', 'core_features', 'plans']

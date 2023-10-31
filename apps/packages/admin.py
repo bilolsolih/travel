@@ -37,9 +37,9 @@ class DayInPackageInLine(admin.TabularInline):
 
 @admin.register(Package)
 class PackageAdmin(TranslationAdmin):
-    list_display = ['id', 'title', 'picture', 'get_discount', 'get_duration']
+    list_display = ['id', 'title', 'get_discount', 'get_duration', 'is_active']
     list_display_links = ['id', 'title']
-    list_editable = ['picture']
+    list_editable = ['is_active']
     search_fields = ['title']
     readonly_fields = ['get_discount', 'get_duration']
     inlines = [PictureInPackageInLine, DestinationInPackageInLine, PlanInPackage, TripInPackage, DayInPackageInLine]
@@ -72,7 +72,7 @@ class AccommodationPictureInAccommodation(admin.TabularInline):
 
 
 @admin.register(Accommodation)
-class AccommodationAdmin(admin.ModelAdmin):
+class AccommodationAdmin(TranslationAdmin):
     list_display = ['id', 'title', 'type', 'country', 'city']
     list_display_links = ['id', 'title']
     list_filter = ['type']
@@ -88,11 +88,11 @@ class AccommodationTypeAdmin(admin.ModelAdmin):
 
 
 @admin.register(AccommodationFeature)
-class AccommodationFeatureAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'icon', 'is_paid']
+class AccommodationFeatureAdmin(TranslationAdmin):
+    list_display = ['id', 'title', 'icon', 'is_paid', 'is_popular']
     list_display_links = ['id', 'title']
-    list_filter = ['is_paid']
-    list_editable = ['icon', 'is_paid']
+    list_filter = ['is_paid', 'is_popular']
+    list_editable = ['icon', 'is_paid', 'is_popular']
     search_fields = ['title']
 
 
