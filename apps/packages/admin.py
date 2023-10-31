@@ -24,6 +24,10 @@ class DestinationInPackageInLine(admin.TabularInline):
     model = Destination
 
 
+class PictureInPackageInLine(admin.TabularInline):
+    model = PackagePicture
+
+
 @admin.register(Package)
 class PackageAdmin(TranslationAdmin):
     list_display = ['id', 'title', 'picture', 'get_discount', 'get_duration']
@@ -31,7 +35,7 @@ class PackageAdmin(TranslationAdmin):
     list_editable = ['picture']
     search_fields = ['title']
     readonly_fields = ['get_discount', 'get_duration']
-    inlines = [DestinationInPackageInLine, PlanInPackage, TripInPackage]
+    inlines = [PictureInPackageInLine, DestinationInPackageInLine, PlanInPackage, TripInPackage]
 
 
 @admin.register(PlanType)
