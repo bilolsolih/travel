@@ -100,6 +100,7 @@ class DayAdmin(admin.ModelAdmin):
     list_display_links = ['id']
     list_filter = ['package']
     list_editable = ['package', 'trip']
+    search_fields = ['package']
 
 # @admin.register()
 # class Admin(admin.ModelAdmin):
