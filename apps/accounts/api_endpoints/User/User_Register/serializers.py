@@ -11,7 +11,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         if not VerifiedPhoneNumber.objects.filter(phone_number=attrs['phone_number']).exists():
             raise serializers.ValidationError({'phone_number': 'Phone number is not verified.'})
-        super().validate(attrs)
+        return attrs
 
     def create(self, validated_data):
         VerifiedPhoneNumber.objects.filter(phone_number=validated_data['phone_number']).delete()
