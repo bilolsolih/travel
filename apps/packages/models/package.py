@@ -36,7 +36,6 @@ class Package(TimeStampedModel):
     picture = models.ImageField(_('Picture'), upload_to='images/packages/packages/%Y/%m/')
     popular_places = models.ManyToManyField('places.PopularPlace', related_name='packages', blank=True, verbose_name=_('Popular places'))
 
-    core_activities = models.ManyToManyField('packages.Activity', related_name='packages', blank=True, verbose_name=_('Core activities'))
     core_features = models.ManyToManyField('packages.PackageFeature', related_name='packages', blank=True, verbose_name=_('Core features'))
 
     is_active = models.BooleanField(_('Active status'), default=True)
