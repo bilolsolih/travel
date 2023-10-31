@@ -1,12 +1,13 @@
 from rest_framework.generics import RetrieveAPIView
 
-from apps.packages.models import Package
-from .serializers import PackageRetrieveSerializer
+from apps.packages.models import Day
+from .serializers import DayRetrieveSerializer
 
 
-class PackageRetrieveAPIView(RetrieveAPIView):
-    serializer_class = PackageRetrieveSerializer
-    queryset = Package.objects.filter(is_active=True)
+class DayRetrieveAPIView(RetrieveAPIView):
+    serializer_class = DayRetrieveSerializer
+    queryset = Day.objects.all()
+    lookup_field = 'pk'
 
 
-__all__ = ['PackageRetrieveAPIView']
+__all__ = ['DayRetrieveAPIView']

@@ -1,5 +1,6 @@
 from ckeditor.fields import RichTextField
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from apps.base.models import TimeStampedModel
@@ -7,14 +8,20 @@ from apps.base.models import TimeStampedModel
 
 class Day(TimeStampedModel):
     package = models.ForeignKey('packages.Package', related_name='days', on_delete=models.CASCADE, verbose_name=_('Package'))
+    trip = models.ForeignKey('packages.Trip', related_name='days', on_delete=models.SET_NULL, null=True, verbose_name=_('Trip'))
     day_number = models.PositiveIntegerField(_('Day number'))
 
     class Meta:
         verbose_name = _('Day')
         verbose_name_plural = _('Days')
+        unique_together = ['package', 'trip', 'day_number']
+
+    def clean(self):
+        if not self.package.trips.contains(self.trip):
+            raise ValidationError({'trip': 'No such trip in the package.'})
 
     def __str__(self):
-        return f'{self.package.title}: day {self.day_number}'
+        return f'{self.package.title} - {self.trip.start_date}: day {self.day_number}'
 
 
 class Stay(TimeStampedModel):
@@ -55,8 +62,8 @@ class PackageFeature(models.Model):
 
 
 class ActivityBridge(models.Model):
-    plan = models.ForeignKey('packages.Plan', related_name='activities', on_delete=models.CASCADE, verbose_name=_('Plan'))
     day = models.ForeignKey('packages.Day', related_name='activities', on_delete=models.CASCADE, verbose_name=_('Day'))
+    plan = models.ForeignKey('packages.Plan', related_name='activities', on_delete=models.CASCADE, blank=True, null=True, verbose_name=_('Plan'))
     activity = models.ForeignKey('packages.Activity', related_name='bridges', on_delete=models.PROTECT, verbose_name=_('Activity'))
     due_time = models.TimeField(_('Due time'))
 
@@ -90,9 +97,16 @@ class ActivityPicture(TimeStampedModel):
     activity = models.ForeignKey('packages.Activity', related_name='pictures', on_delete=models.PROTECT, verbose_name=_('Activity'))
     picture = models.ImageField(_('Picture'), upload_to='images/packages/activities/%Y/%m')
 
+    is_main = models.BooleanField(_('Is main?'), default=False)
+
     class Meta:
         verbose_name = _('Activity picture')
         verbose_name_plural = _('Activity pictures')
+
+    def save(self, *args, **kwargs):
+        if self.activity.pictures.exclude(self).filter(is_main=True).exists():
+            self.activity.pictures.update(is_main=False)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'Picture for {self.activity} {self.id}'

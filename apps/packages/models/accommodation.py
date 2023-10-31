@@ -45,9 +45,18 @@ class AccommodationPicture(TimeStampedModel):
     accommodation = models.ForeignKey('packages.Accommodation', related_name='pictures', on_delete=models.PROTECT, verbose_name=_('Accommodation'))
     picture = models.ImageField(_('Picture'), upload_to='images/accommodations/destinations/%Y/%m/%d/')
 
+    is_main = models.BooleanField(_('Is main?'), default=False)
+
     class Meta:
         verbose_name = _('Accommodation type')
         verbose_name_plural = _('Accommodation types')
+
+    def save(self, *args, **kwargs):
+        if self.is_main:
+            queryset = self.accommodation.pictures.exclude(self).filter(is_main=True)
+            if queryset.exists():
+                queryset.update(is_main=False)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f'Picture {self.id} for {self.accommodation}'
