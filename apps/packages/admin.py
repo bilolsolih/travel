@@ -30,7 +30,7 @@ class PictureInPackageInLine(admin.TabularInline):
 
 class DayInPackageInLine(admin.TabularInline):
     model = Day
-    extra = 10
+    extra = 3
 
 
 @admin.register(Package)
@@ -94,12 +94,25 @@ class AccommodationFeatureAdmin(admin.ModelAdmin):
     search_fields = ['title']
 
 
+class StayInDayInLine(admin.TabularInline):
+    model = Stay
+
+
+class FlightInDayInLine(admin.TabularInline):
+    model = Flight
+
+
+class ActivityInDayInLine(admin.TabularInline):
+    model = ActivityBridge
+
+
 @admin.register(Day)
 class DayAdmin(admin.ModelAdmin):
     list_display = ['id', 'package', 'trip', 'day_number']
     list_display_links = ['id']
     list_filter = ['package']
     list_editable = ['package', 'trip']
+    inlines = [StayInDayInLine, FlightInDayInLine, ActivityInDayInLine]
 
 # @admin.register()
 # class Admin(admin.ModelAdmin):
