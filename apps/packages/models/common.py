@@ -1,8 +1,8 @@
 from ckeditor.fields import RichTextField
-from django.db import models
 from django.core.exceptions import ValidationError
+from django.db import models
 from django.utils.translation import gettext_lazy as _
-
+from django.urls import reverse
 from apps.base.models import TimeStampedModel
 
 
@@ -15,6 +15,9 @@ class Day(TimeStampedModel):
         verbose_name = _('Day')
         verbose_name_plural = _('Days')
         unique_together = ['package', 'trip', 'day_number']
+    def get_absolute_url(self):
+        pass
+
 
     def clean(self):
         if not self.package.trips.contains(self.trip):
