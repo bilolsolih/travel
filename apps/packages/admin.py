@@ -28,6 +28,11 @@ class PictureInPackageInLine(admin.TabularInline):
     model = PackagePicture
 
 
+class DayInPackageInLine(admin.TabularInline):
+    model = Day
+    extra = 10
+
+
 @admin.register(Package)
 class PackageAdmin(TranslationAdmin):
     list_display = ['id', 'title', 'picture', 'get_discount', 'get_duration']
@@ -35,7 +40,7 @@ class PackageAdmin(TranslationAdmin):
     list_editable = ['picture']
     search_fields = ['title']
     readonly_fields = ['get_discount', 'get_duration']
-    inlines = [PictureInPackageInLine, DestinationInPackageInLine, PlanInPackage, TripInPackage]
+    inlines = [PictureInPackageInLine, DestinationInPackageInLine, PlanInPackage, TripInPackage, DayInPackageInLine]
 
 
 @admin.register(PlanType)
@@ -87,6 +92,22 @@ class AccommodationFeatureAdmin(admin.ModelAdmin):
     list_filter = ['is_paid']
     list_editable = ['icon', 'is_paid']
     search_fields = ['title']
+
+
+@admin.register(Day)
+class DayAdmin(admin.ModelAdmin):
+    list_display = ['id', 'package', 'trip', 'day_number']
+    list_display_links = ['id']
+    list_filter = ['package']
+    list_editable = ['package', 'trip']
+
+# @admin.register()
+# class Admin(admin.ModelAdmin):
+#     list_display = ['id', ''],
+#     list_display_links = ['id', '']
+#     list_filter = ['']
+#     list_editable = ['']
+#     search_fields = ['']
 
 # @admin.register()
 # class Admin(admin.ModelAdmin):
