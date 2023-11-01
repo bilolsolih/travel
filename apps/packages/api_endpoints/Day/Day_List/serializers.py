@@ -63,10 +63,19 @@ class ActivityBridgeInDayListSerializer(ModelSerializer):
 
 
 class DayListSerializer(ModelSerializer):
-    stays = StayInDayListNestedSerializer(many=True)
-    flights = FlightInDayListNestedSerializer(many=True)
-    activities = ActivityBridgeInDayListSerializer(many=True)
+    # stays = StayInDayListNestedSerializer(many=True)
+    # flights = FlightInDayListNestedSerializer(many=True)
+    # activities = ActivityBridgeInDayListSerializer(many=True)
+    items = SerializerMethodField()
 
     class Meta:
         model = Day
-        fields = ['id', 'day_number', 'stays', 'flights', 'activities']
+        fields = ['id', 'day_number', 'items']
+        # fields = ['id', 'day_number', 'stays', 'flights', 'activities', 'items']
+
+    def get_items(self, instance):
+        stays = StayInDayListNestedSerializer(instance.stays.all(), many=True)
+        flights = FlightInDayListNestedSerializer(instance.flights.all(), many=True)
+        activities = ActivityBridgeInDayListSerializer(instance.activities.all(), many=True)
+        response = list(stays.data) + list(flights.data) + list(activities.data)
+        return response
