@@ -12,10 +12,14 @@ class AccommodationInStayNestedSerializer(ModelSerializer):
 
 class StayInDayListNestedSerializer(ModelSerializer):
     accommodation = AccommodationInStayNestedSerializer(many=False)
+    type = SerializerMethodField()
 
     class Meta:
         model = Stay
         fields = ['id', 'accommodation', 'due_time']
+
+    def get_type(self):
+        return 'stay'
 
 
 class CityInFlightNestedSerializer(ModelSerializer):
@@ -27,10 +31,14 @@ class CityInFlightNestedSerializer(ModelSerializer):
 class FlightInDayListNestedSerializer(ModelSerializer):
     from_city = CityInFlightNestedSerializer(many=False)
     to_city = CityInFlightNestedSerializer(many=False)
+    type = SerializerMethodField()
 
     class Meta:
         model = Flight
         fields = ['id', 'from_city', 'to_city', 'due_time']
+
+    def get_type(self):
+        return 'flight'
 
 
 class PlanInActivityBridgeNestedSerializer(ModelSerializer):
@@ -41,6 +49,7 @@ class PlanInActivityBridgeNestedSerializer(ModelSerializer):
 
 class ActivityInActivityBridgeNestedSerializer(ModelSerializer):
     main_picture = SerializerMethodField()
+    type = SerializerMethodField()
 
     class Meta:
         model = Activity
@@ -51,6 +60,9 @@ class ActivityInActivityBridgeNestedSerializer(ModelSerializer):
             return instance.pictures.filter(is_main=True).first()
         else:
             return instance.pictures.first()
+
+    def get_type(self):
+        return 'activity'
 
 
 class ActivityBridgeInDayListSerializer(ModelSerializer):
@@ -63,15 +75,11 @@ class ActivityBridgeInDayListSerializer(ModelSerializer):
 
 
 class DayListSerializer(ModelSerializer):
-    # stays = StayInDayListNestedSerializer(many=True)
-    # flights = FlightInDayListNestedSerializer(many=True)
-    # activities = ActivityBridgeInDayListSerializer(many=True)
     items = SerializerMethodField()
 
     class Meta:
         model = Day
         fields = ['id', 'day_number', 'items']
-        # fields = ['id', 'day_number', 'stays', 'flights', 'activities', 'items']
 
     def get_items(self, instance):
         stays = StayInDayListNestedSerializer(instance.stays.all(), many=True)
