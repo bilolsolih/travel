@@ -42,9 +42,14 @@ class FlightInDayListNestedSerializer(ModelSerializer):
 
 
 class PlanInActivityBridgeNestedSerializer(ModelSerializer):
+    plan_type = SerializerMethodField()
+
     class Meta:
         model = Plan
-        fields = ['id', 'type']
+        fields = ['id', 'plan_type']
+
+    def get_plan_type(self, instance):
+        return instance.type.title
 
 
 class ActivityInActivityBridgeNestedSerializer(ModelSerializer):
