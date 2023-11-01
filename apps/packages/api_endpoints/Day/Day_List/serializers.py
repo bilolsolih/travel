@@ -86,4 +86,5 @@ class DayListSerializer(ModelSerializer):
         flights = FlightInDayListNestedSerializer(instance.flights.all(), many=True)
         activities = ActivityBridgeInDayListSerializer(instance.activities.all(), many=True)
         response = list(stays.data) + list(flights.data) + list(activities.data)
+        response.sort(key=lambda x: x['due_time'])
         return response
