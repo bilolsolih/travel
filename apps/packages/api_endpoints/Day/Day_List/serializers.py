@@ -16,7 +16,7 @@ class StayInDayListNestedSerializer(ModelSerializer):
 
     class Meta:
         model = Stay
-        fields = ['id', 'accommodation', 'due_time']
+        fields = ['id', 'type', 'accommodation', 'due_time']
 
     def get_type(self):
         return 'stay'
@@ -35,7 +35,7 @@ class FlightInDayListNestedSerializer(ModelSerializer):
 
     class Meta:
         model = Flight
-        fields = ['id', 'from_city', 'to_city', 'due_time']
+        fields = ['id', 'type', 'from_city', 'to_city', 'due_time']
 
     def get_type(self):
         return 'flight'
@@ -49,7 +49,6 @@ class PlanInActivityBridgeNestedSerializer(ModelSerializer):
 
 class ActivityInActivityBridgeNestedSerializer(ModelSerializer):
     main_picture = SerializerMethodField()
-    type = SerializerMethodField()
 
     class Meta:
         model = Activity
@@ -61,17 +60,18 @@ class ActivityInActivityBridgeNestedSerializer(ModelSerializer):
         else:
             return instance.pictures.first()
 
-    def get_type(self):
-        return 'activity'
-
 
 class ActivityBridgeInDayListSerializer(ModelSerializer):
     plan = PlanInActivityBridgeNestedSerializer(many=False)
     activity = ActivityInActivityBridgeNestedSerializer(many=False)
+    type = SerializerMethodField()
 
     class Meta:
         model = ActivityBridge
-        fields = ['id', 'plan', 'activity', 'due_time']
+        fields = ['id', 'type', 'plan', 'activity', 'due_time']
+
+    def get_type(self):
+        return 'activity'
 
 
 class DayListSerializer(ModelSerializer):
