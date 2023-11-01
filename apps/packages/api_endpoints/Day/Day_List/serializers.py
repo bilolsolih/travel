@@ -18,7 +18,7 @@ class StayInDayListNestedSerializer(ModelSerializer):
         model = Stay
         fields = ['id', 'type', 'accommodation', 'due_time']
 
-    def get_type(self):
+    def get_type(self, instance):
         return 'stay'
 
 
@@ -37,7 +37,7 @@ class FlightInDayListNestedSerializer(ModelSerializer):
         model = Flight
         fields = ['id', 'type', 'from_city', 'to_city', 'due_time']
 
-    def get_type(self):
+    def get_type(self, instance):
         return 'flight'
 
 
@@ -70,7 +70,7 @@ class ActivityBridgeInDayListSerializer(ModelSerializer):
         model = ActivityBridge
         fields = ['id', 'type', 'plan', 'activity', 'due_time']
 
-    def get_type(self):
+    def get_type(self, instance):
         return 'activity'
 
 
