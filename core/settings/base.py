@@ -42,7 +42,8 @@ USER_DEFINED_APPS = [
     'apps.orders',
     'apps.gallery',
     'apps.payments',
-    'apps.places'
+    'apps.places',
+    'apps.discounts'
 ]
 
 INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + USER_DEFINED_APPS

@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 from apps.base.models import TimeStampedModel
 
@@ -14,6 +15,7 @@ class OrderStatus(models.TextChoices):
 class Order(TimeStampedModel):
     user = models.ForeignKey('accounts.User', related_name='orders', on_delete=models.PROTECT, verbose_name=_('User'))
     package = models.ForeignKey('packages.Package', related_name='orders', on_delete=models.CASCADE, verbose_name=_('Package'))
+    trip = models.ForeignKey('packages.Trip', related_name='orders', on_delete=models.SET_NULL, null=True, verbose_name=_('Trip'))
     plan = models.ForeignKey('packages.Plan', related_name='orders', on_delete=models.SET_NULL, null=True, verbose_name=_('Plan'))
     price_total = models.PositiveIntegerField(_('Total price'))
     price_paid = models.PositiveIntegerField(_('Price paid'), default=0)
@@ -23,6 +25,12 @@ class Order(TimeStampedModel):
     class Meta:
         verbose_name = _('Order')
         verbose_name_plural = _('Orders')
+
+    def clean(self):
+        if not self.package.trips.contains(self.trip):
+            raise ValidationError({'trip': _('No such Trip in the Package.')})
+        if not self.package.plans.contains(self.plan):
+            raise ValidationError({'plan': _('No such Plan in the Package.')})
 
     @property
     def get_price_to_pay(self):
