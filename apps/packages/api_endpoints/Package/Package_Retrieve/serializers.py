@@ -1,6 +1,6 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
-from apps.packages.models import Package, Trip, Destination, PackageFeature, Plan, PlanType, PackagePicture
+from apps.packages.models import Package, Trip, Destination, PackageFeature, Plan, PlanType, PackagePicture, Day
 
 
 class TripInPackageRetrieveSerializer(ModelSerializer):
@@ -52,13 +52,20 @@ class PictureInPackageRetrieveSerializer(ModelSerializer):
         fields = ['id', 'picture', 'is_main']
 
 
+class DayInPackageRetrieveSerializer(ModelSerializer):
+    class Meta:
+        model = Day
+        fields = ['id', 'day_number']
+
+
 class PackageRetrieveSerializer(ModelSerializer):
     core_features = FeatureNestedRetrieveSerializer(many=True)
     plans = PlanInPackageRetrieveSerializer(many=True)
     destinations = DestinationInPackageRetrieveSerializer(many=True)
     pictures = PictureInPackageRetrieveSerializer(many=True)
     trips = TripInPackageRetrieveSerializer(many=True)
+    days = DayInPackageRetrieveSerializer(many=True)
 
     class Meta:
         model = Package
-        fields = ['id', 'title', 'trips', 'description', 'pictures', 'get_duration', 'destinations', 'core_features', 'plans']
+        fields = ['id', 'title', 'trips', 'description', 'pictures', 'get_duration', 'destinations', 'core_features', 'plans', 'days']
