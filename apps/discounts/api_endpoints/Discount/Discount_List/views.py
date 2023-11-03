@@ -20,7 +20,7 @@ class DiscountListAPIView(ListAPIView):
 
         serializer = self.get_serializer(queryset, many=True)
         packages_length = Package.objects.filter(discounts__isnull=True).count()
-        return Response(serializer.data, {'packages_length': packages_length})
+        return Response({'discount_companies': serializer.data, 'packages_length': packages_length})
 
     def get_queryset(self):
         return Discount.objects.filter(expiry_date__gt=timezone.now())
