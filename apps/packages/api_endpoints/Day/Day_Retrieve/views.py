@@ -6,9 +6,8 @@ from .serializers import DayRetrieveSerializer
 
 class DayRetrieveAPIView(RetrieveAPIView):
     serializer_class = DayRetrieveSerializer
-
-    def get_queryset(self):
-        return Day.objects.filter(package_id=self.kwargs.get('package_id', None))
+    queryset = Day.objects.all()
+    lookup_field = 'pk'
 
 
 __all__ = ['DayRetrieveAPIView']
