@@ -1,0 +1,72 @@
+[
+  {
+    "model": "places.popularplace",
+    "pk": 1,
+    "fields": {
+      "created": "2023-10-30T14:03:59.210Z",
+      "updated": "2023-10-30T14:03:59.210Z",
+      "title": "Popular place 1",
+      "picture": "images/places/Laye_Banzs_-_Krezi.jpeg",
+      "description": "Amidst the serene forest, the trees whispered secrets to the wind. A river, glistening under the dappled sunlight, meandered through the heart of the wilderness. Birds, their feathers painted with vibrant hues, created a symphony of melodies that filled the air. Nature, in all its grandeur, unveiled its timeless beauty, inviting all who ventured into this enchanted realm to lose themselves in its tranquility."
+    }
+  },
+  {
+    "model": "places.popularplace",
+    "pk": 2,
+    "fields": {
+      "created": "2023-10-30T14:04:46.366Z",
+      "updated": "2023-10-30T14:04:46.366Z",
+      "title": "Popular place 2",
+      "picture": "images/places/aloVuSQa.jpg",
+      "description": "Amidst the serene forest, the trees whispered secrets to the wind. A river, glistening under the dappled sunlight, meandered through the heart of the wilderness. Birds, their feathers painted with vibrant hues, created a symphony of melodies that filled the air. Nature, in all its grandeur, unveiled its timeless beauty, inviting all who ventured into this enchanted realm to lose themselves in its tranquility."
+    }
+  },
+  {
+    "model": "places.feature",
+    "pk": 1,
+    "fields": {
+      "place": 1,
+      "title": "Feature 1"
+    }
+  },
+  {
+    "model": "places.feature",
+    "pk": 2,
+    "fields": {
+      "place": 1,
+      "title": "Feature 2"
+    }
+  },
+  {
+    "model": "places.feature",
+    "pk": 3,
+    "fields": {
+      "place": 1,
+      "title": "Feature 3"
+    }
+  },
+  {
+    "model": "places.feature",
+    "pk": 4,
+    "fields": {
+      "place": 2,
+      "title": "Feature 1"
+    }
+  },
+  {
+    "model": "places.feature",
+    "pk": 5,
+    "fields": {
+      "place": 2,
+      "title": "Feature 2"
+    }
+  },
+  {
+    "model": "places.feature",
+    "pk": 6,
+    "fields": {
+      "place": 2,
+      "title": "Feature 3"
+    }
+  }
+]
