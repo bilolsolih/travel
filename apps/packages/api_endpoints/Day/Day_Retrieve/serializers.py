@@ -10,7 +10,7 @@ class AccommodationInStayNestedSerializer(ModelSerializer):
         fields = ['id', 'title', 'type', 'short_description', 'rating']
 
 
-class StayInDayListNestedSerializer(ModelSerializer):
+class StayInDayRetrieveNestedSerializer(ModelSerializer):
     accommodation = AccommodationInStayNestedSerializer(many=False)
     type = SerializerMethodField()
 
@@ -28,7 +28,7 @@ class CityInFlightNestedSerializer(ModelSerializer):
         fields = ['id', 'title']
 
 
-class FlightInDayListNestedSerializer(ModelSerializer):
+class FlightInDayRetrieveNestedSerializer(ModelSerializer):
     from_city = CityInFlightNestedSerializer(many=False)
     to_city = CityInFlightNestedSerializer(many=False)
     type = SerializerMethodField()
@@ -66,7 +66,7 @@ class ActivityInActivityBridgeNestedSerializer(ModelSerializer):
             return instance.pictures.first()
 
 
-class ActivityBridgeInDayListSerializer(ModelSerializer):
+class ActivityBridgeInDayRetrieveSerializer(ModelSerializer):
     plan = PlanInActivityBridgeNestedSerializer(many=False)
     activity = ActivityInActivityBridgeNestedSerializer(many=False)
     type = SerializerMethodField()
@@ -79,7 +79,7 @@ class ActivityBridgeInDayListSerializer(ModelSerializer):
         return 'activity'
 
 
-class DayListSerializer(ModelSerializer):
+class DayRetrieveSerializer(ModelSerializer):
     items = SerializerMethodField()
 
     class Meta:
@@ -87,9 +87,9 @@ class DayListSerializer(ModelSerializer):
         fields = ['id', 'day_number', 'items']
 
     def get_items(self, instance):
-        stays = StayInDayListNestedSerializer(instance.stays.all(), many=True)
-        flights = FlightInDayListNestedSerializer(instance.flights.all(), many=True)
-        activities = ActivityBridgeInDayListSerializer(instance.activities.all(), many=True)
+        stays = StayInDayRetrieveNestedSerializer(instance.stays.all(), many=True)
+        flights = FlightInDayRetrieveNestedSerializer(instance.flights.all(), many=True)
+        activities = ActivityBridgeInDayRetrieveSerializer(instance.activities.all(), many=True)
         response = list(stays.data) + list(flights.data) + list(activities.data)
         response.sort(key=lambda x: x['due_time'])
         return response
