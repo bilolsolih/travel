@@ -17,9 +17,9 @@ class PackageFilterSet(FilterSet):
 
 class CustomLimitOffsetPagination(LimitOffsetPagination):
     def get_next_link(self):
-        if not self.get_offset():
+        if not self.get_offset(self.request):
             return None
-        next_offset = self.get_offset() + self.get_limit()
+        next_offset = self.get_offset(self.request) + self.get_limit(self.request)
         return next_offset
 
 
