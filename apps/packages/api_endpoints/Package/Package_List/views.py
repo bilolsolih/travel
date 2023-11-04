@@ -24,6 +24,7 @@ class PackageListAPIView(ListAPIView):
     def dispatch(self, request, *args, **kwargs):
         if request.query_params.get('nopage', None):
             self.pagination_class = None
+        super().dispatch(request, *args, **kwargs)
 
     def get_queryset(self):
         queryset = Package.objects.filter(is_active=True)
