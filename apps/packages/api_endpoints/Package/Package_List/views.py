@@ -39,11 +39,6 @@ class PackageListAPIView(ListAPIView):
                 queryset = queryset.filter(discounts__pk=discount).distinct()
         return queryset
 
-    def get(self, request, *args, **kwargs):
-        if request.query_params.get('nopage', None):
-            self.pagination_class = None
-        return self.list(request, *args, **kwargs)
-
 
 class PackageLikedListAPIView(ListAPIView):
     permission_classes = [IsAuthenticated]
