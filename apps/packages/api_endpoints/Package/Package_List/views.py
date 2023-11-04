@@ -34,7 +34,7 @@ class PackageListAPIView(ListAPIView):
     def get(self, request, *args, **kwargs):
         if request.query_params.get('nopage', None):
             self.pagination_class = None
-        super().get(request, *args, **kwargs)
+        return self.list(request, *args, **kwargs)
 
 
 class PackageLikedListAPIView(ListAPIView):
