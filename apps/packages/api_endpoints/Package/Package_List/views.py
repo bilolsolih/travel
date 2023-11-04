@@ -2,8 +2,8 @@ import django_filters
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from django_filters.rest_framework.filterset import FilterSet
 from rest_framework.generics import ListAPIView
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.permissions import IsAuthenticated
 
 from apps.packages.models import Package
 from apps.places.models import PopularPlace
@@ -21,11 +21,6 @@ class PackageListAPIView(ListAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_class = PackageFilterSet
 
-    def dispatch(self, request, *args, **kwargs):
-        if request.query_params.get('nopage', None):
-            self.pagination_class = None
-        super().dispatch(request, *args, **kwargs)
-
     def get_queryset(self):
         queryset = Package.objects.filter(is_active=True)
         discount = self.request.query_params.get('discount', None)
@@ -35,6 +30,11 @@ class PackageListAPIView(ListAPIView):
             else:
                 queryset = queryset.filter(discounts__pk=discount).distinct()
         return queryset
+
+    def get(self, request, *args, **kwargs):
+        if request.query_params.get('nopage', None):
+            self.pagination_class = None
+        super().get(request, *args, **kwargs)
 
 
 class PackageLikedListAPIView(ListAPIView):
