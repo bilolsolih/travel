@@ -15,9 +15,17 @@ class PackageFilterSet(FilterSet):
     popular_places = django_filters.ModelChoiceFilter(field_name='popular_places', to_field_name='id', queryset=PopularPlace.objects.all())
 
 
+class CustomLimitOffsetPagination(LimitOffsetPagination):
+    def get_next_link(self):
+        if not self.get_offset():
+            return None
+        next_offset = self.get_offset() + self.get_limit()
+        return next_offset
+
+
 class PackageListAPIView(ListAPIView):
     serializer_class = PackageListSerializer
-    pagination_class = LimitOffsetPagination
+    pagination_class = CustomLimitOffsetPagination
     filter_backends = [DjangoFilterBackend]
     filterset_class = PackageFilterSet
 
