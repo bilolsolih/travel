@@ -56,7 +56,6 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
         return str(self.phone_number)
 
 
-
 class AdminUser(User):
     def save(self, *args, **kwargs):
         self.is_superuser = True

@@ -11,8 +11,9 @@ from .serializers import UserCheckSerializer
 
 class UserCheckAPIView(APIView):
     def generate_otp(self, validated_data):
-        if OTPCode.objects.filter(**validated_data).exists():
-            OTPCode.objects.filter(**validated_data).delete()
+        obsolete_otps = OTPCode.objects.filter(**validated_data)
+        if obsolete_otps.exists():
+            obsolete_otps.delete()
         return OTPCode.objects.create(code=randint(1000, 9999), **validated_data)
 
     @swagger_auto_schema(request_body=UserCheckSerializer)

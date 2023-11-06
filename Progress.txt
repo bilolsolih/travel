@@ -1,0 +1,6 @@
+TEST:
+    discount - DONE
+
+
+TODO:
+4 digit code ni olib, token_obtainga bergandan keyin expired qilib qo'yish kerak
