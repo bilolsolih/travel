@@ -13,7 +13,6 @@ SECRET_KEY = getenv('SECRET_KEY')
 # Application definition
 
 DJANGO_APPS = [
-    'modeltranslation',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -24,6 +23,7 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'modeltranslation',
     'jazzmin',
     'rest_framework',
     'rest_framework.authtoken',
@@ -32,7 +32,7 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'phonenumber_field',
     'debug_toolbar',
-    'django_filters'
+    'django_filters',
 ]
 
 USER_DEFINED_APPS = [
@@ -43,7 +43,8 @@ USER_DEFINED_APPS = [
     'apps.gallery',
     'apps.payments',
     'apps.places',
-    'apps.discounts'
+    'apps.discounts',
+    'apps.about',
 ]
 
 INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + USER_DEFINED_APPS

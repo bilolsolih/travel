@@ -14,7 +14,8 @@ urlpatterns = i18n_patterns(
     path('api/v1/gallery/', include('apps.gallery.urls', namespace='gallery')),
     path('api/v1/payments/', include('apps.payments.urls', namespace='payments')),
     path('api/v1/places/', include('apps.places.urls', namespace='places')),
-    path('api/v1/discounts/', include('apps.discounts.urls', namespace='discounts'))
+    path('api/v1/discounts/', include('apps.discounts.urls', namespace='discounts')),
+    path('api/v1/about/', include('apps.about.urls', namespace='about'))
 )
 
 urlpatterns += swagger_patterns
