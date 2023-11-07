@@ -15,22 +15,14 @@ class PopularPlace(TimeStampedModel):
         verbose_name = _('Popular place')
         verbose_name_plural = _('Popular places')
 
+    @property
+    def get_count(self):
+        return self.packages.count()
+
     def delete(self, *args, **kwargs):
         if os.path.exists(self.picture.path):
             os.remove(self.picture.path)
         super().delete(*args, **kwargs)
-
-    def __str__(self):
-        return self.title
-
-
-class Feature(models.Model):
-    place = models.ForeignKey('places.PopularPlace', related_name='features', on_delete=models.CASCADE, verbose_name=_('Place'))
-    title = models.CharField(_('Title'), max_length=128)
-
-    class Meta:
-        verbose_name = _('Feature')
-        verbose_name_plural = _('Features')
 
     def __str__(self):
         return self.title
