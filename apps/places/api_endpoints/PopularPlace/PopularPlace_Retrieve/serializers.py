@@ -1,17 +1,10 @@
 from rest_framework.serializers import ModelSerializer
 
-from apps.places.models import PopularPlace, Feature
-
-
-class FeatureInPopularPlaceRetrieveSerializer(ModelSerializer):
-    class Meta:
-        model = Feature
-        fields = ['title']
+from apps.places.models import PopularPlace
 
 
 class PopularPlaceRetrieveSerializer(ModelSerializer):
-    features = FeatureInPopularPlaceRetrieveSerializer(many=True)
 
     class Meta:
         model = PopularPlace
-        fields = ['id', 'title', 'description', 'picture', 'features']
+        fields = ['id', 'title', 'description', 'picture']
