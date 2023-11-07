@@ -12,8 +12,7 @@ DATABASES = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    '',
-    '',
+    'localhost:3000',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
