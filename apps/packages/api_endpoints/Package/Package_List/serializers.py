@@ -61,10 +61,10 @@ class PackageListSerializer(ModelSerializer):
     def get_picture(self, instance):
         pictures = instance.pictures.all()
         if pictures.exists():
-            if instance.pictures.filter(is_main=True).exists():
-                url = instance.pictures.filter(is_main=True).first().picture.url
+            if pictures.filter(is_main=True).exists():
+                url = pictures.filter(is_main=True).first().picture.url
             else:
-                url = instance.pictures.first().picture.url
+                url = pictures.first().picture.url
             return self.context['request'].build_absolute_uri(url)
         else:
             return None
