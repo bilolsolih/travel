@@ -59,10 +59,14 @@ class PackageListSerializer(ModelSerializer):
         fields = ['id', 'title', 'trips', 'picture', 'get_duration', 'get_discount', 'destinations', 'core_features', 'plans', 'is_liked']
 
     def get_picture(self, instance):
-        if instance.pictures.filter(is_main=True).exists():
-            return instance.pictures.filter(is_main=True).first().picture.url
+        pictures = instance.pictures.all()
+        if pictures.exists():
+            if instance.pictures.filter(is_main=True).exists():
+                return instance.pictures.filter(is_main=True).first().picture.url
+            else:
+                return instance.pictures.first().picture.url
         else:
-            return instance.pictures.first().picture.url
+            return None
 
     def get_is_liked(self, instance):
         user = self.context['request'].user
