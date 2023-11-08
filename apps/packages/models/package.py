@@ -46,9 +46,9 @@ class Package(TimeStampedModel):
     @property
     def get_picture(self):
         if self.pictures.filter(is_main=True).exists():
-            return self.pictures.filter(is_main=True).first().picture.path
+            return self.pictures.filter(is_main=True).first().picture.url
         else:
-            return self.pictures.first().picture.path
+            return self.pictures.first().picture.url
 
     @property
     def get_duration(self):
