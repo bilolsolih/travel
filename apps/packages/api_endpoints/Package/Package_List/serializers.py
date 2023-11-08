@@ -52,11 +52,17 @@ class PackageListSerializer(ModelSerializer):
     destinations = DestinationInPackageListSerializer(many=True)
     trips = TripInPackageListSerializer(many=True)
     is_liked = SerializerMethodField()
-
+    picture = SerializerMethodField()
 
     class Meta:
         model = Package
-        fields = ['id', 'title', 'trips', 'get_picture', 'get_duration', 'get_discount', 'destinations', 'core_features', 'plans', 'is_liked']
+        fields = ['id', 'title', 'trips', 'picture', 'get_duration', 'get_discount', 'destinations', 'core_features', 'plans', 'is_liked']
+
+    def get_picture(self, instance):
+        if instance.pictures.filter(is_main=True).exists():
+            return instance.pictures.filter(is_main=True).first().picture.url
+        else:
+            return instance.pictures.first().picture.url
 
     def get_is_liked(self, instance):
         user = self.context['request'].user

@@ -44,13 +44,6 @@ class Package(TimeStampedModel):
         verbose_name_plural = _('Packages')
 
     @property
-    def get_picture(self):
-        if self.pictures.filter(is_main=True).exists():
-            return self.pictures.filter(is_main=True).first().picture.url
-        else:
-            return self.pictures.first().picture.url
-
-    @property
     def get_duration(self):
         if self.destinations.exists():
             return self.destinations.aggregate(total_duration=models.Sum('duration'))['total_duration']
