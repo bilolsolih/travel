@@ -38,12 +38,15 @@ class PlanTypeInPlan(ModelSerializer):
 
 
 class PlanInPackageListSerializer(ModelSerializer):
-    type = PlanTypeInPlan(many=False)
+    type = SerializerMethodField()
     features = FeatureNestedListSerializer(many=True)
 
     class Meta:
         model = Plan
         fields = ['id', 'type', 'price', 'discount', 'discount_expiry_date', 'get_discounted_price', 'features']
+
+    def get_type(self, instance):
+        return instance.type.title
 
 
 class PackageListSerializer(ModelSerializer):
