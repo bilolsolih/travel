@@ -42,6 +42,10 @@ class Package(TimeStampedModel):
     class Meta:
         verbose_name = _('Package')
         verbose_name_plural = _('Packages')
+        indexes = [
+            models.Index(fields=('title',)),
+            models.Index(fields=('is_active',)),
+        ]
 
     @property
     def get_duration(self):
@@ -49,10 +53,6 @@ class Package(TimeStampedModel):
             return self.destinations.aggregate(total_duration=models.Sum('duration'))['total_duration']
         else:
             return None
-
-    @property
-    def get_discount(self):
-        return self.plans.aggregate(max_discount=models.Max('discount'))['max_discount'] if self.plans.exists() else None
 
     def __str__(self):
         return self.title

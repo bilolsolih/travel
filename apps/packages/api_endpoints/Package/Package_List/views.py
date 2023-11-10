@@ -1,4 +1,5 @@
 import django_filters
+from django.core.cache import cache
 from django_filters.rest_framework.backends import DjangoFilterBackend
 from django_filters.rest_framework.filterset import FilterSet
 from rest_framework.generics import ListAPIView
@@ -30,7 +31,12 @@ class PackageListAPIView(ListAPIView):
     filterset_class = PackageFilterSet
 
     def get_queryset(self):
-        queryset = Package.objects.filter(is_active=True)
+        queryset = cache.get('all_packages')
+        if not queryset:
+            queryset = Package.objects.filter(is_active=True).prefetch_related(
+                'trips', 'destinations', 'destinations__country', 'destinations__city', 'core_features', 'plans', 'plans__features', 'plans__type',
+            )
+            cache.set('all_packages', queryset, 60 * 60 * 6)
         discount = self.request.query_params.get('discount', None)
         if discount:
             if discount == 0:
