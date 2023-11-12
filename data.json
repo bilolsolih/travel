@@ -66,7 +66,7 @@
     "pk": 1,
     "fields": {
       "password": "pbkdf2_sha256$600000$2HJCnDr1cgTe5ccVw91h1u$B7NnhmGmwIp+zFbeRwAZ8P5Xy7wi1uGyM6n2fgZ1hPk=",
-      "last_login": "2023-11-04T06:20:07.321Z",
+      "last_login": "2023-11-10T06:18:26.775Z",
       "is_superuser": true,
       "created": "2023-10-30T09:10:26.194Z",
       "updated": "2023-10-30T14:06:31.283Z",
@@ -343,7 +343,7 @@
     "pk": 1,
     "fields": {
       "created": "2023-10-31T13:20:08.269Z",
-      "updated": "2023-10-31T13:22:49.162Z",
+      "updated": "2023-11-10T12:00:05.524Z",
       "title": "Madina Hotel en",
       "title_uz": "Madina Hotel uz",
       "title_ru": "Madina Hotel ru",
@@ -374,6 +374,74 @@
     }
   },
   {
+    "model": "packages.accommodation",
+    "pk": 2,
+    "fields": {
+      "created": "2023-11-12T09:37:23.905Z",
+      "updated": "2023-11-12T09:37:48.445Z",
+      "title": "Makka Motel en",
+      "title_uz": "Makka Motel uz",
+      "title_ru": "Makka Motel ru",
+      "title_en": "Makka Motel en",
+      "type": 2,
+      "short_description": "Short description en",
+      "short_description_uz": "Short description uz",
+      "short_description_ru": "Short description ru",
+      "short_description_en": "Short description en",
+      "long_description": "<p>Long description en</p>",
+      "long_description_uz": "<p>Long description uz</p>",
+      "long_description_ru": "<p>Long description ru</p>",
+      "long_description_en": "<p>Long description en</p>",
+      "rating": "5.0",
+      "country": 3,
+      "city": 6,
+      "address": "Makka city",
+      "landmark": null,
+      "iframe": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3345.614807544559!2d71.67087705802278!3d40.99674238816455!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38bb4d43dfc088f7%3A0xe7957b2d09e36e45!2sNamangan!5e1!3m2!1sru!2s!4v1699781784012!5m2!1sru!2s\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+      "latitude": "40.99717804208671",
+      "longitude": "71.67240618600994",
+      "features": [
+        1,
+        2,
+        3,
+        4
+      ]
+    }
+  },
+  {
+    "model": "packages.accommodation",
+    "pk": 3,
+    "fields": {
+      "created": "2023-11-12T09:39:32.184Z",
+      "updated": "2023-11-12T09:39:32.184Z",
+      "title": "Villa 1 en",
+      "title_uz": "Villa 1 uz",
+      "title_ru": "Villa 1 ru",
+      "title_en": "Villa 1 en",
+      "type": 3,
+      "short_description": "Short description en",
+      "short_description_uz": "Short description uz",
+      "short_description_ru": "Short description ru",
+      "short_description_en": "Short description en",
+      "long_description": "<p>Long description en</p>",
+      "long_description_uz": "<p>Long description uz</p>",
+      "long_description_ru": "<p>Long description ru</p>",
+      "long_description_en": "<p>Long description en</p>",
+      "rating": "4.0",
+      "country": 1,
+      "city": 1,
+      "address": "Russia, moscow, toscow, nimadurcow 42",
+      "landmark": "Katta haykal",
+      "iframe": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3345.4047288260304!2d71.66303755125558!3d41.00088140815556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38bb4bf704cd97ab%3A0xf0f9206f0f767ead!2z0J_QsNC80Y_RgtC90LjQuiDRgdC60L7RgNCx0Y_RidC10Lkg0JzQsNGC0LXRgNC4!5e1!3m2!1sru!2s!4v1699781938938!5m2!1sru!2s\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+      "latitude": "41.00130939217537",
+      "longitude": "71.66364515178027",
+      "features": [
+        1,
+        2
+      ]
+    }
+  },
+  {
     "model": "packages.accommodationpicture",
     "pk": 1,
     "fields": {
@@ -381,7 +449,7 @@
       "updated": "2023-10-31T13:20:27.446Z",
       "accommodation": 1,
       "picture": "images/accommodations/destinations/2023/10/31/accommodation_1.jpg",
-      "is_main": true
+      "is_main": false
     }
   },
   {
@@ -400,10 +468,10 @@
     "pk": 3,
     "fields": {
       "created": "2023-10-31T13:20:08.339Z",
-      "updated": "2023-10-31T13:20:08.339Z",
+      "updated": "2023-11-10T12:00:05.531Z",
       "accommodation": 1,
       "picture": "images/accommodations/destinations/2023/10/31/accommodation_3.jpg",
-      "is_main": false
+      "is_main": true
     }
   },
   {
@@ -425,6 +493,72 @@
       "updated": "2023-10-31T13:20:08.348Z",
       "accommodation": 1,
       "picture": "images/accommodations/destinations/2023/10/31/accommodation_5.jpg",
+      "is_main": false
+    }
+  },
+  {
+    "model": "packages.accommodationpicture",
+    "pk": 6,
+    "fields": {
+      "created": "2023-11-12T09:37:23.911Z",
+      "updated": "2023-11-12T09:37:23.911Z",
+      "accommodation": 2,
+      "picture": "images/accommodations/destinations/2023/11/12/accommodation_1.jpg",
+      "is_main": false
+    }
+  },
+  {
+    "model": "packages.accommodationpicture",
+    "pk": 7,
+    "fields": {
+      "created": "2023-11-12T09:37:23.918Z",
+      "updated": "2023-11-12T09:37:23.918Z",
+      "accommodation": 2,
+      "picture": "images/accommodations/destinations/2023/11/12/accommodation_2.jpg",
+      "is_main": true
+    }
+  },
+  {
+    "model": "packages.accommodationpicture",
+    "pk": 8,
+    "fields": {
+      "created": "2023-11-12T09:37:23.923Z",
+      "updated": "2023-11-12T09:37:23.923Z",
+      "accommodation": 2,
+      "picture": "images/accommodations/destinations/2023/11/12/accommodation_3.jpg",
+      "is_main": false
+    }
+  },
+  {
+    "model": "packages.accommodationpicture",
+    "pk": 9,
+    "fields": {
+      "created": "2023-11-12T09:39:32.190Z",
+      "updated": "2023-11-12T09:39:32.190Z",
+      "accommodation": 3,
+      "picture": "images/accommodations/destinations/2023/11/12/accommodation_5.jpg",
+      "is_main": true
+    }
+  },
+  {
+    "model": "packages.accommodationpicture",
+    "pk": 10,
+    "fields": {
+      "created": "2023-11-12T09:39:32.200Z",
+      "updated": "2023-11-12T09:39:32.200Z",
+      "accommodation": 3,
+      "picture": "images/accommodations/destinations/2023/11/12/accommodation_4.jpg",
+      "is_main": false
+    }
+  },
+  {
+    "model": "packages.accommodationpicture",
+    "pk": 11,
+    "fields": {
+      "created": "2023-11-12T09:39:32.205Z",
+      "updated": "2023-11-12T09:39:32.205Z",
+      "accommodation": 3,
+      "picture": "images/accommodations/destinations/2023/11/12/accommodation_3_ND8PBMa.jpg",
       "is_main": false
     }
   },
@@ -593,6 +727,61 @@
       "package": 1,
       "trip": 1,
       "day_number": 9
+    }
+  },
+  {
+    "model": "packages.day",
+    "pk": 10,
+    "fields": {
+      "created": "2023-11-12T09:44:16.377Z",
+      "updated": "2023-11-12T09:44:16.377Z",
+      "package": 2,
+      "trip": 2,
+      "day_number": 1
+    }
+  },
+  {
+    "model": "packages.day",
+    "pk": 11,
+    "fields": {
+      "created": "2023-11-12T09:44:16.378Z",
+      "updated": "2023-11-12T09:44:16.378Z",
+      "package": 2,
+      "trip": 2,
+      "day_number": 2
+    }
+  },
+  {
+    "model": "packages.day",
+    "pk": 12,
+    "fields": {
+      "created": "2023-11-12T09:44:16.379Z",
+      "updated": "2023-11-12T09:44:16.379Z",
+      "package": 2,
+      "trip": 2,
+      "day_number": 3
+    }
+  },
+  {
+    "model": "packages.day",
+    "pk": 13,
+    "fields": {
+      "created": "2023-11-12T09:44:16.379Z",
+      "updated": "2023-11-12T09:44:16.379Z",
+      "package": 2,
+      "trip": 2,
+      "day_number": 4
+    }
+  },
+  {
+    "model": "packages.day",
+    "pk": 14,
+    "fields": {
+      "created": "2023-11-12T09:44:16.380Z",
+      "updated": "2023-11-12T09:44:16.380Z",
+      "package": 2,
+      "trip": 2,
+      "day_number": 5
     }
   },
   {
@@ -822,11 +1011,21 @@
     }
   },
   {
+    "model": "packages.trip",
+    "pk": 2,
+    "fields": {
+      "created": "2023-11-12T09:43:50.553Z",
+      "updated": "2023-11-12T09:43:50.553Z",
+      "package": 2,
+      "start_date": "2023-12-12"
+    }
+  },
+  {
     "model": "packages.package",
     "pk": 1,
     "fields": {
       "created": "2023-10-31T13:44:09.815Z",
-      "updated": "2023-10-31T13:45:28.577Z",
+      "updated": "2023-11-12T09:04:33.382Z",
       "title": "Package 1 en",
       "title_uz": "Package 1 uz",
       "title_ru": "Package 1 ru",
@@ -842,6 +1041,32 @@
       ],
       "core_features": [
         1
+      ]
+    }
+  },
+  {
+    "model": "packages.package",
+    "pk": 2,
+    "fields": {
+      "created": "2023-11-10T09:37:11.649Z",
+      "updated": "2023-11-12T09:44:16.372Z",
+      "title": "Package 2 en",
+      "title_uz": "Package 2 uz",
+      "title_ru": "Package 2 ru",
+      "title_en": "Package 2 en",
+      "description": "Description en",
+      "description_uz": "Description uz",
+      "description_ru": "Description ru",
+      "description_en": "Description en",
+      "is_active": true,
+      "popular_places": [
+        1,
+        2
+      ],
+      "core_features": [
+        1,
+        2,
+        3
       ]
     }
   },
@@ -901,6 +1126,17 @@
     }
   },
   {
+    "model": "packages.packagepicture",
+    "pk": 6,
+    "fields": {
+      "created": "2023-11-10T09:40:49.618Z",
+      "updated": "2023-11-10T09:40:49.618Z",
+      "package": 2,
+      "picture": "images/packages/package/2023/11/44fab1350c183be6c272d18d8e1e2df9.jpg",
+      "is_main": true
+    }
+  },
+  {
     "model": "packages.destination",
     "pk": 1,
     "fields": {
@@ -928,6 +1164,26 @@
       "country": 3,
       "city": 6,
       "duration": 3
+    }
+  },
+  {
+    "model": "packages.destination",
+    "pk": 4,
+    "fields": {
+      "package": 2,
+      "country": 2,
+      "city": 3,
+      "duration": 6
+    }
+  },
+  {
+    "model": "packages.destination",
+    "pk": 5,
+    "fields": {
+      "package": 2,
+      "country": 1,
+      "city": 1,
+      "duration": 4
     }
   },
   {
@@ -1010,6 +1266,63 @@
       "description_uz": "<p>Description uz</p>",
       "description_ru": "<p>Description ru</p>",
       "description_en": "<p>Description en</p>",
+      "features": [
+        1,
+        2,
+        3
+      ]
+    }
+  },
+  {
+    "model": "packages.plan",
+    "pk": 4,
+    "fields": {
+      "package": 2,
+      "type": 1,
+      "price": 1000,
+      "discount": 0,
+      "discount_expiry_date": null,
+      "description": "<p>EN After running this command, you&#39;ll be prompted to enter the password for the user on the remote server. Once you provide the correct password, the file will be copied to the specified location on the remote server.</p>",
+      "description_uz": "<p>UZ After running this command, you&#39;ll be prompted to enter the password for the user on the remote server. Once you provide the correct password, the file will be copied to the specified location on the remote server.</p>",
+      "description_ru": "<p>RU After running this command, you&#39;ll be prompted to enter the password for the user on the remote server. Once you provide the correct password, the file will be copied to the specified location on the remote server.</p>",
+      "description_en": "<p>EN After running this command, you&#39;ll be prompted to enter the password for the user on the remote server. Once you provide the correct password, the file will be copied to the specified location on the remote server.</p>",
+      "features": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "packages.plan",
+    "pk": 5,
+    "fields": {
+      "package": 2,
+      "type": 2,
+      "price": 1200,
+      "discount": 10,
+      "discount_expiry_date": "2024-11-12T09:41:04Z",
+      "description": "<p>EN Keep in mind that the paths are relative to the perspective of the machine where the command is executed. Adjust the paths accordingly based on your local and remote file locations.</p>",
+      "description_uz": "<p>UZ Keep in mind that the paths are relative to the perspective of the machine where the command is executed. Adjust the paths accordingly based on your local and remote file locations.</p>",
+      "description_ru": "<p>RU Keep in mind that the paths are relative to the perspective of the machine where the command is executed. Adjust the paths accordingly based on your local and remote file locations.</p>",
+      "description_en": "<p>EN Keep in mind that the paths are relative to the perspective of the machine where the command is executed. Adjust the paths accordingly based on your local and remote file locations.</p>",
+      "features": [
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "model": "packages.plan",
+    "pk": 6,
+    "fields": {
+      "package": 2,
+      "type": 3,
+      "price": 1500,
+      "discount": 15,
+      "discount_expiry_date": "2024-11-12T09:42:02Z",
+      "description": "<p>EN Keep in mind that the paths are relative to the perspective of the machine where the command is executed. Adjust the paths accordingly based on your local and remote file locations.</p>",
+      "description_uz": "<p>Uz Keep in mind that the paths are relative to the perspective of the machine where the command is executed. Adjust the paths accordingly based on your local and remote file locations.</p>",
+      "description_ru": "<p>RU Keep in mind that the paths are relative to the perspective of the machine where the command is executed. Adjust the paths accordingly based on your local and remote file locations.</p>",
+      "description_en": "<p>EN Keep in mind that the paths are relative to the perspective of the machine where the command is executed. Adjust the paths accordingly based on your local and remote file locations.</p>",
       "features": [
         1,
         2,

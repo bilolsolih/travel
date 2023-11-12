@@ -1,8 +1,8 @@
 from .base import *  # noqa
 
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['lordstormrage.pythonanywhere.com']
+ALLOWED_HOSTS = ['lordstormrage.pythonanywhere.com', 'localhost']
 
 DATABASES = {
     'default': {
