@@ -1,9 +1,9 @@
 from .base import *  # noqa
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['lordstormrage.pythonanywhere.com', 'localhost', '45.89.190.14']
-
+# ALLOWED_HOSTS = ['lordstormrage.pythonanywhere.com', 'localhost', '45.89.190.14']
+ALLOWED_HOSTS = ['*']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
