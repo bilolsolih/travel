@@ -12,6 +12,9 @@ class MainPagePictures(models.Model):
     class Meta:
         verbose_name = _('Main page picture')
         verbose_name_plural = _('Main page pictures')
+        indexes = [
+            models.Index(fields=('active',))
+        ]
 
     def __str__(self):
         if self.title:

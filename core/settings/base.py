@@ -33,6 +33,7 @@ THIRD_PARTY_APPS = [
     'phonenumber_field',
     'debug_toolbar',
     'django_filters',
+    'redisboard'
 ]
 
 USER_DEFINED_APPS = [

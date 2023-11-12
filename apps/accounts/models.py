@@ -114,6 +114,9 @@ class VerifiedPhoneNumber(models.Model):
     class Meta:
         verbose_name = _('Verified phone number')
         verbose_name_plural = _('Verified phone numbers')
+        indexes = [
+            models.Index(fields=('phone_number',))
+        ]
 
     def __str__(self):
         return self.phone_number
@@ -128,6 +131,9 @@ class OTPCode(TimeStampedModel):
         verbose_name = _('OTP code')
         verbose_name_plural = _('OTP codes')
         unique_together = ['phone_number', 'code', 'is_expired']
+        indexes = [
+            models.Index(fields=('phone_number', 'code', 'is_expired'))
+        ]
 
     def __str__(self):
         return f'{self.phone_number} - {self.code}'
