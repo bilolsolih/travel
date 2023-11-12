@@ -1,6 +1,13 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
+from apps.base.models import Country
 from apps.packages.models import Accommodation, AccommodationType
+
+
+class CountryInAccommodationListSerializer(ModelSerializer):
+    class Meta:
+        model = Country
+        fields = ['id', 'title']
 
 
 class AccommodationTypeInAccommodationListSerializer(ModelSerializer):
@@ -12,10 +19,11 @@ class AccommodationTypeInAccommodationListSerializer(ModelSerializer):
 class AccommodationListSerializer(ModelSerializer):
     type = AccommodationTypeInAccommodationListSerializer(many=False)
     picture = SerializerMethodField()
+    country = CountryInAccommodationListSerializer(many=False)
 
     class Meta:
         model = Accommodation
-        fields = ['id', 'title', 'type', 'short_description', 'rating', 'picture']
+        fields = ['id', 'title', 'type', 'short_description', 'rating', 'picture', 'country']
 
     def get_picture(self, instance):
         request = self.context['request']
