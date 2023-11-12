@@ -31,12 +31,15 @@ class PackageListAPIView(ListAPIView):
     filterset_class = PackageFilterSet
 
     def get_queryset(self):
-        queryset = cache.get('all_packages')
-        if not queryset:
-            queryset = Package.objects.filter(is_active=True).prefetch_related(
-                'trips', 'destinations', 'destinations__country', 'destinations__city', 'core_features', 'plans', 'plans__features', 'plans__type',
-            )
-            cache.set('all_packages', queryset, 60 * 60 * 6)
+        # queryset = cache.get('all_packages')
+        # if not queryset:
+        #     queryset = Package.objects.filter(is_active=True).prefetch_related(
+        #         'trips', 'destinations', 'destinations__country', 'destinations__city', 'core_features', 'plans', 'plans__features', 'plans__type',
+        #     )
+        #     cache.set('all_packages', queryset, 60 * 60 * 6)
+        queryset = Package.objects.filter(is_active=True).prefetch_related(
+            'trips', 'destinations', 'destinations__country', 'destinations__city', 'core_features', 'plans', 'plans__features', 'plans__type',
+        )
         discount = self.request.query_params.get('discount', None)
         if discount:
             if discount == 0:
