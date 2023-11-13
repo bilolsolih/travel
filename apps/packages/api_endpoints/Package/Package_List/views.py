@@ -17,18 +17,6 @@ class PackageFilterSet(FilterSet):
 
 
 class CustomLimitOffsetPagination(LimitOffsetPagination):
-    pass
-
-    # def get_next_link2(self):
-    #     if self.offset + self.limit >= self.count:
-    #         return None
-    #
-    #     url = self.request.build_absolute_uri()
-    #     url = replace_query_param(url, self.limit_query_param, self.limit)
-    #
-    #     offset = self.offset + self.limit
-    #     return replace_query_param(url, self.offset_query_param, offset)
-
     def get_next_link(self):
         if self.get_offset(self.request) is None:
             return None
@@ -62,6 +50,7 @@ class PackageListAPIView(ListAPIView):
 
 class PackageLikedListAPIView(ListAPIView):
     permission_classes = [IsAuthenticated]
+    pagination_class = CustomLimitOffsetPagination
     serializer_class = PackageListSerializer
 
     def get_queryset(self):
