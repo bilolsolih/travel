@@ -14,6 +14,8 @@ from .serializers import PackageListSerializer
 class PackageFilterSet(FilterSet):
     title = django_filters.CharFilter(field_name='title', lookup_expr='icontains')
     popular_places = django_filters.ModelChoiceFilter(field_name='popular_places', to_field_name='id', queryset=PopularPlace.objects.all())
+    start_date = django_filters.DateFilter(field_name='trips__start_date', lookup_expr='gte', distinct=True)
+    end_date = django_filters.DateFilter(field_name='trips__start_date', lookup_expr='lte', distinct=True)
 
 
 class CustomLimitOffsetPagination(LimitOffsetPagination):
