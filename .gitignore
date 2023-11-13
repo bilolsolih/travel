@@ -1,3 +1,7 @@
+uwsgi.ini
+nginx.conf
+
+
 # Django #
 *.log
 *.pot
