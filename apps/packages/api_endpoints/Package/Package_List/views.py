@@ -28,13 +28,13 @@ class CustomLimitOffsetPagination(LimitOffsetPagination):
     #     offset = self.offset + self.limit
     #     return replace_query_param(url, self.offset_query_param, offset)
 
-    def get_next_link(self):
-        if self.offset + self.limit >= self.count:
-            return None
-        if self.get_offset(self.request) is None:
-            return None
-        next_offset = self.get_offset(self.request) + self.get_limit(self.request)
-        return next_offset
+    # def get_next_link(self):
+    #     if self.offset + self.limit >= self.count:
+    #         return None
+    #     if self.get_offset(self.request) is None:
+    #         return None
+    #     next_offset = self.get_offset(self.request) + self.get_limit(self.request)
+    #     return next_offset
 
 
 class PackageListAPIView(ListAPIView):
