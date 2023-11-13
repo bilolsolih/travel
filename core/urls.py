@@ -2,12 +2,13 @@ from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.urls import path, include
-from django.conf.urls.static import static
 
+from apps.base.second_admin import second_admin
 from .drf_schemas import swagger_patterns
 
 urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
+    path('second_admin/', second_admin.urls),
     path('api/v1/base/', include('apps.base.urls', namespace='base')),
     path('api/v1/accounts/', include('apps.accounts.urls', namespace='accounts')),
     path('api/v1/packages/', include('apps.packages.urls', namespace='packages')),

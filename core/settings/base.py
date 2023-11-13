@@ -37,15 +37,15 @@ THIRD_PARTY_APPS = [
 ]
 
 USER_DEFINED_APPS = [
+    'apps.about',
     'apps.accounts',
     'apps.base',
-    'apps.packages',
-    'apps.orders',
+    'apps.discounts',
     'apps.gallery',
+    'apps.orders',
+    'apps.packages',
     'apps.payments',
     'apps.places',
-    'apps.discounts',
-    'apps.about',
 ]
 
 INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + USER_DEFINED_APPS
@@ -101,6 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
+
 USE_I18N = True
 
 USE_TZ = True

@@ -1,6 +1,7 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin, TranslationStackedInline
 
+from apps.base.second_admin import second_admin
 from .models import *
 
 
@@ -43,6 +44,9 @@ class PackageAdmin(TranslationAdmin):
     search_fields = ['title']
     readonly_fields = ['get_duration']
     inlines = [PictureInPackageInLine, DestinationInPackageInLine, PlanInPackage, TripInPackage, DayInPackageInLine]
+
+
+second_admin.register(Package, PackageAdmin)
 
 
 @admin.register(PlanType)
@@ -115,6 +119,9 @@ class DayAdmin(admin.ModelAdmin):
     list_filter = ['package']
     list_editable = ['package', 'trip']
     inlines = [StayInDayInLine, FlightInDayInLine, ActivityInDayInLine]
+
+
+second_admin.register(Day, DayAdmin)
 
 # @admin.register()
 # class Admin(admin.ModelAdmin):
