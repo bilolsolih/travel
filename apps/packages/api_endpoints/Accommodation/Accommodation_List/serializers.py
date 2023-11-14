@@ -10,6 +10,12 @@ class CountryInAccommodationListSerializer(ModelSerializer):
         fields = ['id', 'title']
 
 
+class CityInAccommodationListSerializer(ModelSerializer):
+    class Meta:
+        model = Country
+        fields = ['id', 'title']
+
+
 class AccommodationTypeInAccommodationListSerializer(ModelSerializer):
     class Meta:
         model = AccommodationType
@@ -20,10 +26,11 @@ class AccommodationListSerializer(ModelSerializer):
     type = AccommodationTypeInAccommodationListSerializer(many=False)
     picture = SerializerMethodField()
     country = CountryInAccommodationListSerializer(many=False)
+    city = CityInAccommodationListSerializer(many=False)
 
     class Meta:
         model = Accommodation
-        fields = ['id', 'title', 'type', 'short_description', 'rating', 'picture', 'country']
+        fields = ['id', 'title', 'type', 'short_description', 'rating', 'picture', 'country', 'city']
 
     def get_picture(self, instance):
         request = self.context['request']
