@@ -6,6 +6,7 @@ from rest_framework.generics import ListAPIView
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
 
+from apps.base.models import Country, City
 from apps.packages.models import Package
 from apps.places.models import PopularPlace
 from .serializers import PackageListSerializer
@@ -16,6 +17,8 @@ class PackageFilterSet(FilterSet):
     popular_places = django_filters.ModelChoiceFilter(field_name='popular_places', to_field_name='id', queryset=PopularPlace.objects.all())
     start_date = django_filters.DateFilter(field_name='trips__start_date', lookup_expr='gte', distinct=True)
     end_date = django_filters.DateFilter(field_name='trips__start_date', lookup_expr='lte', distinct=True)
+    country = django_filters.ModelChoiceFilter(field_name='destinations__country', to_field_name='pk', queryset=Country.objects.all(), distinct=True)
+    city = django_filters.ModelChoiceFilter(field_name='destinations__city', to_field_name='pk', queryset=City.objects.all(), distinct=True)
 
 
 class CustomLimitOffsetPagination(LimitOffsetPagination):
