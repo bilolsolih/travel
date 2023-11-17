@@ -36,7 +36,6 @@ class AccommodationFeatureInAccommodationList(ModelSerializer):
 
 class AccommodationRetrieveSerializer(ModelSerializer):
     type = AccommodationTypeInAccommodationRetrieveSerializer(many=False)
-    picture = SerializerMethodField()
     country = CountryInAccommodationRetrieveSerializer(many=False)
     city = CityInAccommodationRetrieveSerializer(many=False)
     features = AccommodationFeatureInAccommodationList(many=True)
@@ -45,15 +44,3 @@ class AccommodationRetrieveSerializer(ModelSerializer):
     class Meta:
         model = Accommodation
         fields = ['id', 'title', 'type', 'long_description', 'rating', 'country', 'city', 'address', 'landmark', 'features', 'iframe', 'latitude', 'longitude', 'pictures']
-
-    def get_picture(self, instance):
-        request = self.context['request']
-        pictures = instance.pictures.all()
-        if pictures.exists():
-            if pictures.filter(is_main=True).exists:
-                url = pictures.filter(is_main=True).first().picture.url
-            else:
-                url = pictures.first().picture.url
-            return request.build_absolute_uri(url)
-        else:
-            return None
