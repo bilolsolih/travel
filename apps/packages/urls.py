@@ -9,5 +9,6 @@ urlpatterns = [
     path('package/retrieve/<int:pk>/', views.PackageRetrieveAPIView.as_view(), name='package_retrieve'),
     path('package/list/liked/', views.PackageLikedListAPIView.as_view(), name='package_liked_list'),
     path('day/retrieve/<int:pk>/', views.DayRetrieveAPIView.as_view(), name='day_retrieve'),
-    path('accommodation/list/', views.AccommodationListAPIView.as_view(), name='accommodation_list')
+    path('accommodation/list/', views.AccommodationListAPIView.as_view(), name='accommodation_list'),
+    path('accommodation/retrieve/<int:pk>/', views.AccommodationRetrieveAPIView.as_view(), name='accommodation_retrieve')
 ]
