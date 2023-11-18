@@ -1,13 +1,34 @@
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
 from apps.base.models import City
-from apps.packages.models import Day, Stay, Flight, Activity, ActivityBridge, Accommodation, Plan
+from apps.packages.models import Day, Stay, Flight, Activity, ActivityBridge, Accommodation, Plan, AccommodationType
+
+
+class TypeInAccommodationInStay(ModelSerializer):
+    class Meta:
+        model = AccommodationType
+        fields = ['id', 'title']
 
 
 class AccommodationInStayNestedSerializer(ModelSerializer):
+    type = TypeInAccommodationInStay(many=False)
+    picture = SerializerMethodField()
+
     class Meta:
         model = Accommodation
-        fields = ['id', 'title', 'type', 'short_description', 'rating']
+        fields = ['id', 'title', 'type', 'short_description', 'rating', 'picture']
+
+    def get_picture(self, instance):
+        request = self.context['request']
+        pictures = instance.pictures.all()
+        if pictures.exists():
+            if pictures.filter(is_main=True).exists:
+                url = pictures.filter(is_main=True).first().picture.url
+            else:
+                url = pictures.first().picture.url
+            return request.build_absolute_uri(url)
+        else:
+            return None
 
 
 class StayInDayRetrieveNestedSerializer(ModelSerializer):
