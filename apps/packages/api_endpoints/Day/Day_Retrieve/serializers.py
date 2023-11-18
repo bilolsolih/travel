@@ -19,14 +19,13 @@ class AccommodationInStayNestedSerializer(ModelSerializer):
         fields = ['id', 'title', 'type', 'short_description', 'rating', 'picture']
 
     def get_picture(self, instance):
-        request = self.context['request']
         pictures = instance.pictures.all()
         if pictures.exists():
             if pictures.filter(is_main=True).exists:
                 url = pictures.filter(is_main=True).first().picture.url
             else:
                 url = pictures.first().picture.url
-            return request.build_absolute_uri(url)
+            return self.context['request'].build_absolute_uri(url)
         else:
             return None
 
@@ -108,7 +107,7 @@ class DayRetrieveSerializer(ModelSerializer):
         fields = ['id', 'day_number', 'items']
 
     def get_items(self, instance):
-        stays = StayInDayRetrieveNestedSerializer(instance.stays.all(), many=True)
+        stays = StayInDayRetrieveNestedSerializer(instance.stays.all(), many=True, context={'request': self.context['request']})
         flights = FlightInDayRetrieveNestedSerializer(instance.flights.all(), many=True)
         activities = ActivityBridgeInDayRetrieveSerializer(instance.activities.all(), many=True)
         response = list(stays.data) + list(flights.data) + list(activities.data)
