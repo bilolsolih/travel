@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
 from apps.packages.models import Package, Trip, Destination, PackageFeature, Plan, PlanType, PackagePicture, Day
@@ -53,9 +55,14 @@ class PictureInPackageRetrieveSerializer(ModelSerializer):
 
 
 class DayInPackageRetrieveSerializer(ModelSerializer):
+    date = SerializerMethodField()
+
     class Meta:
         model = Day
-        fields = ['id', 'day_number']
+        fields = ['id', 'day_number', 'date']
+
+    def get_date(self, instance):
+        return instance.trip.start_date + timedelta(days=(instance.day_number - 1))
 
 
 class PackageRetrieveSerializer(ModelSerializer):
