@@ -33,11 +33,19 @@ class PlanInOrder(ModelSerializer):
 class OrderListSerializer(ModelSerializer):
     package = SerializerMethodField()
     plan = PlanInOrder(many=False)
+    from_city = SerializerMethodField()
+    to_city = SerializerMethodField()
 
     class Meta:
         model = Order
-        fields = ['package', 'plan', 'price_total', 'price_paid', 'get_price_to_pay', 'status']
+        fields = ['package', 'plan', 'price_total', 'price_paid', 'get_price_to_pay', 'status', 'created', 'from_city', 'to_city']
 
     def get_package(self, instance):
         package = PackageInOrderSerializer(instance.package, many=False, context={'request': self.context['request']})
         return package.data
+
+    def get_from_city(self, instance):
+        return instance.package.trips.last().flight_from.title
+
+    def get_to_city(self, instance):
+        return instance.package.country.title

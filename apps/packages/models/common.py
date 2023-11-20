@@ -1,10 +1,10 @@
 from ckeditor.fields import RichTextField
-from django.core.exceptions import ValidationError
-from django.contrib.sites.models import Site
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-from django.utils.safestring import mark_safe
 from django.conf import settings
+from django.contrib.sites.models import Site
+from django.core.exceptions import ValidationError
+from django.db import models
+from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 
 from apps.base.models import TimeStampedModel
 
@@ -18,6 +18,7 @@ class Day(TimeStampedModel):
         verbose_name = _('Day')
         verbose_name_plural = _('Days')
         unique_together = ['package', 'trip', 'day_number']
+        ordering = ('day_number',)
 
     @property
     def change_link(self):

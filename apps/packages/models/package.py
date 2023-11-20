@@ -12,11 +12,13 @@ from apps.base.models import TimeStampedModel
 
 class Trip(TimeStampedModel):
     package = models.ForeignKey('packages.Package', related_name='trips', on_delete=models.CASCADE, verbose_name=_('Package'))
+    flight_from = models.ForeignKey('base.Region', related_name='trips', on_delete=models.PROTECT, verbose_name=_('Region'))
     start_date = models.DateField(_('Start date'))
 
     class Meta:
         verbose_name = _('Trip')
         verbose_name_plural = _('Trips')
+        ordering = ('start_date',)
 
     @property
     def get_is_active(self):
@@ -34,6 +36,7 @@ class Package(TimeStampedModel):
     title = models.CharField(_('Title'), max_length=256)
     description = models.TextField(_('Description'), blank=True, null=True)
     popular_places = models.ManyToManyField('places.PopularPlace', related_name='packages', blank=True, verbose_name=_('Popular places'))
+    country = models.ForeignKey('base.Country', related_name='packages', on_delete=models.PROTECT, verbose_name=_('Country'), null=True)
 
     core_features = models.ManyToManyField('packages.PackageFeature', related_name='packages', blank=True, verbose_name=_('Core features'))
 
@@ -85,7 +88,6 @@ class PackagePicture(TimeStampedModel):
 
 class Destination(models.Model):
     package = models.ForeignKey('packages.Package', related_name='destinations', on_delete=models.CASCADE, verbose_name=_('Package'))
-    country = models.ForeignKey('base.Country', related_name='packages', on_delete=models.PROTECT, verbose_name=_('Country'))
     city = models.ForeignKey('base.City', related_name='packages', on_delete=models.PROTECT, verbose_name=_('City'))
     duration = models.PositiveIntegerField(_('Duration in days'), validators=[MinValueValidator(1)])
 
@@ -94,7 +96,7 @@ class Destination(models.Model):
         verbose_name_plural = _('Destinations')
 
     def clean(self):
-        if self.city not in self.country.cities.all():
+        if self.city not in self.package.country.cities.all():
             raise ValidationError({'city': 'No such City in the chosen Country'})
 
     def __str__(self):
