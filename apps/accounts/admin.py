@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import User, AdminUser
+from .models import User, AdminUser, UserType
 
 
 @admin.register(User)
@@ -38,3 +38,10 @@ class AdminUserAdmin(CustomUserAdmin):
         if ordering:
             qs = qs.order_by(*ordering)
         return qs
+
+
+@admin.register(UserType)
+class UserTypeAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title']
+    list_display_links = ['id']
+    list_editable = ['title']
