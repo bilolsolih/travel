@@ -2,8 +2,13 @@ from .base import *  # noqa
 
 DEBUG = False
 
-# ALLOWED_HOSTS = ['lordstormrage.pythonanywhere.com', 'localhost', '45.89.190.14']
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'lordstormrage.pythonanywhere.com',
+    'localhost',
+    '45.89.190.14',
+    '127.0.0.1',
+]
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
