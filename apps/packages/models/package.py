@@ -12,7 +12,7 @@ from apps.base.models import TimeStampedModel
 
 class Trip(TimeStampedModel):
     package = models.ForeignKey('packages.Package', related_name='trips', on_delete=models.CASCADE, verbose_name=_('Package'))
-    flight_from = models.ForeignKey('base.Region', related_name='trips', on_delete=models.PROTECT, verbose_name=_('Region'))
+    flight_from = models.ForeignKey('base.Region', related_name='trips', on_delete=models.PROTECT, verbose_name=_('Region'), null=True)
     start_date = models.DateField(_('Start date'))
 
     class Meta:
