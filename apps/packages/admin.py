@@ -63,12 +63,17 @@ class PackageFeatureAdmin(TranslationAdmin):
     search_fields = ['title']
 
 
+class ActivityPictureInActivityInline(admin.TabularInline):
+    model = ActivityPicture
+
+
 @admin.register(Activity)
 class ActivityAdmin(TranslationAdmin):
     list_display = ['id', 'title', 'latitude', 'longitude']
     list_display_links = ['id', 'title']
     list_editable = ['latitude', 'longitude']
     search_fields = ['title']
+    inlines = [ActivityPictureInActivityInline]
 
 
 class AccommodationPictureInAccommodation(admin.TabularInline):
