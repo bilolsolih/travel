@@ -9,6 +9,17 @@ from apps.base.models import TimeStampedModel
 from . import choices
 
 
+class UserType(models.Model):
+    title = models.CharField(_('Title'), max_length=128)
+
+    class Meta:
+        verbose_name = _('User type')
+        verbose_name_plural = _('User types')
+
+    def __str__(self):
+        return self.title
+
+
 class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
     # AUTHENTICATION FIELDS #
     phone_number = PhoneNumberField(_('Phone number'), max_length=15, unique=True)
@@ -40,6 +51,7 @@ class User(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
 
     # DISTINCT FIELDS #
     is_staff = models.BooleanField(_('Staff status'), default=False)
+    type = models.ForeignKey('accounts.UserType', related_name='users', on_delete=models.PROTECT, blank=True, null=True, verbose_name=_('Type'))
 
     # OTHERS #
     objects = UserManager()
