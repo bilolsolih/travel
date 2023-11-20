@@ -23,13 +23,8 @@ class Day(TimeStampedModel):
     @property
     def change_link(self):
         current_site = Site.objects.get_current()
-        if settings.SITE_ID == 1:
-            protocol = 'http'
-        elif settings.SITE_ID == 2:
-            protocol = 'https'
-        else:
-            protocol = 'http'
-        return mark_safe(f'<a href="{protocol}://{current_site.domain}/admin/packages/day/{self.id}/change/">{self.id}</a>')
+
+        return mark_safe(f'<a href="http://{current_site.domain}/admin/packages/day/{self.id}/change/">{self.id}</a>')
 
     def clean(self):
         if not self.package.trips.contains(self.trip):

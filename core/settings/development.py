@@ -19,4 +19,3 @@ INTERNAL_IPS = [
     'localhost',
 ]
 
-SITE_ID = 1
