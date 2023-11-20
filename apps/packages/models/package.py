@@ -22,7 +22,7 @@ class Trip(TimeStampedModel):
 
     @property
     def get_is_active(self):
-        return self.start_date > timezone.now().date()
+        return self.start_date > timezone.now().date() if self.start_date else None
 
     @property
     def get_end_date(self):
