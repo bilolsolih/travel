@@ -31,6 +31,7 @@ class Accommodation(TimeStampedModel):
     features = models.ManyToManyField('packages.AccommodationFeature', related_name='accommodations', blank=True)
 
     iframe = models.TextField(_('iFrame'), blank=True, null=True)
+    embedded_link = models.TextField(_('Embedded Map link'), blank=True, null=True)
     latitude = models.CharField(_('Latitude'), max_length=64, blank=True, null=True)
     longitude = models.CharField(_('Longitude'), max_length=64, blank=True, null=True)
 

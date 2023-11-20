@@ -16,7 +16,7 @@ class AccommodationInStayNestedSerializer(ModelSerializer):
 
     class Meta:
         model = Accommodation
-        fields = ['id', 'title', 'type', 'short_description', 'rating', 'picture']
+        fields = ['id', 'title', 'type', 'short_description', 'rating', 'picture', 'embedded_link']
 
     def get_picture(self, instance):
         pictures = instance.pictures.all()
