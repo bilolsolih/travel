@@ -11,7 +11,7 @@ DJANGO_SETTINGS_MODULE = getenv('DJANGO_SETTINGS_MODULE')
 class HttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
     def get_schema(self, request=None, public=False):
         schema = super().get_schema(request, public)
-        schema.schemes = ["https", "http"]
+        schema.schemes = ["http"]
         # if DJANGO_SETTINGS_MODULE == 'core.settings.development':
         #     schema.schemes = ["http", "https"]
         # elif DJANGO_SETTINGS_MODULE == 'core.settings.production':
