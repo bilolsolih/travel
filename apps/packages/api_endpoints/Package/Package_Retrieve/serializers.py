@@ -12,18 +12,14 @@ class TripInPackageRetrieveSerializer(ModelSerializer):
 
 
 class DestinationInPackageRetrieveSerializer(ModelSerializer):
-    ccountry = SerializerMethodField()
     ccity = SerializerMethodField()
-
-    def get_ccountry(self, obj):
-        return obj.country.title
 
     def get_ccity(self, obj):
         return obj.city.title
 
     class Meta:
         model = Destination
-        fields = ['ccountry', 'ccity', 'duration']
+        fields = ['ccity', 'duration']
 
 
 class FeatureNestedRetrieveSerializer(ModelSerializer):
@@ -75,4 +71,4 @@ class PackageRetrieveSerializer(ModelSerializer):
 
     class Meta:
         model = Package
-        fields = ['id', 'title', 'trips', 'description', 'pictures', 'get_duration', 'destinations', 'core_features', 'plans', 'days']
+        fields = ['id', 'title', 'trips', 'description', 'country', 'pictures', 'get_duration', 'destinations', 'core_features', 'plans', 'days']
