@@ -23,18 +23,14 @@ class TripInPackageListSerializer(ModelSerializer):
 
 
 class DestinationInPackageListSerializer(ModelSerializer):
-    ccountry = SerializerMethodField()
     ccity = SerializerMethodField()
-
-    def get_ccountry(self, instance):
-        return instance.country.title
 
     def get_ccity(self, instance):
         return instance.city.title
 
     class Meta:
         model = Destination
-        fields = ['ccountry', 'ccity', 'duration']
+        fields = ['ccity', 'duration']
 
 
 class FeatureNestedListSerializer(ModelSerializer):
@@ -80,7 +76,7 @@ class PackageListSerializer(ModelSerializer):
 
     class Meta:
         model = Package
-        fields = ['id', 'title', 'trips', 'picture', 'duration', 'destinations', 'core_features', 'plans', 'is_liked']
+        fields = ['id', 'title', 'trips', 'picture', 'duration', 'country', 'destinations', 'core_features', 'plans', 'is_liked']
 
     def get_duration(self, instance):
         if instance.destinations.exists():

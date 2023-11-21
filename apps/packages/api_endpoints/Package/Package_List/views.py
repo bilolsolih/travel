@@ -41,7 +41,7 @@ class PackageListAPIView(ListAPIView):
         queryset = cache.get('all_packages')
         if not queryset:
             queryset = Package.objects.filter(is_active=True).prefetch_related(
-                'trips', 'destinations', 'destinations__country', 'destinations__city', 'core_features', 'plans', 'plans__features', 'plans__type',
+                'trips', 'destinations', 'destinations__city', 'core_features', 'plans', 'plans__features', 'plans__type',
             )
             cache.set('all_packages', queryset, timeout=5)
         discount = self.request.query_params.get('discount', None)
