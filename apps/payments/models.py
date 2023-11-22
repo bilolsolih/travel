@@ -15,6 +15,12 @@ class Category(models.Model):
         return self.title
 
 
+class PaymentStatus(models.TextChoices):
+    WAITING = ('waiting', _('Waiting for verification'))
+    VERIFIED = ('verified', _('Verified'))
+    CANCELED = ('canceled', _('Canceled'))
+
+
 class Payment(TimeStampedModel):
     category = models.ForeignKey('payments.Category', related_name='payments', on_delete=models.PROTECT, verbose_name=_('Payment category'))
     payer = models.ForeignKey('accounts.User', related_name='payments', on_delete=models.SET_NULL, null=True, verbose_name=_('Payer'))
@@ -22,6 +28,8 @@ class Payment(TimeStampedModel):
     responsible = models.ForeignKey('accounts.User', related_name='responsible_payments', on_delete=models.SET_NULL, null=True, verbose_name=_('Responsible person'))
     description = models.TextField(_('Description'))
     amount = models.PositiveIntegerField(_('Amount'))
+
+    status = models.CharField(_('Status'), max_length=10, choices=PaymentStatus.choices, default=PaymentStatus.WAITING)
 
     class Meta:
         verbose_name = _('Payment')

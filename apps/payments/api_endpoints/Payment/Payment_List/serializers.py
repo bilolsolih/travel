@@ -13,4 +13,4 @@ class PaymentListSerializer(ModelSerializer):
 
     class Meta:
         model = Payment
-        fields = ['id', 'category', 'payee', 'responsible', 'amount']
+        fields = ['id', 'category', 'payee', 'responsible', 'amount', 'status', 'created']

@@ -14,4 +14,4 @@ class PaymentRetrieveSerializer(ModelSerializer):
 
     class Meta:
         model = Payment
-        fields = ['id', 'category', 'payer', 'payee', 'responsible', 'description', 'amount']
+        fields = ['id', 'category', 'payer', 'payee', 'responsible', 'description', 'amount', 'status', 'created']
