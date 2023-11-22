@@ -23,6 +23,7 @@ class PaymentStatus(models.TextChoices):
 
 class Payment(TimeStampedModel):
     category = models.ForeignKey('payments.Category', related_name='payments', on_delete=models.PROTECT, verbose_name=_('Payment category'))
+    order = models.ForeignKey('orders.Order', related_name='payments', on_delete=models.SET_NULL, null=True, verbose_name=_('Order'))
     payer = models.ForeignKey('accounts.User', related_name='payments', on_delete=models.SET_NULL, null=True, verbose_name=_('Payer'))
     payee = models.ForeignKey('accounts.User', related_name='receivements', on_delete=models.SET_NULL, null=True, verbose_name=_('Payee'))
     responsible = models.ForeignKey('accounts.User', related_name='responsible_payments', on_delete=models.SET_NULL, null=True, verbose_name=_('Responsible person'))
