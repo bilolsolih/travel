@@ -3,14 +3,14 @@ from rest_framework.serializers import ModelSerializer
 from apps.payments.models import Payment, Category
 
 
-class CategoryInPayment(ModelSerializer):
+class CategoryInPaymentRetrieve(ModelSerializer):
     class Meta:
         model = Category
         fields = ['id', 'title']
 
 
 class PaymentRetrieveSerializer(ModelSerializer):
-    category = CategoryInPayment(many=False)
+    category = CategoryInPaymentRetrieve(many=False)
 
     class Meta:
         model = Payment
