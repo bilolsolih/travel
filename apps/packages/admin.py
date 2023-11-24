@@ -31,7 +31,7 @@ class PictureInPackageInLine(admin.TabularInline):
 
 class DayInPackageInLine(admin.TabularInline):
     model = Day
-    fields = ['change_link', 'trip', 'day_number']
+    fields = ['change_link', 'day_number']
     readonly_fields = ['change_link']
     extra = 3
 
@@ -119,10 +119,8 @@ class ActivityInDayInLine(admin.TabularInline):
 
 @admin.register(Day)
 class DayAdmin(admin.ModelAdmin):
-    list_display = ['id', 'package', 'trip', 'day_number']
+    list_display = ['id', 'package', 'day_number']
     list_display_links = ['id']
-    list_filter = ['package']
-    list_editable = ['package', 'trip']
     inlines = [StayInDayInLine, FlightInDayInLine, ActivityInDayInLine]
 
 
