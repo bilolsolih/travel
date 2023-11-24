@@ -1,5 +1,4 @@
 from ckeditor.fields import RichTextField
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -24,7 +23,6 @@ class Accommodation(TimeStampedModel):
     short_description = models.TextField(_('Short description'))
     long_description = RichTextField(_('Long description'))
     rating = models.DecimalField(_('Rating'), max_digits=2, decimal_places=1)
-    country = models.ForeignKey('base.Country', related_name='accommodations', on_delete=models.PROTECT, blank=True, null=True, verbose_name=_('Country'))
     city = models.ForeignKey('base.City', related_name='accommodations', on_delete=models.PROTECT, blank=True, null=True, verbose_name=_('City'))
     address = models.CharField(_('Address'), max_length=256)
     landmark = models.CharField(_('Landmark'), max_length=256, blank=True, null=True)
@@ -38,10 +36,6 @@ class Accommodation(TimeStampedModel):
     class Meta:
         verbose_name = _('Accommodation')
         verbose_name_plural = _('Accommodations')
-
-    # def clean(self):
-    #     if not self.country.cities.contains(self.city):
-    #         raise ValidationError({'city': 'No such City in the Country.'})
 
     def __str__(self):
         return self.title

@@ -82,10 +82,10 @@ class AccommodationPictureInAccommodation(admin.TabularInline):
 
 @admin.register(Accommodation)
 class AccommodationAdmin(TranslationAdmin):
-    list_display = ['id', 'title', 'type', 'country', 'city']
+    list_display = ['id', 'title', 'type', 'city']
     list_display_links = ['id', 'title']
     list_filter = ['type']
-    search_fields = ['title', 'country', 'city']
+    search_fields = ['title', 'city']
     inlines = [AccommodationPictureInAccommodation]
 
 

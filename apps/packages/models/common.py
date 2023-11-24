@@ -59,8 +59,8 @@ class PackageFeature(models.Model):
     icon = models.ImageField(_('Icon'), upload_to='images/packages/features/')
 
     class Meta:
-        verbose_name = _('Plan feature')
-        verbose_name_plural = _('Plan features')
+        verbose_name = _('Package feature')
+        verbose_name_plural = _('Package features')
 
     def __str__(self):
         return self.title
