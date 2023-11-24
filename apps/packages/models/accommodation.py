@@ -39,9 +39,9 @@ class Accommodation(TimeStampedModel):
         verbose_name = _('Accommodation')
         verbose_name_plural = _('Accommodations')
 
-    def clean(self):
-        if not self.country.cities.contains(self.city):
-            raise ValidationError({'city': 'No such City in the Country.'})
+    # def clean(self):
+    #     if not self.country.cities.contains(self.city):
+    #         raise ValidationError({'city': 'No such City in the Country.'})
 
     def __str__(self):
         return self.title

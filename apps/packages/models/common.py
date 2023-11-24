@@ -11,13 +11,12 @@ from apps.base.models import TimeStampedModel
 
 class Day(TimeStampedModel):
     package = models.ForeignKey('packages.Package', related_name='days', on_delete=models.CASCADE, verbose_name=_('Package'))
-    trip = models.ForeignKey('packages.Trip', related_name='days', on_delete=models.SET_NULL, null=True, verbose_name=_('Trip'))
     day_number = models.PositiveIntegerField(_('Day number'))
 
     class Meta:
         verbose_name = _('Day')
         verbose_name_plural = _('Days')
-        unique_together = ['package', 'trip', 'day_number']
+        unique_together = ['package', 'day_number']
         ordering = ('day_number',)
 
     @property
@@ -26,12 +25,8 @@ class Day(TimeStampedModel):
 
         return mark_safe(f'<a href="http://{current_site.domain}/admin/packages/day/{self.id}/change/">{self.id}</a>')
 
-    def clean(self):
-        if not self.package.trips.contains(self.trip):
-            raise ValidationError({'trip': 'No such trip in the package.'})
-
     def __str__(self):
-        return f'{self.package.title} - {self.trip.start_date}: day {self.day_number}'
+        return f'{self.package.title} - day: {self.day_number}'
 
 
 class Stay(TimeStampedModel):

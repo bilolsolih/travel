@@ -58,7 +58,10 @@ class DayInPackageRetrieveSerializer(ModelSerializer):
         fields = ['id', 'day_number', 'date']
 
     def get_date(self, instance):
-        return instance.trip.start_date + timedelta(days=(instance.day_number - 1))
+        if instance.package.trips.exists():
+            return instance.package.trips.last().start_date + timedelta(days=(instance.day_number - 1))
+        else:
+            return None
 
 
 class PackageRetrieveSerializer(ModelSerializer):

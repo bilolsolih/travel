@@ -1,7 +1,7 @@
 import os
 from datetime import timedelta
 
-from django.core.exceptions import ValidationError
+# from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils import timezone
@@ -95,9 +95,9 @@ class Destination(models.Model):
         verbose_name = _('Destination')
         verbose_name_plural = _('Destinations')
 
-    def clean(self):
-        if self.city not in self.package.country.cities.all():
-            raise ValidationError({'city': 'No such City in the chosen Country'})
+    # def clean(self):
+    #     if not self.package.country.cities.contains(self.city):
+    #         raise ValidationError({'city': 'No such City in the chosen Country'})
 
     def __str__(self):
         return f"{self.city} - {self.duration} {'days' if self.duration >= 2 else 'day'}"
