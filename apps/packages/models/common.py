@@ -109,7 +109,7 @@ class ActivityPicture(TimeStampedModel):
         verbose_name_plural = _('Activity pictures')
 
     def save(self, *args, **kwargs):
-        if self.activity.pictures.exclude(self).filter(is_main=True).exists():
+        if self.activity.pictures.exclude(pk=self.pk).filter(is_main=True).exists():
             self.activity.pictures.update(is_main=False)
         super().save(*args, **kwargs)
 
