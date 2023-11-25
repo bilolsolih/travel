@@ -47,3 +47,5 @@ CACHES = {
         'LOCATION': 'redis://127.0.0.1:6379/0',
     }
 }
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 3145728  # 3 MB
