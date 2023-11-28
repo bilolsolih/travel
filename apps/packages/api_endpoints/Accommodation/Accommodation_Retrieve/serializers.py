@@ -1,18 +1,12 @@
-from rest_framework.serializers import ModelSerializer, SerializerMethodField
+from rest_framework.serializers import ModelSerializer
 
-from apps.base.models import Country
+from apps.base.models import City
 from apps.packages.models import Accommodation, AccommodationType, AccommodationFeature, AccommodationPicture
-
-
-class CountryInAccommodationRetrieveSerializer(ModelSerializer):
-    class Meta:
-        model = Country
-        fields = ['id', 'title']
 
 
 class CityInAccommodationRetrieveSerializer(ModelSerializer):
     class Meta:
-        model = Country
+        model = City
         fields = ['id', 'title']
 
 
@@ -36,7 +30,6 @@ class AccommodationFeatureInAccommodationList(ModelSerializer):
 
 class AccommodationRetrieveSerializer(ModelSerializer):
     type = AccommodationTypeInAccommodationRetrieveSerializer(many=False)
-    country = CountryInAccommodationRetrieveSerializer(many=False)
     city = CityInAccommodationRetrieveSerializer(many=False)
     features = AccommodationFeatureInAccommodationList(many=True)
     pictures = AccommodationPictureInAccommodationList(many=True)
@@ -44,5 +37,5 @@ class AccommodationRetrieveSerializer(ModelSerializer):
     class Meta:
         model = Accommodation
         fields = [
-            'id', 'title', 'type', 'long_description', 'rating', 'country', 'city', 'address', 'landmark', 'features', 'iframe', 'latitude', 'longitude', 'pictures', 'embedded_link'
+            'id', 'title', 'type', 'long_description', 'rating', 'city', 'address', 'landmark', 'features', 'iframe', 'latitude', 'longitude', 'pictures', 'embedded_link'
         ]
