@@ -1,3 +1,5 @@
+from os import getenv
+
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
 from apps.base.models import City
@@ -81,9 +83,10 @@ class ActivityInActivityBridgeNestedSerializer(ModelSerializer):
 
     def get_main_picture(self, instance):
         if instance.pictures.filter(is_main=True).exists():
-            return instance.pictures.filter(is_main=True).first()
+            url = instance.pictures.filter(is_main=True).first().picture.url
         else:
-            return instance.pictures.first()
+            url = instance.pictures.first().picture.url
+        return f'{getenv("DOMAIN")}{url}'
 
 
 class ActivityBridgeInDayRetrieveSerializer(ModelSerializer):
@@ -107,7 +110,8 @@ class DayRetrieveSerializer(ModelSerializer):
         fields = ['id', 'day_number', 'items']
 
     def get_items(self, instance):
-        stays = StayInDayRetrieveNestedSerializer(instance.stays.all(), many=True, context={'request': self.context['request']})
+        stays = StayInDayRetrieveNestedSerializer(instance.stays.all(), many=True,
+                                                  context={'request': self.context['request']})
         flights = FlightInDayRetrieveNestedSerializer(instance.flights.all(), many=True)
         activities = ActivityBridgeInDayRetrieveSerializer(instance.activities.all(), many=True)
         response = list(stays.data) + list(flights.data) + list(activities.data)
