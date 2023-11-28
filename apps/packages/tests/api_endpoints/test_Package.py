@@ -58,3 +58,18 @@ class PackageAPITestCase(APITestCase):
         response = self.client.get(path=reverse('packages:accommodation_list'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertContains(response, 'Title 1')
+
+    def test_accommodation_retrieve(self):
+        urls = [reverse('packages:accommodation_retrieve', args=[accommodation_id]) for accommodation_id in range(1, 4)]
+        for url in urls:
+            response = self.client.get(path=url)
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+            self.assertContains(response, 'title')
+
+    def test_activity_retrieve(self):
+        urls = [reverse('packages:activity_retrieve', args=[activity_id]) for activity_id in range(1, 4)]
+        for url in urls:
+            response = self.client.get(path=url)
+            self.assertEqual(response.status_code, status.HTTP_200_OK)
+            self.assertContains(response, 'title')
+# TODO: tests for package_list with filters
