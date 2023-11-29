@@ -8,7 +8,7 @@ from .serializers import UserRegisterSerializer
 
 
 class UserRegisterAPIView(CreateAPIView):
-    # parser_classes = [MultiPartParser, FormParser]
+    parser_classes = [MultiPartParser, FormParser]
     serializer_class = UserRegisterSerializer
 
     def generate_token(self, user):
