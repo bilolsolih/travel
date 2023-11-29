@@ -1,6 +1,6 @@
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
-from rest_framework.parsers import MultiPartParser
+from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -8,7 +8,7 @@ from .serializers import UserRegisterSerializer
 
 
 class UserRegisterAPIView(CreateAPIView):
-    parser_classes = [MultiPartParser]
+    parser_classes = [MultiPartParser, FormParser]
     serializer_class = UserRegisterSerializer
 
     def generate_token(self, user):
