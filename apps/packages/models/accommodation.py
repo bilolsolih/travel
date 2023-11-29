@@ -37,6 +37,10 @@ class Accommodation(TimeStampedModel):
         verbose_name = _('Accommodation')
         verbose_name_plural = _('Accommodations')
 
+    @property
+    def country(self):
+        return self.city.country.title
+
     def __str__(self):
         return self.title
 

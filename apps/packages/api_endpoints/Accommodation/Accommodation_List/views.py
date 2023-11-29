@@ -7,7 +7,7 @@ from .serializers import AccommodationListSerializer
 
 
 class AccommodationFilterSet(django_filters.FilterSet):
-    country = django_filters.ModelChoiceFilter(field_name='country', queryset=Country.objects.all(), to_field_name='pk')
+    country = django_filters.ModelChoiceFilter(field_name='city__country', queryset=Country.objects.all(), to_field_name='pk')
 
 
 class AccommodationListAPIView(ListAPIView):

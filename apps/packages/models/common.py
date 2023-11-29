@@ -1,9 +1,6 @@
 from ckeditor.fields import RichTextField
-from django.conf import settings
 from django.contrib.sites.models import Site
-from django.core.exceptions import ValidationError
 from django.db import models
-from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
 from apps.base.models import TimeStampedModel
@@ -22,8 +19,7 @@ class Day(TimeStampedModel):
     @property
     def change_link(self):
         current_site = Site.objects.get_current()
-
-        return mark_safe(f'<a href="http://{current_site.domain}/admin/packages/day/{self.id}/change/">{self.id}</a>')
+        return f'<a href="http://{current_site.domain}/admin/packages/day/{self.id}/change/">{self.id}</a>'
 
     def __str__(self):
         return f'{self.package.title} - day: {self.day_number}'
@@ -37,6 +33,9 @@ class Stay(TimeStampedModel):
     class Meta:
         verbose_name = _('Stay')
         verbose_name_plural = _('Stays')
+
+    def __str__(self):
+        return f'Stay at {self.accommodation.title}'
 
 
 class Flight(TimeStampedModel):
