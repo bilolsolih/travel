@@ -20,7 +20,7 @@ class Day(TimeStampedModel):
     @property
     def change_link(self):
         current_site = Site.objects.get_current()
-        return mark_safe(f'<a href="http://{current_site.domain}/admin/packages/day/{self.id}/change/">{self.id}</a>')
+        return mark_safe(f'<a href="http://{current_site.domain}/second_admin/packages/day/{self.id}/change/">{self.id}</a>')
 
     def __str__(self):
         return f'{self.package.title} - day: {self.day_number}'
