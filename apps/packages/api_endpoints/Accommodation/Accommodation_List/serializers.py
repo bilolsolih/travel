@@ -23,7 +23,7 @@ class AccommodationListSerializer(ModelSerializer):
 
     class Meta:
         model = Accommodation
-        fields = ['id', 'title', 'type', 'short_description', 'rating', 'picture', 'city', 'embedded_link']
+        fields = ['id', 'title', 'type', 'short_description', 'rating', 'picture', 'city', 'country','embedded_link']
 
     def get_picture(self, instance):
         request = self.context['request']

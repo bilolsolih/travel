@@ -37,5 +37,5 @@ class AccommodationRetrieveSerializer(ModelSerializer):
     class Meta:
         model = Accommodation
         fields = [
-            'id', 'title', 'type', 'long_description', 'rating', 'city', 'address', 'landmark', 'features', 'iframe', 'latitude', 'longitude', 'pictures', 'embedded_link'
+            'id', 'title', 'type', 'long_description', 'rating', 'city', 'country', 'address', 'landmark', 'features', 'iframe', 'latitude', 'longitude', 'pictures', 'embedded_link'
         ]
