@@ -112,7 +112,7 @@ LANGUAGES = [
     ('uz', _('Uzbek')),
     ('ru', _('Russian')),
     ('en', _('English')),
-    ('cr', _('Cyrillic'))
+    ('cr', _('Cyrillic')),
 ]
 
 TIME_ZONE = 'Asia/Tashkent'
