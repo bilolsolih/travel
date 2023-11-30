@@ -79,7 +79,7 @@ class ActivityInActivityBridgeNestedSerializer(ModelSerializer):
 
     class Meta:
         model = Activity
-        fields = ['id', 'title', 'description', 'main_picture']
+        fields = ['id', 'type', 'title', 'description', 'main_picture']
 
     def get_main_picture(self, instance):
         if instance.pictures.filter(is_main=True).exists():
@@ -107,11 +107,10 @@ class DayRetrieveSerializer(ModelSerializer):
 
     class Meta:
         model = Day
-        fields = ['id', 'day_number', 'items']
+        fields = ['id', 'day_number', 'date', 'items']
 
     def get_items(self, instance):
-        stays = StayInDayRetrieveNestedSerializer(instance.stays.all(), many=True,
-                                                  context={'request': self.context['request']})
+        stays = StayInDayRetrieveNestedSerializer(instance.stays.all(), many=True, context={'request': self.context['request']})
         flights = FlightInDayRetrieveNestedSerializer(instance.flights.all(), many=True)
         activities = ActivityBridgeInDayRetrieveSerializer(instance.activities.all(), many=True)
         response = list(stays.data) + list(flights.data) + list(activities.data)

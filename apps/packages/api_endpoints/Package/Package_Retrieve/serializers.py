@@ -9,7 +9,7 @@ from apps.packages.models import Package, Trip, Destination, PackageFeature, Pla
 class TripInPackageRetrieveSerializer(ModelSerializer):
     class Meta:
         model = Trip
-        fields = ['id', 'start_date', 'get_end_date']
+        fields = ['id', 'start_date', 'end_date']
 
 
 class DestinationInPackageRetrieveSerializer(ModelSerializer):
@@ -59,17 +59,10 @@ class PictureInPackageRetrieveSerializer(ModelSerializer):
 
 
 class DayInPackageRetrieveSerializer(ModelSerializer):
-    date = SerializerMethodField()
 
     class Meta:
         model = Day
         fields = ['id', 'day_number', 'date']
-
-    def get_date(self, instance):
-        if instance.package.trips.exists():
-            return instance.package.trips.last().start_date + timedelta(days=(instance.day_number - 1))
-        else:
-            return None
 
 
 class PackageRetrieveSerializer(ModelSerializer):

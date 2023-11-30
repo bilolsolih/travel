@@ -14,6 +14,7 @@ class Trip(TimeStampedModel):
     package = models.ForeignKey('packages.Package', related_name='trips', on_delete=models.CASCADE, verbose_name=_('Package'))
     flight_from = models.ForeignKey('base.Region', related_name='trips', on_delete=models.PROTECT, verbose_name=_('Region'), null=True)
     start_date = models.DateField(_('Start date'))
+    end_date = models.DateField(_('End date'), default=timezone.now)
 
     class Meta:
         verbose_name = _('Trip')
@@ -24,12 +25,8 @@ class Trip(TimeStampedModel):
     def get_is_active(self):
         return self.start_date > timezone.now().date() if self.start_date else None
 
-    @property
-    def get_end_date(self):
-        return self.start_date + timedelta(days=self.package.get_duration) if self.package.destinations.exists() else None
-
     def __str__(self):
-        return f'{self.package}: {self.start_date} - {self.get_end_date}'
+        return f'{self.package}: {self.start_date} - {self.end_date}'
 
 
 class Package(TimeStampedModel):

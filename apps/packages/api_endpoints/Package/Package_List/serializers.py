@@ -1,6 +1,3 @@
-from datetime import timedelta
-
-from django.db.models import Sum
 from django.utils import timezone
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
@@ -8,18 +5,10 @@ from apps.packages.models import Package, Trip, Destination, PackageFeature, Pla
 
 
 class TripInPackageListSerializer(ModelSerializer):
-    end_date = SerializerMethodField()
 
     class Meta:
         model = Trip
         fields = ['id', 'start_date', 'end_date']
-
-    def get_end_date(self, instance):
-        if instance.package.destinations.exists():
-            duration = instance.package.destinations.aggregate(total_duration=Sum('duration'))['total_duration']
-            return instance.start_date + timedelta(days=duration)
-        else:
-            return None
 
 
 class DestinationInPackageListSerializer(ModelSerializer):

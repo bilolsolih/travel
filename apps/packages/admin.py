@@ -7,10 +7,10 @@ from .models import *
 
 @admin.register(Trip)
 class TripAdmin(admin.ModelAdmin):
-    list_display = ['id', 'package', 'start_date', 'get_end_date', 'get_is_active']
+    list_display = ['id', 'package', 'start_date', 'end_date', 'get_is_active']
     list_display_links = ['id']
     list_editable = ['package', 'start_date']
-    readonly_fields = ['get_end_date', 'get_is_active']
+    readonly_fields = ['get_is_active']
 
 
 class PlanInPackage(TranslationStackedInline):

@@ -1,6 +1,7 @@
 from ckeditor.fields import RichTextField
 from django.contrib.sites.models import Site
 from django.db import models
+from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
 
@@ -10,6 +11,7 @@ from apps.base.models import TimeStampedModel
 class Day(TimeStampedModel):
     package = models.ForeignKey('packages.Package', related_name='days', on_delete=models.CASCADE, verbose_name=_('Package'))
     day_number = models.PositiveIntegerField(_('Day number'))
+    date = models.DateField(_('Corresponding date'), default=timezone.now)
 
     class Meta:
         verbose_name = _('Day')
@@ -81,6 +83,7 @@ class ActivityBridge(models.Model):
 
 
 class Activity(TimeStampedModel):
+    type = models.CharField(_('Activity type'), max_length=128, default='Mashg\'ulot')
     title = models.CharField(_('Title'), max_length=256)
     address = models.CharField(_('Address'), max_length=256)
     landmark = models.CharField(_('Landmark'), max_length=256, blank=True, null=True)
@@ -117,4 +120,4 @@ class ActivityPicture(TimeStampedModel):
         return f'Picture for {self.activity} {self.id}'
 
 
-__all__ = ['Day', 'Stay', 'Flight', 'PackageFeature', 'Activity', 'ActivityBridge', 'ActivityPicture']
+__all__ = ['Day', 'Stay', 'Flight', 'PackageFeature', 'ActivityType', 'Activity', 'ActivityBridge', 'ActivityPicture']
