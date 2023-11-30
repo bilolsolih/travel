@@ -120,4 +120,4 @@ class ActivityPicture(TimeStampedModel):
         return f'Picture for {self.activity} {self.id}'
 
 
-__all__ = ['Day', 'Stay', 'Flight', 'PackageFeature', 'ActivityType', 'Activity', 'ActivityBridge', 'ActivityPicture']
+__all__ = ['Day', 'Stay', 'Flight', 'PackageFeature', 'Activity', 'ActivityBridge', 'ActivityPicture']
