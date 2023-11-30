@@ -106,13 +106,13 @@ USE_I18N = True
 
 USE_TZ = True
 
-LANGUAGE_CODE = 'cr'
+LANGUAGE_CODE = 'uz'
 
 LANGUAGES = [
     ('uz', _('Uzbek')),
     ('ru', _('Russian')),
     ('en', _('English')),
-    ('cr', _('Cyrillic')),
+    ('uk', _('Uzbek Cyrillic')),
 ]
 
 TIME_ZONE = 'Asia/Tashkent'
