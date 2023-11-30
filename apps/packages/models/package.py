@@ -37,6 +37,7 @@ class Package(TimeStampedModel):
     description = models.TextField(_('Description'), blank=True, null=True)
     popular_places = models.ManyToManyField('places.PopularPlace', related_name='packages', blank=True, verbose_name=_('Popular places'))
     country = models.ForeignKey('base.Country', related_name='packages', on_delete=models.PROTECT, verbose_name=_('Country'), null=True)
+    duration = models.PositiveIntegerField(_('Duration'), default=1)
 
     core_features = models.ManyToManyField('packages.PackageFeature', related_name='packages', blank=True, verbose_name=_('Core features'))
 
@@ -49,13 +50,6 @@ class Package(TimeStampedModel):
             models.Index(fields=('title',)),
             models.Index(fields=('is_active',)),
         ]
-
-    @property
-    def get_duration(self):
-        if self.destinations.exists():
-            return self.destinations.aggregate(total_duration=models.Sum('duration'))['total_duration']
-        else:
-            return None
 
     def __str__(self):
         return self.title

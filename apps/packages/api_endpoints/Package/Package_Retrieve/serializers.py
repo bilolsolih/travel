@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from django.utils import timezone
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
 from apps.packages.models import Package, Trip, Destination, PackageFeature, Plan, PlanType, PackagePicture, Day
@@ -38,10 +39,17 @@ class PlanTypeInPlan(ModelSerializer):
 class PlanInPackageRetrieveSerializer(ModelSerializer):
     type = PlanTypeInPlan(many=False)
     features = FeatureNestedRetrieveSerializer(many=True)
+    discounted_price = SerializerMethodField()
 
     class Meta:
         model = Plan
-        fields = ['id', 'type', 'price', 'discount', 'discount_expiry_date', 'get_discounted_price', 'features', 'description']
+        fields = ['id', 'type', 'price', 'is_discount_active', 'discount', 'discount_expiry_date', 'discounted_price', 'features', 'description']
+
+    def get_discounted_price(self, instance):
+        if instance.is_discount_active and instance.discount and instance.discount_expiry_date and instance.discount_expiry_date > timezone.now():
+            return instance.price * ((100 - instance.discount) / 100)
+        else:
+            return instance.price
 
 
 class PictureInPackageRetrieveSerializer(ModelSerializer):
@@ -74,4 +82,4 @@ class PackageRetrieveSerializer(ModelSerializer):
 
     class Meta:
         model = Package
-        fields = ['id', 'title', 'trips', 'description', 'country', 'pictures', 'get_duration', 'destinations', 'core_features', 'plans', 'days']
+        fields = ['id', 'title', 'trips', 'description', 'country', 'pictures', 'duration', 'destinations', 'core_features', 'plans', 'days']

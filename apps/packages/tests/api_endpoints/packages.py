@@ -69,6 +69,8 @@ destinations = [
     Destination(package_id=1, city_id=2, duration=5),
     Destination(package_id=2, city_id=3, duration=5),
     Destination(package_id=2, city_id=4, duration=5),
+    Destination(package_id=3, city_id=1, duration=5),
+    Destination(package_id=3, city_id=3, duration=5),
 ]
 
 date = timezone.now().date()

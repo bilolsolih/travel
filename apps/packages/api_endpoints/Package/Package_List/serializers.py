@@ -53,10 +53,10 @@ class PlanInPackageListSerializer(ModelSerializer):
 
     class Meta:
         model = Plan
-        fields = ['id', 'type', 'price', 'discount', 'discount_expiry_date', 'discounted_price', 'features']
+        fields = ['id', 'type', 'price', 'discount', 'is_discount_active', 'discount_expiry_date', 'discounted_price', 'features']
 
     def get_discounted_price(self, instance):
-        if instance.discount and instance.discount_expiry_date and instance.discount_expiry_date > timezone.now():
+        if instance.is_discount_active and instance.discount and instance.discount_expiry_date and instance.discount_expiry_date > timezone.now():
             return instance.price * ((100 - instance.discount) / 100)
         else:
             return instance.price
@@ -72,17 +72,10 @@ class PackageListSerializer(ModelSerializer):
     trips = TripInPackageListSerializer(many=True)
     is_liked = SerializerMethodField()
     picture = SerializerMethodField()
-    duration = SerializerMethodField()
 
     class Meta:
         model = Package
         fields = ['id', 'title', 'trips', 'picture', 'duration', 'country', 'destinations', 'core_features', 'plans', 'is_liked']
-
-    def get_duration(self, instance):
-        if instance.destinations.exists():
-            return instance.destinations.aggregate(total_duration=Sum('duration'))['total_duration']
-        else:
-            return None
 
     def get_picture(self, instance):
         pictures = instance.pictures.all()

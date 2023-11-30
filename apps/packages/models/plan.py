@@ -26,6 +26,8 @@ class Plan(models.Model):
     features = models.ManyToManyField('packages.PackageFeature', related_name='plans', blank=True, verbose_name=_('Features'))
     description = RichTextField(_('Description'), blank=True, null=True)
 
+    is_discount_active = models.BooleanField(_('Discount status'), default=True)
+
     class Meta:
         verbose_name = _('Plan')
         verbose_name_plural = _('Plans')
@@ -33,7 +35,7 @@ class Plan(models.Model):
 
     @property
     def get_discounted_price(self):
-        if self.discount and self.discount_expiry_date and self.discount_expiry_date > timezone.now():
+        if self.is_discount_active and self.discount and self.discount_expiry_date and self.discount_expiry_date > timezone.now():
             return self.price * ((100 - self.discount) / 100)
         else:
             return self.price

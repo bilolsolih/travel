@@ -38,11 +38,10 @@ class DayInPackageInLine(admin.TabularInline):
 
 @admin.register(Package)
 class PackageAdmin(TranslationAdmin):
-    list_display = ['id', 'title', 'get_duration', 'is_active']
+    list_display = ['id', 'title', 'duration', 'is_active']
     list_display_links = ['id', 'title']
     list_editable = ['is_active']
     search_fields = ['title']
-    readonly_fields = ['get_duration']
     inlines = [PictureInPackageInLine, DestinationInPackageInLine, PlanInPackage, TripInPackage, DayInPackageInLine]
 
 
