@@ -49,3 +49,5 @@ CACHES = {
 }
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 3145728  # 3 MB
+
+FCM_SERVICE_ACCOUNT_FILE = 'airtravels-firebase.json'

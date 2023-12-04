@@ -17,7 +17,8 @@ urlpatterns = i18n_patterns(
     path('api/v1/payments/', include('apps.payments.urls', namespace='payments')),
     path('api/v1/places/', include('apps.places.urls', namespace='places')),
     path('api/v1/discounts/', include('apps.discounts.urls', namespace='discounts')),
-    path('api/v1/about/', include('apps.about.urls', namespace='about'))
+    path('api/v1/about/', include('apps.about.urls', namespace='about')),
+    path('api/v1/firebase/', include('apps.firebase.urls', namespace='firebase')),
 )
 
 urlpatterns += swagger_patterns

@@ -1,7 +1,7 @@
 uwsgi.ini
 nginx.conf
 
-
+airtravels-firebase.json
 # Django #
 *.log
 *.pot

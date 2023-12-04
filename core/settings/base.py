@@ -33,7 +33,8 @@ THIRD_PARTY_APPS = [
     'phonenumber_field',
     'debug_toolbar',
     'django_filters',
-    'redisboard'
+    'redisboard',
+    'fcm_django',
 ]
 
 USER_DEFINED_APPS = [
@@ -46,6 +47,7 @@ USER_DEFINED_APPS = [
     'apps.packages',
     'apps.payments',
     'apps.places',
+    'apps.firebase',
 ]
 
 INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + USER_DEFINED_APPS
