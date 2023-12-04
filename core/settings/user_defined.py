@@ -1,6 +1,9 @@
 import os
 from datetime import timedelta
 
+from firebase_admin import initialize_app
+
+FIREBASE_APP = initialize_app()
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
@@ -50,4 +53,17 @@ CACHES = {
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 3145728  # 3 MB
 
-FCM_SERVICE_ACCOUNT_FILE = 'airtravels-firebase.json'
+GOOGLE_APPLICATION_CREDENTIALS = 'airtravels-firebase.json'
+
+FCM_DJANGO_SETTINGS = {
+    "DEFAULT_FIREBASE_APP": FIREBASE_APP,
+    # default: _('FCM Django')
+    "APP_VERBOSE_NAME": "Firebase",
+    # true if you want to have only one active device per registered user at a time
+    # default: False
+    "ONE_DEVICE_PER_USER": False,
+    # devices to which notifications cannot be sent,
+    # are deleted upon receiving error response from FCM
+    # default: False
+    "DELETE_INACTIVE_DEVICES": True,
+}
