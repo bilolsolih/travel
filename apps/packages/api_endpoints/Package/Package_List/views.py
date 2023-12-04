@@ -17,7 +17,7 @@ class PackageFilterSet(FilterSet):
     popular_places = django_filters.ModelChoiceFilter(field_name='popular_places', to_field_name='id', queryset=PopularPlace.objects.all())
     start_date = django_filters.DateFilter(field_name='trips__start_date', lookup_expr='gte', distinct=True)
     end_date = django_filters.DateFilter(field_name='trips__start_date', lookup_expr='lte', distinct=True)
-    country = django_filters.ModelChoiceFilter(field_name='destinations__country', to_field_name='pk', queryset=Country.objects.all(), distinct=True)
+    country = django_filters.ModelChoiceFilter(field_name='country', to_field_name='pk', queryset=Country.objects.all(), distinct=True)
     city = django_filters.ModelChoiceFilter(field_name='destinations__city', to_field_name='pk', queryset=City.objects.all(), distinct=True)
 
 
