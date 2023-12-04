@@ -48,6 +48,7 @@ USER_DEFINED_APPS = [
     'apps.payments',
     'apps.places',
     'apps.firebase',
+    'apps.notifications',
 ]
 
 INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + USER_DEFINED_APPS
