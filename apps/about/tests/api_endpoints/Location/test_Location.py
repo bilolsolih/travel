@@ -2,10 +2,10 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
+from .locations import *
+
 
 class LocationAPITestCase(APITestCase):
-    fixtures = ['test_data/fixtures/about', 'test_data/fixtures/base']
-
     @classmethod
     def setUpTestData(cls):
         cls.urls = {
@@ -13,6 +13,7 @@ class LocationAPITestCase(APITestCase):
             'retrieve_1': reverse('about:location_retrieve', kwargs={'pk': 1}),
             'retrieve_2': reverse('about:location_retrieve', kwargs={'pk': 2}),
         }
+        create_locations()
 
     def test_location_list(self):
         response = self.client.get(path=self.urls['list'])

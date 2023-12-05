@@ -13,6 +13,7 @@ countries = [
     Country(title='Saudi Arabia'),
 ]
 
+
 popular_places = [
     PopularPlace(title='Popular place 1', picture='test_data/hotel.jpg', description='Description 1'),
     PopularPlace(title='Popular place 2', picture='test_data/motel.jpg', description='Description 2'),
