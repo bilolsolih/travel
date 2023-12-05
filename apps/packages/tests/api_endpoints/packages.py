@@ -76,8 +76,9 @@ destinations = [
 date = timezone.now().date()
 
 trips = [
-    Trip(package_id=1, start_date=date, flight_from_id=1),
-    Trip(package_id=2, start_date=date, flight_from_id=2),
+    Trip(package_id=1, start_date="2024-01-01", end_date="2024-02-01", flight_from_id=1),
+    Trip(package_id=2, start_date="2024-02-01", end_date="2024-03-01", flight_from_id=2),
+    Trip(package_id=3, start_date="2024-03-01", end_date="2024-04-01", flight_from_id=3),
 ]
 
 
@@ -91,9 +92,10 @@ def create_packages():
     Package.objects.bulk_create(packages)
     PlanType.objects.bulk_create(plan_types)
     Plan.objects.bulk_create(plans)
-
+    Package.objects.get(pk=1).popular_places.add(1, 2)
+    Package.objects.get(pk=2).popular_places.add(3, 4)
+    Package.objects.get(pk=3).popular_places.add(5, 6)
     for package in Package.objects.all():
-        package.popular_places.add(1, 2, 3, 4, 5, 6)
         package.core_features.add(1, 2, 3)
 
 
