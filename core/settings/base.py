@@ -36,6 +36,7 @@ THIRD_PARTY_APPS = [
     'django_filters',
     'redisboard',
     'fcm_django',
+    'solo',
 ]
 
 USER_DEFINED_APPS = [

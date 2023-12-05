@@ -1,6 +1,8 @@
+from ckeditor.fields import RichTextField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
+from solo.models import SingletonModel
 
 
 class PhoneNumber(models.Model):
@@ -47,3 +49,26 @@ class Location(models.Model):
 
     def __str__(self):
         return f'{self.title} in {self.region}'
+
+
+class FrequentlyAskedQuestion(models.Model):
+    question = models.TextField(_('Question'))
+    answer = models.TextField(_('Answer'))
+
+    class Meta:
+        verbose_name = _('Frequently asked question')
+        verbose_name_plural = _('Frequently asked questions')
+
+    def __str__(self):
+        return self.question
+
+
+class TermsAndConditions(SingletonModel):
+    terms = RichTextField(_('Terms and conditions'))
+
+    class Meta:
+        verbose_name = _('Terms and conditions')
+        verbose_name_plural = _('Terms and conditions')
+
+    def __str__(self):
+        return 'Terms and Conditions'
