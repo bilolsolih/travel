@@ -1,6 +1,19 @@
 from django.contrib import admin
 
-from .models import PhoneNumber, Location, SocialMedia
+from .models import PhoneNumber, Location, SocialMedia, FrequentlyAskedQuestion, TermsAndConditions
+
+
+@admin.register(FrequentlyAskedQuestion)
+class FrequentlyAskedQuestionAdmin(admin.ModelAdmin):
+    list_display = ['id', 'question', 'answer']
+    list_display_links = ['id', 'question', 'answer']
+    search_fields = ['question', 'answer']
+
+
+@admin.register(TermsAndConditions)
+class TermsAndConditionsAdmin(admin.ModelAdmin):
+    list_display = ['id', 'terms']
+    list_display_links = ['id', 'terms']
 
 
 @admin.register(Location)
