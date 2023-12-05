@@ -7,13 +7,13 @@ class MainPagePictures(models.Model):
     picture = models.ImageField(_('Picture'), upload_to='images/gallery/main_page/')
     prompt = models.CharField(_('Text prompt'), max_length=256)
 
-    active = models.BooleanField(_('Active status'), default=True)
+    is_active = models.BooleanField(_('Active status'), default=True)
 
     class Meta:
         verbose_name = _('Main page picture')
         verbose_name_plural = _('Main page pictures')
         indexes = [
-            models.Index(fields=('active',))
+            models.Index(fields=('is_active',))
         ]
 
     def __str__(self):
