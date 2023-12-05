@@ -1,10 +1,9 @@
-from django.utils import timezone
 from rest_framework.generics import ListAPIView
-
+from rest_framework.response import Response
+from django.core.cache import cache
 from apps.discounts.models import Discount
 from apps.packages.models import Package
 from .serializers import DiscountListSerializer
-from rest_framework.response import Response
 
 
 class DiscountListAPIView(ListAPIView):
@@ -23,7 +22,11 @@ class DiscountListAPIView(ListAPIView):
         return Response({'discount_companies': serializer.data, 'packages_length': packages_length})
 
     def get_queryset(self):
-        return Discount.objects.filter(expiry_date__gt=timezone.now())
+        queryset = cache.get('discounts:discount')
+        if not queryset:
+            queryset = Discount.objects.filter(is_active=True)
+            cache.set('discounts:discount', queryset, timeout=60 * 60 * 6)
+        return queryset
 
 
 __all__ = ['DiscountListAPIView']

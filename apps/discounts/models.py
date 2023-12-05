@@ -11,6 +11,8 @@ class Discount(TimeStampedModel):
     expiry_date = models.DateTimeField(_('Expiry date'))
     packages = models.ManyToManyField('packages.Package', related_name='discounts', verbose_name=_('Packages'))
 
+    is_active = models.BooleanField(_('Active status'), default=True)
+
     class Meta:
         verbose_name = _('Discount')
         verbose_name_plural = _('Discounts')
