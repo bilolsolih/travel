@@ -50,18 +50,76 @@ class PackageAPITestCase(APITestCase):
         self.assertContains(response, 'Package 1')
         self.assertNotContains(response, 'Package 2')
 
-        # url = reverse('packages:package_list') + '?start_date=2024-02-01&end_date=2024-03-02'
-        # response = self.client.get(path=url)
-        # self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # self.assertContains(response, 'Package 2')
-        # self.assertNotContains(response, 'Package 1')
-        #
-        # url = reverse('packages:package_list') + '?start_date=2023-01-01&end_date=2023-02-01'
-        # response = self.client.get(path=url)
-        # self.assertEqual(response.status_code, status.HTTP_200_OK)
-        # print(response.content.decode('utf-8'))
-        # self.assertNotContains(response, 'Package 1')
-        # self.assertNotContains(response, 'Package 2')
+        url = reverse('packages:package_list') + '?start_date=2024-02-01&end_date=2024-02-06'
+        response = self.client.get(path=url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, 'Package 2')
+        self.assertNotContains(response, 'Package 1')
+
+        url = reverse('packages:package_list') + '?start_date=2023-01-01&end_date=2023-02-01'
+        response = self.client.get(path=url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertNotContains(response, 'Package 1')
+        self.assertNotContains(response, 'Package 2')
+
+    def test_package_list_filter_country(self):
+        url = reverse('packages:package_list') + '?country=1'
+        response = self.client.get(path=url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, 'Package 1')
+        self.assertNotContains(response, 'Package 2')
+        self.assertNotContains(response, 'Package 3')
+
+        url = reverse('packages:package_list') + '?country=2'
+        response = self.client.get(path=url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, 'Package 2')
+        self.assertNotContains(response, 'Package 1')
+        self.assertNotContains(response, 'Package 3')
+
+        url = reverse('packages:package_list') + '?country=3'
+        response = self.client.get(path=url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, 'Package 3')
+        self.assertNotContains(response, 'Package 1')
+        self.assertNotContains(response, 'Package 2')
+
+    def test_package_list_filter_city(self):
+        url = reverse('packages:package_list') + '?city=1'
+        response = self.client.get(path=url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, 'Package 1')
+        self.assertContains(response, 'Package 3')
+        self.assertNotContains(response, 'Package 2')
+
+        url = reverse('packages:package_list') + '?city=4'
+        response = self.client.get(path=url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, 'Package 2')
+        self.assertNotContains(response, 'Package 1')
+        self.assertNotContains(response, 'Package 3')
+
+    def test_package_list_pagination(self):
+        url = reverse('packages:package_list') + '?limit=1&offset=0'
+        response = self.client.get(path=url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, 'Package 1')
+        self.assertNotContains(response, 'Package 2')
+        self.assertNotContains(response, 'Package 3')
+
+        url = reverse('packages:package_list') + '?limit=2&offset=0'
+        response = self.client.get(path=url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, 'Package 1')
+        self.assertContains(response, 'Package 2')
+        self.assertNotContains(response, 'Package 3')
+
+        url = reverse('packages:package_list') + '?limit=1&offset=2'
+        response = self.client.get(path=url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertContains(response, 'Package 3')
+        self.assertNotContains(response, 'Package 1')
+        self.assertNotContains(response, 'Package 2')
 
     def test_package_retrieve(self):
         urls = [reverse('packages:package_retrieve', args=[package_id]) for package_id in range(1, 4)]
@@ -112,4 +170,4 @@ class PackageAPITestCase(APITestCase):
             response = self.client.get(path=url)
             self.assertEqual(response.status_code, status.HTTP_200_OK)
             self.assertContains(response, 'title')
-# TODO: tests for package_list with filters
+

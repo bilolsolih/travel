@@ -76,9 +76,9 @@ destinations = [
 date = timezone.now().date()
 
 trips = [
-    Trip(package_id=1, start_date="2024-01-01", end_date="2024-02-01", flight_from_id=1),
-    Trip(package_id=2, start_date="2024-02-01", end_date="2024-03-01", flight_from_id=2),
-    Trip(package_id=3, start_date="2024-03-01", end_date="2024-04-01", flight_from_id=3),
+    Trip(package_id=1, start_date="2024-01-05", end_date="2024-02-01", flight_from_id=1),
+    Trip(package_id=2, start_date="2024-02-05", end_date="2024-03-01", flight_from_id=2),
+    Trip(package_id=3, start_date="2024-03-05", end_date="2024-04-01", flight_from_id=3),
 ]
 
 

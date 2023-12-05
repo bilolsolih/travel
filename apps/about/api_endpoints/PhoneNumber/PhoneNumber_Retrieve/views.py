@@ -8,7 +8,7 @@ class PhoneNumberRetrieveAPIView(RetrieveAPIView):
     serializer_class = PhoneNumberRetrieveSerializer
 
     def get_object(self):
-        return PhoneNumber.objects.last()
+        return PhoneNumber.objects.first(is_active=True).first()
 
 
 __all__ = ['PhoneNumberRetrieveAPIView']

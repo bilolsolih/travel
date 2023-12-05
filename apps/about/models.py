@@ -4,11 +4,17 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class PhoneNumber(models.Model):
-    phone_number = PhoneNumberField(_('Phone number'))
+    phone_number = PhoneNumberField(_('Phone number'), unique=True)
+    is_active = models.BooleanField(_('Active status'))
 
     class Meta:
         verbose_name = _('Phone number')
         verbose_name_plural = _('Phone numbers')
+
+    def save(self, *args, **kwargs):
+        if self.is_active and PhoneNumber.objects.exclude(pk=self.pk).filter(is_active=True).exists():
+            PhoneNumber.objects.exclude(pk=self.pk).filter(is_active=True).update(is_active=False)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return str(self.phone_number)
