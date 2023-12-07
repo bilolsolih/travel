@@ -38,7 +38,7 @@ class OrderListSerializer(ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ['package', 'plan', 'price_total', 'price_paid', 'get_price_to_pay', 'status', 'created', 'from_city', 'to_city']
+        fields = ['id', 'package', 'plan', 'price_total', 'price_paid', 'get_price_to_pay', 'status', 'created', 'from_city', 'to_city']
 
     def get_package(self, instance):
         package = PackageInOrderSerializer(instance.package, many=False, context={'request': self.context['request']})
