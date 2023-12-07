@@ -20,3 +20,6 @@ class NotificationSendAPIView(APIView):
         devices = FCMDevice.objects.filter(active=True)
         devices.send_message(message)
         return Response(status=status.HTTP_200_OK)
+
+
+__all__ = ['NotificationSendAPIView']
