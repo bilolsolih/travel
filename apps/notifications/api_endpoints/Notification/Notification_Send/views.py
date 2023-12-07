@@ -1,3 +1,4 @@
+from drf_yasg.utils import swagger_auto_schema
 from fcm_django.models import FCMDevice
 from firebase_admin.messaging import Message, Notification
 from rest_framework import status
@@ -11,6 +12,7 @@ from .serializers import NotificationSendSerializer
 class NotificationSendAPIView(APIView):
     permission_classes = [IsAdminUser]
 
+    @swagger_auto_schema(request_body=NotificationSendSerializer)
     def post(self, request, *args, **kwargs):
         serializer = NotificationSendSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
