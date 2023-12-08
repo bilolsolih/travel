@@ -45,7 +45,7 @@ class OrderListSerializer(ModelSerializer):
         return package.data
 
     def get_from_city(self, instance):
-        return instance.package.trips.last().flight_from.title
+        return instance.package.flight_from.title
 
     def get_to_city(self, instance):
         return instance.package.country.title
