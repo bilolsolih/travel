@@ -1,15 +1,7 @@
-from datetime import timedelta
-
 from django.utils import timezone
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
-from apps.packages.models import Package, Trip, Destination, PackageFeature, Plan, PlanType, PackagePicture, Day
-
-
-class TripInPackageRetrieveSerializer(ModelSerializer):
-    class Meta:
-        model = Trip
-        fields = ['id', 'start_date', 'end_date']
+from apps.packages.models import Package, Destination, PackageFeature, Plan, PlanType, PackagePicture, Day
 
 
 class DestinationInPackageRetrieveSerializer(ModelSerializer):
@@ -59,7 +51,6 @@ class PictureInPackageRetrieveSerializer(ModelSerializer):
 
 
 class DayInPackageRetrieveSerializer(ModelSerializer):
-
     class Meta:
         model = Day
         fields = ['id', 'day_number', 'date']
@@ -70,9 +61,8 @@ class PackageRetrieveSerializer(ModelSerializer):
     plans = PlanInPackageRetrieveSerializer(many=True)
     destinations = DestinationInPackageRetrieveSerializer(many=True)
     pictures = PictureInPackageRetrieveSerializer(many=True)
-    trips = TripInPackageRetrieveSerializer(many=True)
     days = DayInPackageRetrieveSerializer(many=True)
 
     class Meta:
         model = Package
-        fields = ['id', 'title', 'trips', 'description', 'country', 'pictures', 'duration', 'destinations', 'core_features', 'plans', 'days']
+        fields = ['id', 'title', 'flight_from', 'start_date', 'end_date', 'description', 'country', 'pictures', 'duration', 'destinations', 'core_features', 'plans', 'days']

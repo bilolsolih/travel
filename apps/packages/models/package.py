@@ -1,5 +1,4 @@
 import os
-from datetime import timedelta
 
 # from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
@@ -10,31 +9,16 @@ from django.utils.translation import gettext_lazy as _
 from apps.base.models import TimeStampedModel
 
 
-class Trip(TimeStampedModel):
-    package = models.ForeignKey('packages.Package', related_name='trips', on_delete=models.CASCADE, verbose_name=_('Package'))
-    flight_from = models.ForeignKey('base.Region', related_name='trips', on_delete=models.PROTECT, verbose_name=_('Region'), null=True)
-    start_date = models.DateField(_('Start date'))
-    end_date = models.DateField(_('End date'), default=timezone.now)
-
-    class Meta:
-        verbose_name = _('Trip')
-        verbose_name_plural = _('Trips')
-        ordering = ('start_date',)
-
-    @property
-    def get_is_active(self):
-        return self.start_date > timezone.now().date() if self.start_date else None
-
-    def __str__(self):
-        return f'{self.package}: {self.start_date} - {self.end_date}'
-
-
 class Package(TimeStampedModel):
     title = models.CharField(_('Title'), max_length=256)
     description = models.TextField(_('Description'), blank=True, null=True)
     popular_places = models.ManyToManyField('places.PopularPlace', related_name='packages', blank=True, verbose_name=_('Popular places'))
     country = models.ForeignKey('base.Country', related_name='packages', on_delete=models.PROTECT, verbose_name=_('Country'), null=True)
     duration = models.PositiveIntegerField(_('Duration'), default=1)
+
+    flight_from = models.ForeignKey('base.Region', related_name='trips', on_delete=models.PROTECT, verbose_name=_('Region'), null=True)
+    start_date = models.DateField(_('Start date'), default=timezone.now)
+    end_date = models.DateField(_('End date'), default=timezone.now)
 
     core_features = models.ManyToManyField('packages.PackageFeature', related_name='packages', blank=True, verbose_name=_('Core features'))
 
@@ -43,6 +27,7 @@ class Package(TimeStampedModel):
     class Meta:
         verbose_name = _('Package')
         verbose_name_plural = _('Packages')
+        ordering = ('start_date',)
         indexes = [
             models.Index(fields=('title',)),
             models.Index(fields=('is_active',)),
@@ -94,4 +79,4 @@ class Destination(models.Model):
         return f"{self.city} - {self.duration} {'days' if self.duration >= 2 else 'day'}"
 
 
-__all__ = ['Trip', 'Package', 'PackagePicture', 'Destination']
+__all__ = ['Package', 'PackagePicture', 'Destination']

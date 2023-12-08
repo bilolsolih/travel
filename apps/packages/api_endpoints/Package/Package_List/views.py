@@ -15,8 +15,8 @@ from .serializers import PackageListSerializer
 class PackageFilterSet(FilterSet):
     title = django_filters.CharFilter(field_name='title', lookup_expr='icontains')
     popular_places = django_filters.ModelChoiceFilter(field_name='popular_places', to_field_name='id', queryset=PopularPlace.objects.all())
-    start_date = django_filters.DateFilter(field_name='trips__start_date', lookup_expr='gte', distinct=True)
-    end_date = django_filters.DateFilter(field_name='trips__start_date', lookup_expr='lte', distinct=True)
+    start_date = django_filters.DateFilter(field_name='start_date', lookup_expr='gte', distinct=True)
+    end_date = django_filters.DateFilter(field_name='start_date', lookup_expr='lte', distinct=True)
     country = django_filters.ModelChoiceFilter(field_name='country', to_field_name='pk', queryset=Country.objects.all(), distinct=True)
     city = django_filters.ModelChoiceFilter(field_name='destinations__city', to_field_name='pk', queryset=City.objects.all(), distinct=True)
 
@@ -41,7 +41,7 @@ class PackageListAPIView(ListAPIView):
         queryset = cache.get('all_packages')
         if not queryset:
             queryset = Package.objects.filter(is_active=True).prefetch_related(
-                'trips', 'destinations', 'destinations__city', 'core_features', 'plans', 'plans__features', 'plans__type',
+                'destinations', 'destinations__city', 'core_features', 'plans', 'plans__features', 'plans__type',
             )
             cache.set('all_packages', queryset, timeout=60 * 60 * 6)
         discount = self.request.query_params.get('discount', None)

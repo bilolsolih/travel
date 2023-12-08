@@ -3,7 +3,7 @@ from random import randint  # noqa
 from django.utils import timezone
 
 from apps.base.models import Country
-from apps.packages.models import PackageFeature, PackagePicture, Destination, Trip, Package, Plan, PlanType
+from apps.packages.models import PackageFeature, PackagePicture, Destination, Package, Plan, PlanType
 from apps.places.models import PopularPlace
 
 countries = [
@@ -12,7 +12,6 @@ countries = [
     Country(title='United Arab Emirates'),
     Country(title='Saudi Arabia'),
 ]
-
 
 popular_places = [
     PopularPlace(title='Popular place 1', picture='test_data/hotel.jpg', description='Description 1'),
@@ -35,9 +34,9 @@ package_features = [
     PackageFeature(title='Package Feature 9', description='Description 9', icon='test_data/icon.jpg'),
 ]
 packages = [
-    Package(title='Package 1', description='Description 1', country_id=1),
-    Package(title='Package 2', description='Description 2', country_id=2),
-    Package(title='Package 3', description='Description 3', country_id=3),
+    Package(title='Package 1', description='Description 1', country_id=1, start_date="2024-01-05", end_date="2024-02-01", flight_from_id=1),
+    Package(title='Package 2', description='Description 2', country_id=2, start_date="2024-02-05", end_date="2024-03-01", flight_from_id=2),
+    Package(title='Package 3', description='Description 3', country_id=3, start_date="2024-03-05", end_date="2024-04-01", flight_from_id=3),
 ]
 
 pictures = [
@@ -76,18 +75,11 @@ destinations = [
 
 date = timezone.now().date()
 
-trips = [
-    Trip(package_id=1, start_date="2024-01-05", end_date="2024-02-01", flight_from_id=1),
-    Trip(package_id=2, start_date="2024-02-05", end_date="2024-03-01", flight_from_id=2),
-    Trip(package_id=3, start_date="2024-03-05", end_date="2024-04-01", flight_from_id=3),
-]
-
 
 def create_packages():
     Country.objects.bulk_create(countries)
     PopularPlace.objects.bulk_create(popular_places)
     PackageFeature.objects.bulk_create(package_features)
-    Trip.objects.bulk_create(trips)
     PackagePicture.objects.bulk_create(pictures)
     Destination.objects.bulk_create(destinations)
     Package.objects.bulk_create(packages)

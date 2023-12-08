@@ -5,20 +5,10 @@ from apps.base.second_admin import second_admin
 from .models import *
 
 
-@admin.register(Trip)
-class TripAdmin(admin.ModelAdmin):
-    list_display = ['id', 'package', 'start_date', 'end_date', 'get_is_active']
-    list_display_links = ['id']
-    list_editable = ['package', 'start_date']
-    readonly_fields = ['get_is_active']
-
 
 class PlanInPackage(TranslationStackedInline):
     model = Plan
 
-
-class TripInPackage(admin.TabularInline):
-    model = Trip
 
 
 class DestinationInPackageInLine(admin.TabularInline):
@@ -42,7 +32,7 @@ class PackageAdmin(TranslationAdmin):
     list_display_links = ['id', 'title']
     list_editable = ['is_active']
     search_fields = ['title']
-    inlines = [PictureInPackageInLine, DestinationInPackageInLine, PlanInPackage, TripInPackage, DayInPackageInLine]
+    inlines = [PictureInPackageInLine, DestinationInPackageInLine, PlanInPackage, DayInPackageInLine]
 
 
 second_admin.register(Package, PackageAdmin)

@@ -1,14 +1,7 @@
 from django.utils import timezone
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
-from apps.packages.models import Package, Trip, Destination, PackageFeature, Plan, PlanType
-
-
-class TripInPackageListSerializer(ModelSerializer):
-
-    class Meta:
-        model = Trip
-        fields = ['id', 'start_date', 'end_date']
+from apps.packages.models import Package, Destination, PackageFeature, Plan, PlanType
 
 
 class DestinationInPackageListSerializer(ModelSerializer):
@@ -58,13 +51,12 @@ class PackageListSerializer(ModelSerializer):
     core_features = FeatureNestedListSerializer(many=True)
     plans = PlanInPackageListSerializer(many=True)
     destinations = DestinationInPackageListSerializer(many=True)
-    trips = TripInPackageListSerializer(many=True)
     is_liked = SerializerMethodField()
     picture = SerializerMethodField()
 
     class Meta:
         model = Package
-        fields = ['id', 'title', 'trips', 'picture', 'duration', 'country', 'destinations', 'core_features', 'plans', 'is_liked']
+        fields = ['id', 'title', 'flight_from', 'start_date', 'end_date', 'picture', 'duration', 'country', 'destinations', 'core_features', 'plans', 'is_liked']
 
     def get_picture(self, instance):
         pictures = instance.pictures.all()
