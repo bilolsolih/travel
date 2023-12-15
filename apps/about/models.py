@@ -23,6 +23,7 @@ class PhoneNumber(models.Model):
 
 
 class SocialMedia(models.Model):
+    title = models.CharField(_('Title'), max_length=128, blank=True, null=True)
     icon = models.FileField(_('Icon'), upload_to='images/about/icons/')
     link = models.URLField(_('Link or username'))
 
@@ -31,7 +32,7 @@ class SocialMedia(models.Model):
         verbose_name_plural = _('Social media accounts')
 
     def __str__(self):
-        return self.link
+        return self.title if self.title else self.link
 
 
 class Location(models.Model):
