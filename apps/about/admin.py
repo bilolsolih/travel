@@ -1,12 +1,14 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin
 
 from .models import PhoneNumber, Location, SocialMedia, FrequentlyAskedQuestion, TermsAndConditions
-from modeltranslation.admin import TranslationAdmin, TranslationStackedInline
+
 
 @admin.register(FrequentlyAskedQuestion)
 class FrequentlyAskedQuestionAdmin(TranslationAdmin):
     list_display = ['id', 'question', 'answer']
     list_display_links = ['id', 'question', 'answer']
+    list_editable = ['question', 'answer']
     search_fields = ['question', 'answer']
 
 
