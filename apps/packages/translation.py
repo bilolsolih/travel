@@ -6,7 +6,7 @@ from .models import Package, Plan, PlanType, PackageFeature, Activity, Accommoda
 
 @register(Accommodation)
 class AccommodationTranslationOptions(TranslationOptions):
-    fields = ['title', 'short_description', 'long_description']
+    fields = ['title', 'short_description', 'long_description', 'landmark', 'address']
 
 
 @register(AccommodationFeature)
@@ -36,4 +36,4 @@ class PlanFeatureTranslation(TranslationOptions):
 
 @register(Activity)
 class ActivityTranslation(TranslationOptions):
-    fields = ['title', 'address', 'landmark', 'description']
+    fields = ['title', 'address', 'landmark', 'description', 'type']
