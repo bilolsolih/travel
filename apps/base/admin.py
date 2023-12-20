@@ -5,7 +5,7 @@ from .models import Region, Country, City
 
 
 @admin.register(Region)
-class RegionAdmin(admin.ModelAdmin):
+class RegionAdmin(TranslationAdmin):
     list_display = ['id', 'title']
     list_display_links = ['id']
     list_editable = ['title']

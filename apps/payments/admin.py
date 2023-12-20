@@ -1,11 +1,12 @@
 from django.contrib import admin
+from modeltranslation.admin import TranslationAdmin
 
 from apps.base.second_admin import second_admin
 from .models import Category, Payment
 
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(TranslationAdmin):
     list_display = ['id', 'title']
     list_display_links = ['id']
     list_editable = ['title']
