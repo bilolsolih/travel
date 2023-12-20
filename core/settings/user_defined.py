@@ -4,6 +4,7 @@ from datetime import timedelta
 from firebase_admin import initialize_app
 
 FIREBASE_APP = initialize_app()
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
@@ -67,3 +68,5 @@ FCM_DJANGO_SETTINGS = {
     # default: False
     "DELETE_INACTIVE_DEVICES": True,
 }
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
