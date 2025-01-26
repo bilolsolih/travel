@@ -32,9 +32,9 @@ THIRD_PARTY_APPS = [
     'ckeditor',
     'corsheaders',
     'phonenumber_field',
-    'debug_toolbar',
+    # 'debug_toolbar',
     'django_filters',
-    'redisboard',
+    # 'redisboard',
     'fcm_django',
     'solo',
 ]
@@ -56,7 +56,7 @@ USER_DEFINED_APPS = [
 INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + USER_DEFINED_APPS
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

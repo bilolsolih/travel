@@ -1,3 +1,8 @@
 -r base.txt
 
 django-debug-toolbar==4.2.0
+psycopg2-binary==2.9.9
+uWSGI==2.0.23
+celery==5.3.4
+redis==5.0.1
+hiredis==2.2.3
