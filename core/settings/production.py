@@ -17,7 +17,9 @@ DATABASES = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    '*',
+    'http://localhost:3000',
+    'http://bilolsolih.pythonanywhere.com',
+    'https://bilolsolih.pythonanywhere.com',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
