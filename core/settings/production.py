@@ -3,7 +3,7 @@ from .base import *  # noqa
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'lordstormrage.pythonanywhere.com',
+    'bilolsolih.pythonanywhere.com',
     'localhost',
     '45.89.190.14',
     '127.0.0.1',
