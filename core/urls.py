@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
 from django.urls import path, include
@@ -24,7 +23,7 @@ urlpatterns = i18n_patterns(
 
 urlpatterns += swagger_patterns
 
-if settings.DEBUG:
-    urlpatterns += [
-        path('__debug__/', include('debug_toolbar.urls')),
-    ]
+# if settings.DEBUG:
+#     urlpatterns += [
+#         path('__debug__/', include('debug_toolbar.urls')),
+#     ]

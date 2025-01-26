@@ -7,7 +7,7 @@ from .models import PhoneNumber, Location, SocialMedia, FrequentlyAskedQuestion,
 @admin.register(FrequentlyAskedQuestion)
 class FrequentlyAskedQuestionAdmin(TranslationAdmin):
     list_display = ['id', 'question', 'answer']
-    list_display_links = ['id', 'question', 'answer']
+    # list_display_links = ['id', 'question', 'answer']
     list_editable = ['question', 'answer']
     search_fields = ['question', 'answer']
 
